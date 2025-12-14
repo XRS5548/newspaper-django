@@ -1,0 +1,56 @@
+{% extends "dashboard.html" %}
+
+{% block content %}
+
+<div class="container mt-4">
+    <div class="card shadow">
+        <div class="card-header bg-dark text-white">
+            <h4>User Profile</h4>
+        </div>
+
+        <div class="card-body">
+            <div class="row">
+                <!-- Profile Photo -->
+                <div class="col-md-3 " style="display: flex; flex-direction: column; justify-content: center; align-items: center;">
+                    <div class="img-fluid rounded-circle mb-3 bg-cover" style="width:150px;background-size: cover; background-position: center;  aspect-ratio: 1/1; background-image: url('{{ user.photo.url }}');">
+                    </div>
+                    <h5>{{ user.name }} {{ user.surname }}</h5>
+                </div>
+
+                <!-- Profile Details -->
+                <div class="col-md-9">
+                    <table class="table table-bordered">
+                        <tr>
+                            <th>Email</th>
+                            <td>{{ user.email }}</td>
+                        </tr>
+                        <tr>
+                            <th>Mobile</th>
+                            <td>{{ user.mobile }}</td>
+                        </tr>
+                        <tr>
+                            <th>Age</th>
+                            <td>{{ user.age }}</td>
+                        </tr>
+                        <tr>
+                            <th>Gender</th>
+                            <td>{{ user.gender|title }}</td>
+                        </tr>
+                        <tr>
+                            <th>Address</th>
+                            <td>
+                                {{ user.address }}<br>
+                                {{ user.village }}, {{ user.tehsil }}<br>
+                                {{ user.district }}, {{ user.state }} - {{ user.pincode }}
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <div class="p-3" style="display: flex; justify-content: center;">
+            <a href="/dashboard/editprofile" class="btn btn-warning">Edit Profile</a>
+        </div>
+    </div>
+</div>
+{% endblock content %}

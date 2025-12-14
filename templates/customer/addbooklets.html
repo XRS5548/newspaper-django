@@ -1,0 +1,79 @@
+{% extends "dashboard.html" %}
+{% block content %}
+
+<style>
+  .booklet-item {
+    border: 2px solid #e5e7eb;
+    border-radius: 10px;
+    padding: 12px 15px;
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+    transition: all 0.2s ease;
+    cursor: pointer;
+  }
+
+  .booklet-item input {
+    margin-right: 12px;
+    transform: scale(1.1);
+  }
+
+  /* checked state */
+  .booklet-item input:checked + label {
+    font-weight: 600;
+  }
+
+  .booklet-item.selected {
+    border-color: #2563eb;
+    background-color: #eff6ff;
+  }
+</style>
+
+<div class="container mt-4">
+  <h4>Select Your Booklets</h4>
+
+  <form method="POST">
+    {% csrf_token %}
+
+    <div class="card p-3">
+
+      {% for booklet in booklets %}
+        <div class="booklet-item {% if booklet.id in subscribed_ids %}selected{% endif %}">
+          
+          <input
+            type="checkbox"
+            name="booklet"
+            value="{{ booklet.id }}"
+            id="booklet{{ booklet.id }}"
+            {% if booklet.id in subscribed_ids %}checked{% endif %}
+          >
+
+          <label for="booklet{{ booklet.id }}" class="mb-0">
+            {{ booklet.title }}
+            {% if booklet.price %}
+              <small class="text-muted">— ₹{{ booklet.price }}</small>
+            {% endif %}
+          </label>
+
+        </div>
+      {% empty %}
+        <p>No booklets available</p>
+      {% endfor %}
+
+    </div>
+
+    <button type="submit" class="btn btn-primary mt-3">
+      Save Selection
+    </button>
+  </form>
+</div>
+
+<script>
+  document.querySelectorAll('.booklet-item input').forEach(cb => {
+    cb.addEventListener('change', function () {
+      this.closest('.booklet-item').classList.toggle('selected', this.checked);
+    });
+  });
+</script>
+
+{% endblock %}

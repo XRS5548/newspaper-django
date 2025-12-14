@@ -1,0 +1,88 @@
+{% extends 'dashboard.html' %}
+{% block content %}
+
+<div class="container mt-4">
+  <div class="row">
+
+    <!-- LEFT SIDE : Calendar -->
+    <div class="col-md-8">
+
+      <!-- Header -->
+      <div class="d-flex justify-content-between align-items-center mb-3">
+        <a href="{% url 'calendar' prev_year prev_month %}" class="btn btn-outline-dark">◀</a>
+        <h4>{{ month_name }} {{ year }}</h4>
+        <a href="{% url 'calendar' next_year next_month %}" class="btn btn-outline-dark">▶</a>
+      </div>
+
+      <!-- Calendar -->
+      <table class="table table-bordered text-center">
+        <thead class="table-light">
+          <tr>
+           <th>Mon</th><th>Tue</th>
+            <th>Wed</th><th>Thu</th><th>Fri</th><th>Sat</th> <th>Sun</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          {% for week in calendar %}
+          <tr>
+            {% for day in week %}
+              {% if day == 0 %}
+                <td></td>
+              {% else %}
+                {% if day in delivered_days %}
+                  <td class="bg-success text-white">{{ day }}</td>
+                {% else %}
+                  <td class="bg-danger text-white">{{ day }}</td>
+                {% endif %}
+              {% endif %}
+            {% endfor %}
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+
+      <!-- Legend -->
+      <div class="mt-2">
+        <span class="badge bg-success">Delivered</span>
+        <span class="badge bg-danger">Not Delivered</span>
+      </div>
+
+    </div>
+
+    <!-- RIGHT SIDE : PAYMENT -->
+    <div class="col-md-4">
+
+      <!-- Payment Summary -->
+      <div class="card shadow mb-3">
+        <div class="card-header fw-bold">
+          Payment Summary
+        </div>
+        <div class="card-body">
+          <p>This Month Payment: <b>₹ {{ this_month_payment }}</b></p>
+          <p>Remaining Payment: <b class="text-danger">₹ {{ remaining_payment }}</b></p>
+          <p>Total Payment: <b>₹ {{ total_payment }}</b></p>
+
+          <a href="{{ upi_link }}" class="btn btn-success w-100">
+            Pay via UPI
+          </a>
+        </div>
+      </div>
+
+      <!-- QR Code -->
+      <div class="card shadow text-center">
+        <div class="card-header fw-bold">
+          QR Code for Payment
+        </div>
+        <div class="card-body">
+          <img src="{{ qr_code_url }}" class="img-fluid" alt="QR Code">
+          <p class="mt-2">Scan to Pay</p>
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+</div>
+
+{% endblock %}
