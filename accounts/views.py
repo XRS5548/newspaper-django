@@ -39,7 +39,7 @@ def customersignup(request):
             password= make_password(request.POST.get("password"))
         )
 
-        return redirect("login")
+        return redirect("customerlogin")
     return render(request,"customerregister.html")
 
 

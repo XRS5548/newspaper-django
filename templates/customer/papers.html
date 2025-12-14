@@ -6,9 +6,14 @@
   <!-- TOP BAR -->
   <div class="d-flex justify-content-between align-items-center mb-4">
     <h3 class="fw-semibold mb-0">Subscriptions</h3>
-    <a href="/dashboard/addpaper" class="btn btn-outline-primary">
-      + Edit/Add Paper
-    </a>
+    <div class="buttons gap-2">
+      <a href="/dashboard/addpaper" class="btn btn-outline-primary">
+        + Edit/Add Paper
+      </a>
+      <a href="/dashboard/addbooklet" class="btn btn-outline-warning">
+        + Edit/Add Paper
+      </a>
+    </div>
   </div>
 
   <!-- SUBSCRIPTIONS -->
@@ -85,14 +90,14 @@
         {% for p in pending_newspapers %}
           <div class="bill-row">
             <span>{{ p.newspaper.name }}</span>
-            <span class="price">₹{{ p.newspaper.price }}</span>
+            <span class="price">₹{{ p.newspaper.price }} X 30</span>
           </div>
         {% endfor %}
 
         {% for b in pending_booklets %}
           <div class="bill-row">
             <span>{{ b.booklet.title }}</span>
-            <span class="price">₹{{ b.booklet.price }}</span>
+            <span class="price">₹{{ b.booklet.price }} X 4</span>
           </div>
         {% endfor %}
 

@@ -119,11 +119,11 @@ def dashboardPapers(request):
     pending_newspapers = newspapers.filter(is_active=False)
     pending_booklets = booklets.filter(is_active=False)
     total_amount = (
-    sum(p.newspaper.price for p in pending_newspapers) +
-    sum(b.booklet.price for b in pending_booklets)
+    sum(p.newspaper.price for p in pending_newspapers)*30 +
+    sum(b.booklet.price for b in pending_booklets)*4
     )
     context = {
-        "total_amount" :total_amount*30,
+        "total_amount" :total_amount,
         "customer": customer,
         "newspapers": newspapers,
         "booklets": booklets,
