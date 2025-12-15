@@ -44,7 +44,6 @@ class PurchaseBooklet(models.Model):
 class NewspaperDelivery(models.Model):
     customer = models.ForeignKey(CustomerProfile, on_delete=models.CASCADE)
     agent = models.ForeignKey(AgentProfile, on_delete=models.SET_NULL, null=True)
-    purchase = models.ForeignKey(PurchaseNewspaper, on_delete=models.CASCADE)
 
     date = models.DateField()
     is_delivered = models.BooleanField(default=False)

@@ -1,0 +1,82 @@
+{% extends "agent/base.html" %}
+
+{% block title %}Agent Profile{% endblock %}
+{% block page_title %}My Profile{% endblock %}
+
+{% block content %}
+
+<div class="row">
+
+    <!-- Left : Profile Card -->
+    <div class="col-md-4">
+        <div class="card shadow-sm text-center">
+            <div class="card-body">
+                <img
+                    src="{{ agent.photo.url }}"
+                    class="rounded-circle mb-3"
+                    width="120"
+                    height="120"
+                    style="object-fit: cover;"
+                >
+
+                <h5 class="mb-0">{{ agent.full_name }}</h5>
+                <small class="text-muted">{{ agent.email }}</small>
+                <p class="text-muted mb-1">{{ agent.mobile }}</p>
+
+                <span class="badge bg-primary">
+                    {{ agent.agency_name }}
+                </span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Right : Profile Details -->
+    <div class="col-md-8">
+        <div class="card shadow-sm">
+            <div class="card-body">
+
+                <h5 class="mb-3">Profile Details</h5>
+
+                <table class="table table-striped">
+                    <tr>
+                        <th width="35%">Age</th>
+                        <td>{{ agent.age }}</td>
+                    </tr>
+                    <tr>
+                        <th>Gender</th>
+                        <td>{{ agent.gender|title }}</td>
+                    </tr>
+                    <tr>
+                        <th>Agency Phone</th>
+                        <td>{{ agent.agency_phone }}</td>
+                    </tr>
+                    <tr>
+                        <th>Address</th>
+                        <td>
+                            {{ agent.address }},
+                            {{ agent.village }},
+                            {{ agent.tehsil }},
+                            {{ agent.district }},
+                            {{ agent.state }} -
+                            {{ agent.pincode }}
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>Joined On</th>
+                        <td>{{ agent.created_at|date:"d M Y" }}</td>
+                    </tr>
+                </table>
+
+                <div class="text-end">
+                    <a href="#" class="btn btn-outline-primary btn-sm">
+                        Edit Profile
+                    </a>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+</div>
+
+{% endblock %}

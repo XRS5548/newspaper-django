@@ -77,3 +77,58 @@ def customerlogin(request):
 
 
 
+
+
+def agent_signup(request):
+    if request.method == "POST":
+        models.AgentProfile.objects.create(
+            full_name=request.POST.get("full_name"),
+            mobile=request.POST.get("mobile"),
+            email=request.POST.get("email"),
+
+            address=request.POST.get("address"),
+            state=request.POST.get("state"),
+            district=request.POST.get("district"),
+            tehsil=request.POST.get("tehsil"),
+            village=request.POST.get("village"),
+            pincode=request.POST.get("pincode"),
+
+            agency_name=request.POST.get("agency_name"),
+            agency_phone=request.POST.get("agency_phone"),
+
+            age=request.POST.get("age"),
+            gender=request.POST.get("gender"),
+
+            photo=request.FILES.get("photo"),
+            password=make_password(request.POST.get("password")),
+        )
+
+        return redirect("/agentlogin")  # ya jo bhi page chaho
+
+    return render(request, "agentregister.html")
+
+
+
+def agent_login(request):
+    error = None
+
+    if request.method == "POST":
+        email = request.POST.get("email")
+        password = request.POST.get("password")
+
+        try:
+            agent = models.AgentProfile.objects.get(email=email)
+
+            if check_password(password, agent.password):
+                # session set
+                request.session["agent_id"] = agent.id
+                request.session["agent_name"] = agent.full_name
+
+                return redirect("agent/")  # change if needed
+            else:
+                error = "Invalid password"
+
+        except models.AgentProfile.DoesNotExist:
+            error = "Agent not found"
+
+    return render(request, "agentlogin.html", {"error": error})

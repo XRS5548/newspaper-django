@@ -1,0 +1,91 @@
+{% extends "agent/base.html" %}
+{% block content %}
+
+<div class="container mt-4">
+
+  <div class="card shadow-sm">
+    <div class="card-header bg-dark text-white">
+      <h5 class="mb-0">Edit Customer Paper Allotment</h5>
+    </div>
+
+    <div class="card-body">
+
+      <!-- Customer Info -->
+      <div class="mb-3">
+        <strong>Customer:</strong> {{ allotment.customer.name }} <br>
+        <strong>Phone:</strong> {{ allotment.customer.mobile }} <br>
+        <strong>Address:</strong> {{ allotment.customer.address }}
+      </div>
+
+      <hr>
+
+      <!-- Edit Form -->
+      <form method="POST">
+        {% csrf_token %}
+
+        <div class="row">
+
+          <div class="col-md-2 mb-3">
+            <label class="form-label">PB</label>
+            <input type="number" name="PB" class="form-control"
+                   value="{{ allotment.PB }}" min="0">
+          </div>
+
+          <div class="col-md-2 mb-3">
+            <label class="form-label">BH</label>
+            <input type="number" name="BH" class="form-control"
+                   value="{{ allotment.BH }}" min="0">
+          </div>
+
+          <div class="col-md-2 mb-3">
+            <label class="form-label">HT</label>
+            <input type="number" name="HT" class="form-control"
+                   value="{{ allotment.HT }}" min="0">
+          </div>
+
+          <div class="col-md-2 mb-3">
+            <label class="form-label">Times</label>
+            <input type="number" name="TIMES" class="form-control"
+                   value="{{ allotment.TIMES }}" min="0">
+          </div>
+
+          <div class="col-md-2 mb-3">
+            <label class="form-label">Hindu</label>
+            <input type="number" name="HINDU" class="form-control"
+                   value="{{ allotment.HINDU }}" min="0">
+          </div>
+
+        </div>
+
+        <!-- Buttons -->
+        <div class="d-flex justify-content-between mt-4">
+
+          <div>
+            <button type="submit" class="btn btn-success">
+              💾 Save Changes
+            </button>
+
+            <a href="/agent/customers" class="btn btn-secondary ms-2">
+              Cancel
+            </a>
+          </div>
+
+          <!-- Delete -->
+          <div>
+            <a href="/agent/editcustomer/delete/{{allotment.id}}"
+               class="btn btn-danger"
+               onclick="return confirm('Are you sure you want to delete this customer?');">
+              🗑 Delete Customer
+            </a>
+          </div>
+
+        </div>
+
+      </form>
+
+    </div>
+  </div>
+
+</div>
+
+{% endblock %}

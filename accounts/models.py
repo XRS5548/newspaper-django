@@ -45,6 +45,14 @@ class AgentProfile(models.Model):
 
 class CustomerProfile(models.Model):
 
+    agent = models.ForeignKey(
+        AgentProfile,
+        on_delete=models.SET_NULL,
+        null=True,
+        blank=True,
+        related_name="customers"
+    )
+
     name = models.CharField(max_length=100)
     surname = models.CharField(max_length=100)
     mobile = models.CharField(max_length=10)

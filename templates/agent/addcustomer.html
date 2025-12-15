@@ -1,0 +1,78 @@
+{% extends "agent/base.html" %}
+{% block content %}
+
+<div class="container-fluid mt-4">
+
+  <!-- Page Header -->
+  <div class="d-flex justify-content-between align-items-center mb-3">
+    <h4>Add Customers</h4>
+
+    <a href="/agent/customers" class="btn btn-secondary">
+      ← Back
+    </a>
+  </div>
+
+  <form method="POST">
+    {% csrf_token %}
+
+    <!-- Customers Table -->
+    <div class="card shadow-sm">
+      <div class="card-body table-responsive">
+
+        <table class="table table-bordered table-hover align-middle text-center">
+          <thead class="table-dark">
+            <tr>
+              <th>Select</th>
+              <th>ID</th>
+              <th>Name</th>
+              <th>Phone</th>
+              <th>Address</th>
+              <th>Pincode</th>
+            </tr>
+          </thead>
+
+          <tbody>
+            {% if customers %}
+              {% for c in customers %}
+              <tr>
+                <td>
+                  <input
+                    type="checkbox"
+                    name="customers"
+                    value="{{ c.id }}"
+                    class="form-check-input"
+                  >
+                </td>
+                <td>{{ c.id }}</td>
+                <td>{{ c.name }} {{ c.surname }}</td>
+                <td>{{ c.mobile }}</td>
+                <td>{{ c.address }}</td>
+                <td>{{ c.pincode }}</td>
+              </tr>
+              {% endfor %}
+            {% else %}
+              <tr>
+                <td colspan="6" class="text-muted text-center">
+                  No customers available for allotment
+                </td>
+              </tr>
+            {% endif %}
+          </tbody>
+
+        </table>
+
+      </div>
+    </div>
+
+    <!-- Action Buttons -->
+    <div class="mt-3 d-flex justify-content-end">
+      <button type="submit" class="btn btn-success">
+        + Add Selected Customers
+      </button>
+    </div>
+
+  </form>
+
+</div>
+
+{% endblock %}
