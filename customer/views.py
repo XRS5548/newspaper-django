@@ -5,6 +5,7 @@ from django.contrib import messages
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.hashers import make_password , check_password
 from django.forms.models import model_to_dict
+from agent.models import *
 from django.db.models import Sum
 
 from .models import *
@@ -244,78 +245,46 @@ def dashboardAddBooklet(request):
 
 def agentPaymentDashboard(request):
 
-    # 🔐 fake login check (optional)
+    # 🔐 customer login check
     if "user_id" not in request.session:
         return redirect("customerlogin")
 
-    # 🧪 SAMPLE DATA (NO DB)
+    customer_id = request.session["user_id"]
 
-    agents_data = [
-        {
+    # 📦 DB se agent + paper data
+    allotments = AllotedCustomer.objects.select_related(
+        "agent", "customer"
+    ).filter(
+        customer_id=customer_id,
+        is_active=True
+    )
+
+    agents_data = []
+
+    for allot in allotments:
+        agent = allot.agent
+
+        agents_data.append({
             "agent": {
-                "full_name": "Ramesh Sharma",
-                "mobile": "9876543210",
-                "email": "ramesh@gmail.com",
-                "agency": "Sharma News Agency",
-                "area": "Jaipur"
+                "full_name": agent.full_name,
+                "mobile": agent.mobile,
+                "email": agent.email,
+                "agency": agent.agency_name,
+                "area": agent.district,
+                "photo":agent.photo   # ya jo bhi area field ho
             },
 
-            "deliveries": [
-                {
-                    "date": date(2025, 12, 12),
-                    "newspaper": "Dainik Bhaskar",
-                    "is_delivered": True,
-                    "remarks": "On Time"
-                },
-                {
-                    "date": date(2025, 12, 13),
-                    "newspaper": "Dainik Bhaskar",
-                    "is_delivered": False,
-                    "remarks": "Agent absent"
-                }
-            ],
-
-            "payments": [
-                {
-                    "date": date(2025, 12, 1),
-                    "amount": 1200,
-                    "remarks": "Monthly Payment"
-                },
-                {
-                    "date": date(2025, 11, 1),
-                    "amount": 1200,
-                    "remarks": "Monthly Payment"
-                }
-            ]
-        },
-
-        {
-            "agent": {
-                "full_name": "Amit Verma",
-                "mobile": "9123456789",
-                "email": "amit@gmail.com",
-                "agency": "Verma Agency",
-                "area": "Ajmer"
+            # 📰 papers & quantities (from DB)
+            "papers": {
+                "PB": allot.PB,
+                "BH": allot.BH,
+                "HT": allot.HT,
+                "TIMES": allot.TIMES,
+                "HINDU": allot.HINDU,
             },
 
-            "deliveries": [
-                {
-                    "date": date(2025, 12, 10),
-                    "newspaper": "Rajasthan Patrika",
-                    "is_delivered": True,
-                    "remarks": "Delivered early"
-                }
-            ],
-
-            "payments": [
-                {
-                    "date": date(2025, 12, 2),
-                    "amount": 1000,
-                    "remarks": "Partial Payment"
-                }
-            ]
-        }
-    ]
+            "allotted_on": allot.allotted_on.date(),
+        })
 
     context = {
         "agents_data": agents_data
@@ -326,6 +295,7 @@ def agentPaymentDashboard(request):
         "customer/agents.html",
         context
     )
+
 
 def logout(request):
     request.session.flush()

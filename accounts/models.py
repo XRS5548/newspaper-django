@@ -34,7 +34,7 @@ class AgentProfile(models.Model):
     )
 
     photo = models.ImageField(upload_to='agents/')
-    password = models.CharField(max_length=60)
+    password = models.CharField(max_length=150)
 
     created_at = models.DateTimeField(auto_now_add=True)
 
@@ -77,7 +77,7 @@ class CustomerProfile(models.Model):
 
     # 🔥 FIX HERE
     photo = models.ImageField(upload_to='')  
-    password = models.CharField(max_length=60,default="")
+    password = models.CharField(max_length=150,default="")
 
     created_at = models.DateTimeField(auto_now_add=True)
 

@@ -1,97 +1,84 @@
 {% extends "dashboard.html" %}
 {% block content %}
 
+<style>
+  .agent-card {
+    border: none;
+    border-radius: 18px;
+    background: linear-gradient(135deg, #1f2933, #111827);
+    color: #fff;
+    overflow: hidden;
+  }
+
+  .agent-avatar {
+    width: 140px;
+    height: 140px;
+    object-fit: cover;
+    border-radius: 50%;
+    border: 4px solid #22c55e;
+    box-shadow: 0 0 20px rgba(34,197,94,0.4);
+  }
+
+  .agent-name {
+    font-weight: 600;
+    font-size: 1.5rem;
+  }
+
+  .agent-info p {
+    margin-bottom: 6px;
+    font-size: 0.95rem;
+    opacity: 0.9;
+  }
+
+  .agent-badge {
+    background: #22c55e;
+    color: #052e16;
+    font-size: 0.75rem;
+    padding: 6px 12px;
+    border-radius: 999px;
+    font-weight: 600;
+    display: inline-block;
+    margin-bottom: 10px;
+  }
+</style>
+
 <div class="container mt-4">
+  <h3 class="mb-4">🧑‍💼 Your Delivery Agent</h3>
 
-  <h3 class="mb-4">📰 Delivery Agents & History</h3>
+  {% for item in agents_data %}
+  <div class="card agent-card shadow mb-4">
+    <div class="card-body p-4">
+      <div class="row align-items-center">
 
-  <!-- Agent Card START -->
-  <div class="card mb-4 shadow-sm">
-
-    <!-- Agent Header -->
-    <div class="card-header bg-dark text-white">
-      <h5 class="mb-0">Agent Name : Ramesh Sharma</h5>
-    </div>
-
-    <div class="card-body">
-
-      <!-- Agent Info -->
-      <div class="row mb-3">
-        <div class="col-md-6">
-          <p><strong>Mobile:</strong> 9876543210</p>
-          <p><strong>Email:</strong> agent@email.com</p>
+        <!-- Agent Photo -->
+        <div class="col-md-4 text-center mb-3 mb-md-0">
+          {% if item.agent.photo %}
+            <img src="{{ item.agent.photo.url }}" class="agent-avatar">
+          {% else %}
+            <img src="https://via.placeholder.com/150" class="agent-avatar">
+          {% endif %}
         </div>
-        <div class="col-md-6">
-          <p><strong>Agency:</strong> Sharma News Agency</p>
-          <p><strong>Area:</strong> Jaipur</p>
+
+        <!-- Agent Info -->
+        <div class="col-md-8 agent-info">
+          <span class="agent-badge">Assigned Agent</span>
+
+          <h4 class="agent-name mb-2">
+            {{ item.agent.full_name }}
+          </h4>
+
+          <p>📞 <strong>Mobile:</strong> {{ item.agent.mobile }}</p>
+          <p>📧 <strong>Email:</strong> {{ item.agent.email }}</p>
+          <p>🏢 <strong>Agency:</strong> {{ item.agent.agency }}</p>
+          <p>📍 <strong>Area:</strong> {{ item.agent.area }}</p>
         </div>
+
       </div>
-
-      <hr>
-
-      <!-- Delivery History -->
-      <h6 class="mb-3">📦 Delivery History</h6>
-
-      <table class="table table-bordered">
-        <thead class="table-light">
-          <tr>
-            <th>Date</th>
-            <th>Newspaper</th>
-            <th>Status</th>
-            <th>Remarks</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td>12-12-2025</td>
-            <td>Dainik Bhaskar</td>
-            <td>
-              <span class="badge bg-success">Delivered</span>
-            </td>
-            <td>On Time</td>
-          </tr>
-          <tr>
-            <td>13-12-2025</td>
-            <td>Dainik Bhaskar</td>
-            <td>
-              <span class="badge bg-danger">Not Delivered</span>
-            </td>
-            <td>Agent absent</td>
-          </tr>
-        </tbody>
-      </table>
-
-      <hr>
-
-      <!-- Payment History -->
-      <h6 class="mb-3">💰 Payment History</h6>
-
-      <table class="table table-sm table-striped">
-        <thead>
-          <tr>
-            <th>Date</th>
-            <th>Amount</th>
-            <th>Remarks</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td>01-12-2025</td>
-            <td>₹1200</td>
-            <td>Monthly Payment</td>
-          </tr>
-          <tr>
-            <td>01-11-2025</td>
-            <td>₹1200</td>
-            <td>Monthly Payment</td>
-          </tr>
-        </tbody>
-      </table>
-
     </div>
   </div>
-  <!-- Agent Card END -->
-
+  {% empty %}
+    <p class="text-muted">No agent assigned yet.</p>
+  {% endfor %}
 </div>
 
 {% endblock %}
