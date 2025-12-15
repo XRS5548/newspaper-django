@@ -10,6 +10,9 @@ from datetime import date
 
 # Create your views here.
 
+def agent_logout(request):
+    request.session.flush()
+    return redirect("/")
 
 
 

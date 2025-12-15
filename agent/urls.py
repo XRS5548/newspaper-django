@@ -8,6 +8,8 @@ urlpatterns = [
     path("profile",views.ProfilePage,name="Profile Page"),
     path("customers",views.agent_attendance,name="Attendace Page"),
     path("delevery",views.agent_deliveries,name="Delevery Page"),
+    path("logout",views.agent_logout,name="Delevery Page"),
+
      path(
         "editcustomer/<int:id>/",
         views.edit_alloted_customer,
