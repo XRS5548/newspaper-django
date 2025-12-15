@@ -132,6 +132,19 @@ body{
 
 <div class="mt-4">
 <button class="btn btn-primary w-100">🚀 Create Account</button>
+
+{% if messages %}
+  {% for message in messages %}
+    <div class="alert alert-danger">
+      {{ message }}
+    </div>
+  {% endfor %}
+{% endif %}
+{% if error %}
+    <div class="alert alert-danger mt-3 py-2 text-center">
+                            {{ error }}
+                        </div>
+{% endif %}
 </div>
 
 </form>
