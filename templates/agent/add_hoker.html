@@ -1,0 +1,123 @@
+{% extends "agent/base.html" %}
+{% block content %}
+
+<div class="container mt-4">
+
+  <!-- Page Heading -->
+  <div class="d-flex justify-content-between align-items-center mb-4">
+    <h4 class="fw-bold">➕ Add New Hoker</h4>
+    <a href="/agent/hockers" class="btn btn-sm btn-outline-secondary">
+      ← Back
+    </a>
+  </div>
+
+  <div class="card shadow-sm">
+    <div class="card-body">
+
+      <form method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+        {% if messages %}
+<div class="container mt-3">
+  {% for message in messages %}
+    <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
+      {{ message }}
+      <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+    </div>
+  {% endfor %}
+</div>
+{% endif %}
+        <div class="row g-3">
+
+          <!-- Full Name -->
+          <div class="col-md-6">
+            <label class="form-label">Full Name</label>
+            <input type="text" name="full_name" class="form-control" required>
+          </div>
+
+          <!-- Mobile -->
+          <div class="col-md-6">
+            <label class="form-label">Mobile</label>
+            <input type="text" name="mobile" maxlength="10" class="form-control" required>
+          </div>
+
+          <!-- Email -->
+          <div class="col-md-6">
+            <label class="form-label">Email</label>
+            <input type="email" name="email" class="form-control">
+          </div>
+
+          <!-- Password -->
+          <div class="col-md-6">
+            <label class="form-label">Password (Default 2026)</label>
+            <input type="password" name="password" value="2026" class="form-control" required>
+          </div>
+
+          <!-- Address -->
+          <div class="col-12">
+            <label class="form-label">Address</label>
+            <textarea name="address" class="form-control" rows="2" required></textarea>
+          </div>
+
+          <!-- Location -->
+          <div class="col-md-4">
+            <label class="form-label">State</label>
+            <input type="text" name="state" class="form-control" required>
+          </div>
+
+          <div class="col-md-4">
+            <label class="form-label">District</label>
+            <input type="text" name="district" class="form-control" required>
+          </div>
+
+          <div class="col-md-4">
+            <label class="form-label">Tehsil</label>
+            <input type="text" name="tehsil" class="form-control" required>
+          </div>
+
+          <div class="col-md-6">
+            <label class="form-label">Village</label>
+            <input type="text" name="village" class="form-control" required>
+          </div>
+
+          <div class="col-md-6">
+            <label class="form-label">Pincode</label>
+            <input type="text" name="pincode" maxlength="6" class="form-control" required>
+          </div>
+
+          <!-- Personal -->
+          <div class="col-md-4">
+            <label class="form-label">Age</label>
+            <input type="number" name="age" class="form-control" required>
+          </div>
+
+          <div class="col-md-4">
+            <label class="form-label">Gender</label>
+            <select name="gender" class="form-select" required>
+              <option value="">Select</option>
+              <option value="male">Male</option>
+              <option value="female">Female</option>
+              <option value="other">Other</option>
+            </select>
+          </div>
+
+          <div class="col-md-4">
+            <label class="form-label">Photo</label>
+            <input type="file" name="photo" class="form-control">
+          </div>
+
+        </div>
+
+        <div class="mt-4 text-end">
+          <button type="submit" class="btn btn-success">
+            Save Hoker
+          </button>
+        </div>
+
+      </form>
+
+    </div>
+  </div>
+
+</div>
+
+{% endblock %}

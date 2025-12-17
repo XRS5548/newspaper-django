@@ -1,0 +1,151 @@
+{% extends "agent/base.html" %}
+{% block content %}
+
+<div class="container mt-4">
+
+  <!-- Header -->
+  <div class="d-flex justify-content-between align-items-center mb-4">
+    <div>
+      <h4 class="fw-bold mb-0">➕ Add Delivery Record</h4>
+      <small class="text-muted">
+        Customer: {{ customer.name }} {{ customer.surname }}
+      </small>
+    </div>
+
+    <a href="/agent/deliveries" class="btn btn-sm btn-outline-secondary">
+      ← Back
+    </a>
+  </div>
+
+  <!-- Messages -->
+  {% if messages %}
+    {% for message in messages %}
+      <div class="alert alert-{{ message.tags }} alert-dismissible fade show">
+        {{ message }}
+        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+      </div>
+    {% endfor %}
+  {% endif %}
+
+  <!-- Form -->
+  <div class="card shadow-sm">
+    <div class="card-body">
+
+      <form method="POST" novalidate>
+        {% csrf_token %}
+
+        <div class="row g-3">
+
+          <!-- Date -->
+          <div class="col-md-4">
+            <label class="form-label fw-semibold">Delivery Date</label>
+            <input type="date"
+                   name="date"
+                   value="{{ today|date:'Y-m-d' }}"
+                   class="form-control"
+                   required>
+          </div>
+
+          <!-- Hoker -->
+          <div class="col-md-4">
+            <label class="form-label fw-semibold">Delivered By (Hoker)</label>
+            <select name="hoker" class="form-select" required>
+              <option value="">Select Hoker</option>
+              {% for h in hokers %}
+                <option value="{{ h.id }}">
+                  {{ h.full_name }} ({{ h.mobile }})
+                </option>
+              {% endfor %}
+            </select>
+          </div>
+
+          <!-- Status -->
+          <div class="col-md-4">
+            <label class="form-label fw-semibold">Delivery Status</label>
+            <select name="status" class="form-select" required>
+              <option value="">Select</option>
+              <option value="delivered">Delivered</option>
+              <option value="not_delivered">Not Delivered</option>
+            </select>
+          </div>
+
+          <!-- Newspaper -->
+          <div class="col-md-6">
+            <label class="form-label fw-semibold">Newspaper Delivered?</label>
+            <select name="newspaper" class="form-select" required>
+              <option value="">Select</option>
+              <option value="yes">Yes</option>
+              <option value="no">No</option>
+            </select>
+          </div>
+
+          <!-- Booklet -->
+          <div class="col-md-6">
+            <label class="form-label fw-semibold">Booklet Delivered?</label>
+            <select name="booklet" class="form-select" required>
+              <option value="">Select</option>
+              <option value="yes">Yes</option>
+              <option value="no">No</option>
+            </select>
+          </div>
+
+          <!-- Remarks -->
+          <div class="col-12">
+            <label class="form-label fw-semibold">Remarks</label>
+            <input type="text"
+                   name="remarks"
+                   class="form-control"
+                   placeholder="Late / Holiday / Customer not available (optional)">
+          </div>
+
+        </div>
+
+        <!-- EXTRA NEWSPAPERS -->
+        <hr class="my-4">
+
+        <h6 class="fw-bold mb-3">📰 Extra Newspapers</h6>
+
+        <div class="row g-3">
+
+          {% for paper in newspapers %}
+          <div class="col-md-4">
+
+            <label class="form-label">
+              {{ paper.name }}
+            </label>
+
+            <!-- 🔥 fallback hidden input -->
+            <input type="hidden" name="extra_{{ paper.id }}" value="0">
+
+            <input type="number"
+                   class="form-control"
+                   name="extra_{{ paper.id }}"
+                   min="0"
+                   step="1"
+                   placeholder="0">
+          </div>
+          {% endfor %}
+
+        </div>
+
+        <!-- Info -->
+        <div class="alert alert-info mt-4 mb-0">
+          ℹ️ If a delivery record already exists for this date,
+          it will be updated automatically (including extra papers).
+        </div>
+
+        <!-- Submit -->
+        <div class="mt-4 text-end">
+          <button type="submit" class="btn btn-success px-4">
+            💾 Save Delivery
+          </button>
+        </div>
+
+      </form>
+
+    </div>
+  </div>
+
+</div>
+
+{% endblock %}

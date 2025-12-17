@@ -6,10 +6,12 @@ from . import views
 urlpatterns = [
     path("",views.ProfilePage,name="Profile Page"),
     path("profile",views.ProfilePage,name="Profile Page"),
-    path("customers",views.agent_attendance,name="Attendace Page"),
-    path("delevery",views.agent_deliveries,name="Delevery Page"),
+    path("customers",views.Agent_Customers,name="Attendace Page"),
+    path("hockers",views.agent_hokers,name="Delevery Page"),    
     path("logout",views.agent_logout,name="Delevery Page"),
-
+    path("deliveries/", views.all_deliveries, name="agent_deliveries"),
+    path("hockers/add/", views.add_hoker, name="add_hoker"),
+    path("profile/edit/", views.edit_agent_profile, name="agent_edit_profile"),
      path(
         "editcustomer/<int:id>/",
         views.edit_alloted_customer,
@@ -32,5 +34,50 @@ urlpatterns = [
         views.add_delivery,
         name="add_delivery"
     ),
+    path(
+    "hockers/<int:hoker_id>/attendance/",
+    views.hoker_attendance_calendar,
+    name="hoker_attendance"
+),
+
+path(
+    "hockers/<int:hoker_id>/attendance/add/",
+    views.add_hoker_attendance,
+    name="add_hoker_attendance"
+),
+
+path(
+    "hockers/<int:hoker_id>/profile/",
+    views.hoker_profile,
+    name="hoker_profile"
+),
+path(
+    "hockers/<int:hoker_id>/edit/",
+    views.edit_hoker_profile,
+    name="edit_hoker_profile"
+),
+path(
+    "hockers/<int:hoker_id>/payments/",
+    views.hoker_payments,
+    name="hoker_payments"
+),
+
+path(
+    "hockers/<int:hoker_id>/payments/add/",
+    views.add_hoker_payment,
+    name="add_hoker_payment"
+),
+
+path(
+    "payments/",
+    views.all_hoker_payments,
+    name="all_hoker_payments"
+),
+path(
+    "deliveries/<int:customer_id>/add/",
+    views.add_delivery_record,
+    name="add_delivery"
+)
+
 
 ]

@@ -61,7 +61,7 @@ def customersignup(request):
             )
 
             messages.success(request, "Account created successfully")
-            return redirect("customerlogin")
+            return redirect("/customerlogin")
 
         except IntegrityError:
             messages.error(request, "Database error: duplicate or invalid data")
@@ -154,7 +154,7 @@ def agent_signup(request):
             )
 
             messages.success(request, "Agent registered successfully")
-            return redirect("agentlogin")
+            return redirect("/agentlogin")
 
         except IntegrityError:
             messages.error(request, "Database error: duplicate or invalid data")

@@ -1,0 +1,183 @@
+{% extends "agent/base.html" %}
+{% block content %}
+
+<div class="container mt-4">
+
+  <!-- Header -->
+  <div class="d-flex justify-content-between align-items-center mb-4">
+    <div>
+      <h4 class="fw-bold mb-0">✏️ Edit Profile</h4>
+      <small class="text-muted">
+        Update your personal & agency details
+      </small>
+    </div>
+
+    <a href="/agent/profile/" class="btn btn-sm btn-outline-secondary">
+      ← Back
+    </a>
+  </div>
+
+  <!-- Messages -->
+  {% if messages %}
+    {% for message in messages %}
+      <div class="alert alert-{{ message.tags }} alert-dismissible fade show">
+        {{ message }}
+        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+      </div>
+    {% endfor %}
+  {% endif %}
+
+  <!-- Form Card -->
+  <div class="card shadow-sm">
+    <div class="card-body">
+
+      <form method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+
+        <!-- ================= BASIC INFO ================= -->
+        <h6 class="fw-bold mb-3">👤 Basic Information</h6>
+
+        <div class="row g-3 mb-4">
+          <div class="col-md-6">
+            <label class="form-label">Full Name</label>
+            <input type="text"
+                   name="full_name"
+                   value="{{ agent.full_name }}"
+                   class="form-control"
+                   required>
+          </div>
+
+          <div class="col-md-6">
+            <label class="form-label">Mobile</label>
+            <input type="text"
+                   name="mobile"
+                   value="{{ agent.mobile }}"
+                   class="form-control"
+                   required>
+          </div>
+
+          <div class="col-md-6">
+            <label class="form-label">Email</label>
+            <input type="email"
+                   name="email"
+                   value="{{ agent.email }}"
+                   class="form-control"
+                   required>
+          </div>
+
+          <div class="col-md-3">
+            <label class="form-label">Age</label>
+            <input type="number"
+                   name="age"
+                   value="{{ agent.age }}"
+                   class="form-control"
+                   required>
+          </div>
+
+          <div class="col-md-3">
+            <label class="form-label">Gender</label>
+            <select name="gender" class="form-select" required>
+              <option value="male" {% if agent.gender == "male" %}selected{% endif %}>Male</option>
+              <option value="female" {% if agent.gender == "female" %}selected{% endif %}>Female</option>
+              <option value="other" {% if agent.gender == "other" %}selected{% endif %}>Other</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- ================= ADDRESS ================= -->
+        <h6 class="fw-bold mb-3">📍 Address Details</h6>
+
+        <div class="row g-3 mb-4">
+          <div class="col-12">
+            <label class="form-label">Address</label>
+            <textarea name="address"
+                      class="form-control"
+                      rows="2"
+                      required>{{ agent.address }}</textarea>
+          </div>
+
+          <div class="col-md-4">
+            <label class="form-label">State</label>
+            <input type="text" name="state" value="{{ agent.state }}" class="form-control">
+          </div>
+
+          <div class="col-md-4">
+            <label class="form-label">District</label>
+            <input type="text" name="district" value="{{ agent.district }}" class="form-control">
+          </div>
+
+          <div class="col-md-4">
+            <label class="form-label">Tehsil</label>
+            <input type="text" name="tehsil" value="{{ agent.tehsil }}" class="form-control">
+          </div>
+
+          <div class="col-md-6">
+            <label class="form-label">Village</label>
+            <input type="text" name="village" value="{{ agent.village }}" class="form-control">
+          </div>
+
+          <div class="col-md-6">
+            <label class="form-label">Pincode</label>
+            <input type="text" name="pincode" value="{{ agent.pincode }}" class="form-control">
+          </div>
+        </div>
+
+        <!-- ================= AGENCY ================= -->
+        <h6 class="fw-bold mb-3">🏢 Agency Information</h6>
+
+        <div class="row g-3 mb-4">
+          <div class="col-md-6">
+            <label class="form-label">Agency Name</label>
+            <input type="text"
+                   name="agency_name"
+                   value="{{ agent.agency_name }}"
+                   class="form-control">
+          </div>
+
+          <div class="col-md-6">
+            <label class="form-label">Agency Phone</label>
+            <input type="text"
+                   name="agency_phone"
+                   value="{{ agent.agency_phone }}"
+                   class="form-control">
+          </div>
+        </div>
+
+        <!-- ================= PHOTO ================= -->
+        <h6 class="fw-bold mb-3">🖼️ Profile Photo</h6>
+
+        <div class="row g-3 mb-4 align-items-center">
+          <div class="col-md-3 text-center">
+            {% if agent.photo %}
+              <img src="{{ agent.photo.url }}"
+                   class="rounded-circle img-fluid"
+                   style="width:120px;height:120px;object-fit:cover;">
+            {% else %}
+              <img src="https://via.placeholder.com/120"
+                   class="rounded-circle img-fluid">
+            {% endif %}
+          </div>
+
+          <div class="col-md-9">
+            <input type="file" name="photo" class="form-control">
+            <small class="text-muted">
+              Leave empty if you don't want to change photo
+            </small>
+          </div>
+        </div>
+
+        <!-- Submit -->
+        <div class="text-end">
+          <button type="submit" class="btn btn-success px-4">
+            💾 Save Changes
+          </button>
+        </div>
+
+      </form>
+
+    </div>
+  </div>
+
+</div>
+
+{% endblock %}

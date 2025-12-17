@@ -1,0 +1,125 @@
+{% extends "agent/base.html" %}
+{% block content %}
+
+<div class="container mt-4" id="printArea">
+
+  <!-- Header -->
+  <div class="d-flex justify-content-between align-items-center mb-4">
+    <div>
+      <h4 class="fw-bold mb-0">🚚 All Deliveries</h4>
+      <small class="text-muted">
+        All delivery records of your hokers
+      </small>
+    </div>
+
+    <div class="d-flex gap-2">
+      <button onclick="printBill()" class="btn btn-sm btn-outline-primary">
+        🖨️ Print
+      </button>
+
+      <a href="/agent/dashboard"
+         class="btn btn-sm btn-outline-secondary">
+        ← Back
+      </a>
+    </div>
+  </div>
+
+  <!-- Deliveries Table -->
+  <div class="card shadow-sm">
+    <div class="card-body p-0">
+
+      <table class="table table-bordered table-hover mb-0">
+        <thead class="table-light text-center">
+          <tr>
+            <th>#</th>
+            <th>Date</th>
+            <th>Hoker</th>
+            <th>Customer</th>
+            <th>Newspaper</th>
+            <th>Booklet</th>
+            <th>Status</th>
+            <th>Remarks</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          {% for d in deliveries %}
+          <tr>
+            <td class="text-center">{{ forloop.counter }}</td>
+            <td>{{ d.date }}</td>
+            <td>
+              {{ d.hoker.full_name }}<br>
+              <small class="text-muted">{{ d.hoker.mobile }}</small>
+            </td>
+            <td>{{ d.customer.name }} {{ d.customer.surname }}</td>
+
+            <!-- Newspaper -->
+            <td class="text-center">
+              {% if d.newspaper_present %}
+                <span class="badge bg-success">Yes</span>
+              {% else %}
+                <span class="badge bg-secondary">No</span>
+              {% endif %}
+            </td>
+
+            <!-- Booklet -->
+            <td class="text-center">
+              {% if d.booklet_present %}
+                <span class="badge bg-success">Yes</span>
+              {% else %}
+                <span class="badge bg-secondary">No</span>
+              {% endif %}
+            </td>
+
+            <!-- Delivery Status -->
+            <td class="text-center">
+              {% if d.is_delivered %}
+                <span class="badge bg-success">Delivered</span>
+              {% else %}
+                <span class="badge bg-danger">Not Delivered</span>
+              {% endif %}
+            </td>
+
+            <td>{{ d.remarks|default:"—" }}</td>
+          </tr>
+          {% empty %}
+          <tr>
+            <td colspan="8" class="text-center text-muted">
+              No deliveries found
+            </td>
+          </tr>
+          {% endfor %}
+        </tbody>
+
+      </table>
+
+    </div>
+  </div>
+
+</div>
+
+<!-- Print Script -->
+<script>
+function printBill() {
+  const content = document.getElementById("printArea").innerHTML;
+  const original = document.body.innerHTML;
+
+  document.body.innerHTML = content;
+  window.print();
+  document.body.innerHTML = original;
+  location.reload();
+}
+</script>
+
+<style>
+@media print {
+  body {
+    background: #fff;
+  }
+  .btn, a {
+    display: none !important;
+  }
+}
+</style>
+
+{% endblock %}

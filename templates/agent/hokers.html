@@ -1,0 +1,86 @@
+{% extends "agent/base.html" %}
+{% block content %}
+
+<div class="container mt-4">
+
+  <!-- Page Heading -->
+  <div class="d-flex justify-content-between align-items-center mb-4">
+    <h4 class="fw-bold">🧑‍🚴 Hokers</h4>
+    <a href="/agent/hockers/add/" class="btn btn-sm btn-primary">
+      + Add Hoker
+    </a>
+  </div>
+
+  <!-- Hokers Table -->
+  <div class="card shadow-sm">
+    <div class="card-body p-0">
+        
+      <div class="table-responsive">
+        <table class="table table-hover mb-0 align-middle">
+
+          <thead class="table-light">
+            <tr>
+              <th>#</th>
+              <th>Hoker</th>
+              <th>Mobile</th>
+              <th>Area</th>
+              <th>Status</th>
+              <th class="text-end">Action</th>
+            </tr>
+          </thead>
+
+          <tbody>
+            {% for item in hokers %}
+            <tr>
+              <td>{{ forloop.counter }}</td>
+
+              <td>
+                <div class="d-flex align-items-center gap-2">
+                  {% if item.hoker.photo %}
+                    <img src="{{ item.hoker.photo.url }}"
+                         class="rounded-circle"
+                         width="40" height="40"
+                         style="object-fit:cover;">
+                  {% else %}
+                    <img src="https://via.placeholder.com/40"
+                         class="rounded-circle">
+                  {% endif %}
+                  <strong>{{ item.hoker.full_name }}</strong>
+                </div>
+              </td>
+
+              <td>{{ item.hoker.mobile }}</td>
+              <td>{{ item.hoker.village }}</td>
+
+              <td>
+                {% if item.is_active %}
+                  <span class="badge bg-success">Active</span>
+                {% else %}
+                  <span class="badge bg-secondary">Inactive</span>
+                {% endif %}
+              </td>
+
+              <td class="text-end">
+                <a href="/agent/hockers/{{item.hoker.id}}/profile/" class="btn btn-sm btn-outline-primary">View</a>
+                <a href="/agent/hockers/{{item.hoker.id}}/attendance/" class="btn btn-sm btn-outline-success">Attendance</a>
+                <a href="/agent/hockers/{{item.hoker.id}}/payments/" class="btn btn-sm btn-outline-warning">Payment</a>
+              </td>
+            </tr>
+            {% empty %}
+            <tr>
+              <td colspan="6" class="text-center py-4 text-muted">
+                No hokers allotted
+              </td>
+            </tr>
+            {% endfor %}
+          </tbody>
+
+        </table>
+      </div>
+
+    </div>
+  </div>
+
+</div>
+
+{% endblock %}

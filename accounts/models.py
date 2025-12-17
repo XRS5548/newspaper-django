@@ -84,3 +84,35 @@ class CustomerProfile(models.Model):
     def __str__(self):
         return self.name
 
+
+
+
+class HokerProfile(models.Model):
+    full_name = models.CharField(max_length=100)
+    mobile = models.CharField(max_length=10)
+    email = models.EmailField(unique=True)
+
+    address = models.TextField()
+    state = models.CharField(max_length=50)
+    district = models.CharField(max_length=50)
+    tehsil = models.CharField(max_length=50)
+    village = models.CharField(max_length=50)
+    pincode = models.CharField(max_length=6)
+
+    age = models.PositiveIntegerField()
+    gender = models.CharField(
+        max_length=10,
+        choices=[
+            ('male', 'Male'),
+            ('female', 'Female'),
+            ('other', 'Other')
+        ]
+    )
+
+    photo = models.ImageField(upload_to='hokers/', blank=True, null=True)
+    password = models.CharField(max_length=150)
+
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return self.full_name

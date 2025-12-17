@@ -3,12 +3,67 @@ from django.http import HttpResponse
 from accounts.models import * 
 
 from .models import * 
-
+from django.contrib import messages
 from django.db.models import Sum
 from datetime import date
-
+from django.contrib.auth.hashers import make_password
+from datetime import date as today_date
+from django.db import transaction
+import calendar
 
 # Create your views here.
+
+
+
+def edit_agent_profile(request):
+
+    # 🔐 Agent login check
+    agent_id = request.session.get("agent_id")
+    if not agent_id:
+        return redirect("agentlogin")
+
+    agent = get_object_or_404(AgentProfile, id=agent_id)
+
+    if request.method == "POST":
+
+        # 🧾 Basic Info
+        agent.full_name = request.POST.get("full_name")
+        agent.mobile = request.POST.get("mobile")
+        agent.email = request.POST.get("email")
+
+        # 📍 Address
+        agent.address = request.POST.get("address")
+        agent.state = request.POST.get("state")
+        agent.district = request.POST.get("district")
+        agent.tehsil = request.POST.get("tehsil")
+        agent.village = request.POST.get("village")
+        agent.pincode = request.POST.get("pincode")
+
+        # 🏢 Agency Info
+        agent.agency_name = request.POST.get("agency_name")
+        agent.agency_phone = request.POST.get("agency_phone")
+
+        # 👤 Personal
+        agent.age = request.POST.get("age")
+        agent.gender = request.POST.get("gender")
+
+        # 🖼️ Photo update (optional)
+        if request.FILES.get("photo"):
+            agent.photo = request.FILES.get("photo")
+
+        agent.save()
+
+        messages.success(request, "Profile updated successfully")
+        return redirect("agent_profile")  # ya agent_dashboard
+
+    return render(request, "agent/edit_profile.html", {
+        "agent": agent
+    })
+
+
+
+
+
 
 def agent_logout(request):
     request.session.flush()
@@ -19,7 +74,7 @@ def agent_logout(request):
 def ProfilePage(request):
     # login check
     if "agent_id" not in request.session:
-        return redirect("agent_login")
+        return redirect("/agentlogin")
 
     agent = AgentProfile.objects.get(id=request.session["agent_id"])
 
@@ -27,24 +82,47 @@ def ProfilePage(request):
         "agent": agent
     })
 
-
-
-def agent_attendance(request):
+def Agent_Customers(request):
 
     # 🔐 Agent login check
-    if "agent_id" not in request.session:
+    agent_id = request.session.get("agent_id")
+    if not agent_id:
         return redirect("agentlogin")
 
-    agent = AgentProfile.objects.get(id=request.session["agent_id"])
+    agent = get_object_or_404(AgentProfile, id=agent_id)
 
-    # 📋 Allotted customers of this agent
-    customers = AllotedCustomer.objects.filter(
+    # 📋 Active allotted customers
+    allotments = AllotedCustomer.objects.filter(
         agent=agent,
         is_active=True
     )
 
-    # 📊 Totals (bottom summary table)
-    totals = customers.aggregate(
+    customers = []
+
+    for a in allotments:
+        # 🔹 per customer extra (today)
+        ex = (
+            ExtraDelivery.objects.filter(
+                delivery__customer=a.customer,
+                delivery__date=date.today()
+            )
+            .aggregate(total=Sum("quantity"))
+            .get("total") or 0
+        )
+
+        customers.append({
+            "id": a.id,
+            "customer": a.customer,
+            "PB": a.PB,
+            "BH": a.BH,
+            "HT": a.HT,
+            "TIMES": a.TIMES,
+            "HINDU": a.HINDU,
+            "EX": ex,   # 🔥 IMPORTANT
+        })
+
+    # 📊 Totals
+    totals = allotments.aggregate(
         total_pb=Sum("PB"),
         total_bh=Sum("BH"),
         total_ht=Sum("HT"),
@@ -52,13 +130,8 @@ def agent_attendance(request):
         total_hindu=Sum("HINDU"),
     )
 
-    # 🧮 Extra papers (EX)
-    total_ex = ExtraDelivery.objects.filter(
-    delivery__agent=agent,
-    delivery__date=date.today()
-).aggregate(
-    total_ex=Sum("quantity")
-)["total_ex"] or 0
+    # 🧮 Total EX (agent-wise today)
+    total_ex = sum(c["EX"] for c in customers)
 
     total_papers = (
         (totals["total_pb"] or 0) +
@@ -69,18 +142,14 @@ def agent_attendance(request):
         total_ex
     )
 
-    context = {
+    return render(request, "agent/customers.html", {
         "customers": customers,
         "totals": totals,
         "total_ex": total_ex,
         "total_papers": total_papers,
-    }
+    })
 
-    return render(request, "agent/attendance.html", context)
-
-
-
-def agent_deliveries(request):
+def Hockers_Attendance(request):
 
     # 🔐 Agent login check
     if "agent_id" not in request.session:
@@ -175,12 +244,16 @@ def add_alloted_customer(request):
     if "agent_id" not in request.session:
         return redirect("agentlogin")
 
-    agent = AgentProfile.objects.get(id=request.session["agent_id"])
+    agent = get_object_or_404(
+        AgentProfile,
+        id=request.session["agent_id"]
+    )
 
-    # 🧾 Customers jinka agent allot nahi hua
-    # (jin ki AllotedCustomer me entry nahi hai)
+    # ✅ Customers jinke liye koi ACTIVE allotment nahi hai
     available_customers = CustomerProfile.objects.exclude(
-        agent_allotments__is_active=True
+        id__in=AllotedCustomer.objects.filter(
+            is_active=True
+        ).values_list("customer_id", flat=True)
     )
 
     # ➕ Add selected customers
@@ -188,30 +261,27 @@ def add_alloted_customer(request):
         selected_customers = request.POST.getlist("customers")
 
         for cust_id in selected_customers:
-            customer = CustomerProfile.objects.get(id=cust_id)
+            customer = get_object_or_404(CustomerProfile, id=cust_id)
 
-            # safety: double entry na ho
-            if not AllotedCustomer.objects.filter(
+            # safety: double active entry na bane
+            AllotedCustomer.objects.get_or_create(
+                agent=agent,
                 customer=customer,
-                is_active=True
-            ).exists():
-                AllotedCustomer.objects.create(
-                    agent=agent,
-                    customer=customer
-                )
+                defaults={"is_active": True}
+            )
 
         return redirect("/agent/customers")
 
-    context = {
-        "customers": available_customers
-    }
-
-    return render(request, "agent/addcustomer.html", context)
-
+    return render(
+        request,
+        "agent/addcustomer.html",
+        {"customers": available_customers}
+    )
 
 
 
 def add_delivery(request):
+    
 
     # 🔐 Agent login check
     if "agent_id" not in request.session:
@@ -271,3 +341,637 @@ def add_delivery(request):
     }
 
     return render(request, "agent/adddelivery.html", context)
+
+
+
+
+def agent_hokers(request):
+
+    # 🔐 Agent login check
+    agent_id = request.session.get("agent_id")
+    if not agent_id:
+        return redirect("agentlogin")
+
+    try:
+        agent = AgentProfile.objects.get(id=agent_id)
+    except AgentProfile.DoesNotExist:
+        request.session.flush()
+        return redirect("agentlogin")
+
+    # 📋 Hokers allotted to this agent
+    hokers = (
+        AllotedHoker.objects
+        .select_related("hoker")
+        .filter(agent=agent)
+        .order_by("-is_active", "hoker__full_name")
+    )
+
+    context = {
+        "hokers": hokers
+    }
+
+    return render(request, "agent/hokers.html", context)
+
+
+
+def add_hoker(request):
+
+    # 🔐 Agent login check
+    agent_id = request.session.get("agent_id")
+    if not agent_id:
+        return redirect("agentlogin")
+
+    try:
+        agent = AgentProfile.objects.get(id=agent_id)
+    except AgentProfile.DoesNotExist:
+        request.session.flush()
+        return redirect("agentlogin")
+
+    if request.method == "POST":
+        data = request.POST
+        files = request.FILES
+
+        # 🛑 Required fields validation
+        required_fields = [
+            "full_name", "mobile", "password",
+            "address", "state", "district",
+            "tehsil", "village", "pincode",
+            "age", "gender"
+        ]
+
+        for field in required_fields:
+            if not data.get(field):
+                messages.error(request, "All required fields must be filled.")
+                return redirect("add_hoker")
+
+        # 📱 Mobile validation
+        if not data["mobile"].isdigit() or len(data["mobile"]) != 10:
+            messages.error(request, "Invalid mobile number.")
+            return redirect("add_hoker")
+
+        # 🔐 Password length
+        if len(data["password"]) < 4:
+            messages.error(request, "Password must be at least 6 characters.")
+            return redirect("add_hoker")
+
+        # 🔁 Duplicate checks
+        if HokerProfile.objects.filter(mobile=data["mobile"]).exists():
+            messages.error(request, "Hoker with this mobile already exists.")
+            return redirect("add_hoker")
+
+        if data.get("email") and HokerProfile.objects.filter(email=data["email"]).exists():
+            messages.error(request, "Email already in use.")
+            return redirect("add_hoker")
+
+        try:
+            with transaction.atomic():
+
+                # 👤 Create Hoker
+                hoker = HokerProfile.objects.create(
+                    full_name=data["full_name"],
+                    mobile=data["mobile"],
+                    email=data.get("email", ""),
+                    address=data["address"],
+                    state=data["state"],
+                    district=data["district"],
+                    tehsil=data["tehsil"],
+                    village=data["village"],
+                    pincode=data["pincode"],
+                    age=data["age"],
+                    gender=data["gender"],
+                    photo=files.get("photo"),
+                    password=make_password(data["password"])
+                )
+
+                # 🔗 Auto allot hoker to agent
+                AllotedHoker.objects.create(
+                    agent=agent,
+                    hoker=hoker,
+                    is_active=True
+                )
+
+        except Exception:
+            messages.error(request, "Something went wrong. Please try again.")
+            return redirect("add_hoker")
+
+        messages.success(request, "Hoker added successfully.")
+        return redirect("/agent/hockers/add/")
+
+    return render(request, "agent/add_hoker.html")
+
+
+
+
+
+
+
+def hoker_attendance_calendar(request, hoker_id):
+
+    # 🔐 Agent login
+    agent_id = request.session.get("agent_id")
+    if not agent_id:
+        return redirect("agentlogin")
+
+    agent = AgentProfile.objects.filter(id=agent_id).first()
+    if not agent:
+        return redirect("agentlogin")
+
+    # 🔒 Hoker belongs to agent
+    if not AllotedHoker.objects.filter(
+        agent=agent,
+        hoker_id=hoker_id,
+        is_active=True
+    ).exists():
+        return redirect("agent_hokers")
+
+    hoker = HokerProfile.objects.get(id=hoker_id)
+
+    # 📅 Month & Year
+    today = date.today()
+    year = int(request.GET.get("year", today.year))
+    month = int(request.GET.get("month", today.month))
+
+    # 🔁 Month overflow handling
+    if month < 1:
+        month = 12
+        year -= 1
+    elif month > 12:
+        month = 1
+        year += 1
+
+    # 🗓️ Calendar structure
+    calendar_data = calendar.monthcalendar(year, month)
+
+    # 📊 Attendance queryset
+    attendance_qs = HokerAttendance.objects.filter(
+        hoker=hoker,
+        date__year=year,
+        date__month=month
+    )
+
+    # 🎯 Attendance buckets (TEMPLATE FRIENDLY)
+    full_days = []
+    half_days = []
+    absent_days = []
+
+    for att in attendance_qs:
+        if att.is_present and att.half_time:
+            half_days.append(att.date.day)
+        elif att.is_present:
+            full_days.append(att.date.day)
+        else:
+            absent_days.append(att.date.day)
+
+    context = {
+        "hoker": hoker,
+        "calendar": calendar_data,
+        "full_days": full_days,
+        "half_days": half_days,
+        "absent_days": absent_days,
+        "month": month,
+        "year": year,
+        "prev_month": month - 1,
+        "next_month": month + 1,
+    }
+
+    return render(request, "agent/hoker_attendance.html", context)
+
+def add_hoker_attendance(request, hoker_id):
+
+    # 🔐 Agent login
+    agent_id = request.session.get("agent_id")
+    if not agent_id:
+        return redirect("agentlogin")
+
+    agent = AgentProfile.objects.filter(id=agent_id).first()
+    if not agent:
+        return redirect("agentlogin")
+
+    # 🔒 Hoker belongs to agent
+    if not AllotedHoker.objects.filter(agent=agent, hoker_id=hoker_id).exists():
+        return redirect("agent_hokers")
+
+    hoker = HokerProfile.objects.get(id=hoker_id)
+
+    # 📅 Month / Year (for redirect back)
+    month = int(request.GET.get("month", today_date.today().month))
+    year = int(request.GET.get("year", today_date.today().year))
+
+    if request.method == "POST":
+        att_date = request.POST.get("date")
+        status = request.POST.get("status")
+        remarks = request.POST.get("remarks", "")
+
+        if not att_date or not status:
+            messages.error(request, "Date and status are required.")
+            return redirect(request.path)
+
+        # 🚫 Future date block
+        if att_date > str(today_date.today()):
+            messages.error(request, "Future date attendance is not allowed.")
+            return redirect(request.path)
+
+        # 🔄 Create or Update attendance
+        attendance, created = HokerAttendance.objects.get_or_create(
+            hoker=hoker,
+            date=att_date
+        )
+
+        if status == "present":
+            attendance.is_present = True
+            attendance.half_time = False
+
+        elif status == "half":
+            attendance.is_present = True
+            attendance.half_time = True
+
+        elif status == "absent":
+            attendance.is_present = False
+            attendance.half_time = False
+
+        attendance.remarks = remarks
+        attendance.save()
+
+        if created:
+            messages.success(request, "Attendance added successfully.")
+        else:
+            messages.success(request, "Attendance updated successfully.")
+
+        return redirect(
+            f"/agent/hockers/{hoker.id}/attendance/?month={month}&year={year}"
+        )
+
+    return render(request, "agent/add_hoker_attendance.html", {
+        "hoker": hoker,
+        "month": month,
+        "year": year,
+    })
+
+
+
+def hoker_profile(request, hoker_id):
+
+    # 🔐 Agent login check
+    agent_id = request.session.get("agent_id")
+    if not agent_id:
+        return redirect("agentlogin")
+
+    agent = AgentProfile.objects.filter(id=agent_id).first()
+    if not agent:
+        return redirect("agentlogin")
+
+    # 🔒 Check hoker belongs to this agent
+    if not AllotedHoker.objects.filter(
+        agent=agent,
+        hoker_id=hoker_id,
+        is_active=True
+    ).exists():
+        return redirect("agent_hokers")
+
+    # 📄 Hoker profile
+    hoker = HokerProfile.objects.filter(id=hoker_id).first()
+    if not hoker:
+        return redirect("agent_hokers")
+
+    return render(request, "agent/hoker_profile.html", {
+        "hoker": hoker
+    })
+
+
+
+
+
+
+def edit_hoker_profile(request, hoker_id):
+
+    # 🔐 Agent login check
+    agent_id = request.session.get("agent_id")
+    if not agent_id:
+        return redirect("agentlogin")
+
+    agent = AgentProfile.objects.filter(id=agent_id).first()
+    if not agent:
+        return redirect("agentlogin")
+
+    # 🔒 Check hoker belongs to this agent
+    if not AllotedHoker.objects.filter(
+        agent=agent,
+        hoker_id=hoker_id,
+        is_active=True
+    ).exists():
+        return redirect("agent_hokers")
+
+    hoker = HokerProfile.objects.filter(id=hoker_id).first()
+    if not hoker:
+        return redirect("agent_hokers")
+
+    if request.method == "POST":
+        hoker.full_name = request.POST.get("full_name")
+        hoker.mobile = request.POST.get("mobile")
+        hoker.email = request.POST.get("email")
+        hoker.age = request.POST.get("age")
+        hoker.gender = request.POST.get("gender")
+
+        hoker.address = request.POST.get("address")
+        hoker.state = request.POST.get("state")
+        hoker.district = request.POST.get("district")
+        hoker.tehsil = request.POST.get("tehsil")
+        hoker.village = request.POST.get("village")
+        hoker.pincode = request.POST.get("pincode")
+
+        # 📷 Photo update (optional)
+        if request.FILES.get("photo"):
+            hoker.photo = request.FILES["photo"]
+
+        hoker.save()
+        messages.success(request, "Hoker profile updated successfully.")
+
+        return redirect(f"/agent/hockers/{hoker.id}/profile/")
+
+    return render(request, "agent/edit_hoker_profile.html", {
+        "hoker": hoker
+    })
+
+
+
+def hoker_payments(request, hoker_id):
+
+    # 🔐 Agent login
+    agent_id = request.session.get("agent_id")
+    if not agent_id:
+        return redirect("agentlogin")
+
+    agent = AgentProfile.objects.filter(id=agent_id).first()
+    if not agent:
+        return redirect("agentlogin")
+
+    # 🔒 Check hoker belongs to this agent
+    if not AllotedHoker.objects.filter(
+        agent=agent,
+        hoker_id=hoker_id,
+        is_active=True
+    ).exists():
+        return redirect("agent_hokers")
+
+    hoker = HokerProfile.objects.filter(id=hoker_id).first()
+    if not hoker:
+        return redirect("agent_hokers")
+
+    # 💰 Payments of this hoker
+    payments = HokerPayment.objects.filter(
+        hoker=hoker,
+        agent=agent
+    ).order_by("-date")
+
+    # 📊 Total paid amount
+    total_paid = payments.aggregate(
+        total=Sum("amount")
+    )["total"] or 0
+
+    context = {
+        "hoker": hoker,
+        "payments": payments,
+        "total_paid": total_paid,
+    }
+
+    return render(request, "agent/hoker_payments.html", context)
+
+
+
+
+def add_hoker_payment(request, hoker_id):
+
+    # 🔐 Agent login
+    agent_id = request.session.get("agent_id")
+    if not agent_id:
+        return redirect("agentlogin")
+
+    agent = AgentProfile.objects.filter(id=agent_id).first()
+    if not agent:
+        return redirect("agentlogin")
+
+    # 🔒 Check hoker belongs to this agent
+    if not AllotedHoker.objects.filter(
+        agent=agent,
+        hoker_id=hoker_id,
+        is_active=True
+    ).exists():
+        return redirect("agent_hokers")
+
+    hoker = HokerProfile.objects.filter(id=hoker_id).first()
+    if not hoker:
+        return redirect("agent_hokers")
+
+    if request.method == "POST":
+        amount = request.POST.get("amount")
+        remarks = request.POST.get("remarks", "")
+
+        if not amount:
+            messages.error(request, "Amount is required.")
+            return redirect(request.path)
+
+        # 💰 Save payment
+        HokerPayment.objects.create(
+            hoker=hoker,
+            agent=agent,
+            amount=amount,
+            remarks=remarks,
+            date=date.today()
+        )
+
+        messages.success(request, "Payment added successfully.")
+
+        return redirect(f"/agent/hockers/{hoker.id}/payments/")
+
+    return render(request, "agent/add_hoker_payment.html", {
+        "hoker": hoker
+    })
+
+
+
+
+def all_hoker_payments(request):
+
+    # 🔐 Agent login check
+    agent_id = request.session.get("agent_id")
+    if not agent_id:
+        return redirect("agentlogin")
+
+    agent = AgentProfile.objects.filter(id=agent_id).first()
+    if not agent:
+        return redirect("agentlogin")
+
+    # 💰 All payments done by this agent
+    payments = HokerPayment.objects.filter(
+        agent=agent
+    ).select_related("hoker").order_by("-date")
+
+    # 📊 Total amount paid by agent
+    total_paid = payments.aggregate(
+        total=Sum("amount")
+    )["total"] or 0
+
+    context = {
+        "payments": payments,
+        "total_paid": total_paid,
+    }
+
+    return render(request, "agent/all_payments.html", context)
+
+
+
+
+
+def all_deliveries(request):
+
+    # 🔐 Agent login check
+    agent_id = request.session.get("agent_id")
+    if not agent_id:
+        return redirect("agentlogin")
+
+    agent = AgentProfile.objects.filter(id=agent_id).first()
+    if not agent:
+        return redirect("agentlogin")
+
+    # 🔒 Agent ke hokers
+    hoker_ids = AllotedHoker.objects.filter(
+        agent=agent,
+        is_active=True
+    ).values_list("hoker_id", flat=True)
+
+    # 📦 All deliveries of agent hokers
+    deliveries = HokerDelivery.objects.filter(
+        hoker_id__in=hoker_ids
+    ).select_related("hoker", "customer").order_by("-date")
+
+    context = {
+        "deliveries": deliveries,
+    }
+
+    return render(request, "agent/all_deliveries.html", context)
+
+
+def add_delivery_record(request, customer_id):
+
+    # 🔐 Agent login check
+    agent_id = request.session.get("agent_id")
+    if not agent_id:
+        return redirect("agentlogin")
+
+    agent = get_object_or_404(AgentProfile, id=agent_id)
+
+    # 🔒 Customer belongs to this agent?
+    allotment = AllotedCustomer.objects.filter(
+        agent=agent,
+        customer_id=customer_id,
+        is_active=True
+    ).first()
+
+    if not allotment:
+        messages.error(request, "Unauthorized customer access")
+        return redirect("agent_deliveries")
+
+    customer = allotment.customer
+
+    # ✅ Hokers allotted to this agent
+    hokers = HokerProfile.objects.filter(
+        id__in=AllotedHoker.objects.filter(
+            agent=agent,
+            is_active=True
+        ).values_list("hoker_id", flat=True)
+    )
+
+    newspapers = Newspaper.objects.all()
+
+    # ================= POST =================
+    if request.method == "POST":
+
+        delivery_date = request.POST.get("date")
+        hoker_id = request.POST.get("hoker")
+        status = request.POST.get("status")
+        remarks = request.POST.get("remarks", "")
+
+        newspaper_present = request.POST.get("newspaper") == "yes"
+        booklet_present = request.POST.get("booklet") == "yes"
+
+        if not delivery_date or not hoker_id:
+            messages.error(request, "Date and hoker are required")
+            return redirect(request.path)
+
+        hoker = get_object_or_404(HokerProfile, id=hoker_id)
+
+        # 🔍 CHECK: delivery already exists?
+        delivery = HokerDelivery.objects.filter(
+            customer=customer,
+            date=delivery_date
+        ).first()
+
+        if delivery:
+            # ✅ UPDATE existing delivery
+            delivery.hoker = hoker
+            delivery.is_delivered = (status == "delivered")
+            delivery.newspaper_present = newspaper_present
+            delivery.booklet_present = booklet_present
+            delivery.remarks = remarks
+            delivery.save()
+        else:
+            # ➕ CREATE new delivery
+            delivery = HokerDelivery.objects.create(
+                customer=customer,
+                date=delivery_date,
+                hoker=hoker,
+                is_delivered=(status == "delivered"),
+                newspaper_present=newspaper_present,
+                booklet_present=booklet_present,
+                remarks=remarks,
+            )
+
+        # ================= EXTRA DELIVERY LOGIC =================
+        
+        print(request.POST)
+
+
+        for paper in newspapers:
+            qty = request.POST.get(f"extra_{paper.id}", "0")
+
+            try:
+                qty = int(qty)
+            except ValueError:
+                qty = 0
+
+            # 🔍 check existing extra entry
+            extra = ExtraDelivery.objects.filter(
+                delivery=delivery,
+                newspaper=paper
+            ).first()
+
+            if qty > 0:
+                if extra:
+                    # ✏️ update quantity
+                    extra.quantity = qty
+                    extra.save()
+                else:
+                    # ➕ create new extra
+                    ExtraDelivery.objects.create(
+                        delivery=delivery,
+                        newspaper=paper,
+                        quantity=qty
+                    )
+            else:
+                # 🗑️ remove extra if qty = 0
+                if extra:
+                    extra.delete()
+
+        messages.success(
+            request,
+            "Delivery record updated successfully (date-wise)"
+        )
+        return redirect("agent_deliveries")
+
+    # ================= GET =================
+    return render(request, "agent/add_delivery.html", {
+        "customer": customer,
+        "hokers": hokers,
+        "newspapers": newspapers,
+        "today": date.today(),
+    })

@@ -1,0 +1,124 @@
+{% extends "agent/base.html" %}
+{% block content %}
+
+<div class="container mt-4" id="printArea">
+
+  <!-- Header -->
+  <div class="d-flex justify-content-between align-items-center mb-4">
+    <div>
+      <h4 class="fw-bold mb-0">💰 Hoker Payments</h4>
+      <small class="text-muted">
+        {{ hoker.full_name }}
+      </small>
+    </div>
+
+    <div class="d-flex gap-2" id="buttons">
+      <a href="/agent/hockers/{{ hoker.id }}/payments/add/"
+         class="btn btn-sm btn-success">
+        ➕ Add Payment
+      </a>
+
+      <button onclick="printBill()" class="btn btn-sm btn-outline-primary">
+        🖨️ Print Bill
+      </button>
+
+      <a href="/agent/hockers"
+         class="btn btn-sm btn-outline-secondary">
+        ← Back
+      </a>
+    </div>
+  </div>
+
+   <!-- Messages -->
+      {% if messages %}
+        {% for message in messages %}
+          <div class="alert alert-{{ message.tags }} alert-dismissible fade show">
+            {{ message }}
+            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+          </div>
+        {% endfor %}
+      {% endif %}
+
+  <!-- Hoker Info -->
+  <div class="card mb-3">
+    <div class="card-body">
+      <strong>Name:</strong> {{ hoker.full_name }} <br>
+      <strong>Mobile:</strong> {{ hoker.mobile }} <br>
+      <strong>Address:</strong>
+      {{ hoker.address }}, {{ hoker.village }},
+      {{ hoker.tehsil }}, {{ hoker.district }},
+      {{ hoker.state }} – {{ hoker.pincode }}
+    </div>
+  </div>
+
+  <!-- Payments Table -->
+  <div class="card shadow-sm">
+    <div class="card-body p-0">
+
+      <table class="table table-bordered mb-0">
+        <thead class="table-light">
+          <tr>
+            <th>#</th>
+            <th>Date</th>
+            <th>Amount (₹)</th>
+            <th>Remarks</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          {% for pay in payments %}
+          <tr>
+            <td>{{ forloop.counter }}</td>
+            <td>{{ pay.date }}</td>
+            <td>₹ {{ pay.amount }}</td>
+            <td>{{ pay.remarks|default:"—" }}</td>
+          </tr>
+          {% empty %}
+          <tr>
+            <td colspan="4" class="text-center text-muted">
+              No payments found
+            </td>
+          </tr>
+          {% endfor %}
+        </tbody>
+
+        {% if payments %}
+        <tfoot class="table-light">
+          <tr>
+            <th colspan="2" class="text-end">Total Paid</th>
+            <th colspan="2">₹ {{ total_paid }}</th>
+          </tr>
+        </tfoot>
+        {% endif %}
+      </table>
+
+    </div>
+  </div>
+
+</div>
+
+<!-- Print Script -->
+<script>
+function printBill() {
+  const content = document.getElementById("printArea").innerHTML;
+  const original = document.body.innerHTML;
+
+  document.body.innerHTML = content;
+  window.print();
+  document.body.innerHTML = original;
+  location.reload();
+}
+</script>
+
+<style>
+@media print {
+  body {
+    background: #fff;
+  }
+  .btn, a {
+    display: none !important;
+  }
+}
+</style>
+
+{% endblock %}
