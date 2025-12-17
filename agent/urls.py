@@ -12,6 +12,12 @@ urlpatterns = [
     path("deliveries/", views.all_deliveries, name="agent_deliveries"),
     path("hockers/add/", views.add_hoker, name="add_hoker"),
     path("profile/edit/", views.edit_agent_profile, name="agent_edit_profile"),
+    path("bills/", views.agent_all_bills, name="agent_all_bills"),
+     path("bills/create/", views.agent_create_bill, name="agent_create_bill"),
+
+       # ✅ EDIT & DELETE
+    path("bills/<int:bill_id>/edit/", views.agent_edit_bill, name="agent_edit_bill"),
+    path("bills/<int:bill_id>/delete/", views.agent_delete_bill, name="agent_delete_bill"),
      path(
         "editcustomer/<int:id>/",
         views.edit_alloted_customer,

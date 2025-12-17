@@ -37,39 +37,56 @@ today = date.today()
 def dashboardCalender(request, year=today.year, month=today.month):
 
     if "user_id" not in request.session:
-        return redirect("customerlogin/")
+        return redirect("/customerlogin")
 
     customer = CustomerProfile.objects.get(id=request.session["user_id"])
 
-    # active subscription
-    purchase = PurchaseNewspaper.objects.filter(
+    # ================= SUBSCRIPTIONS =================
+    purchases = PurchaseNewspaper.objects.filter(
         customer=customer,
         is_active=True
-    ).first()
+    ).select_related("newspaper")
 
-    # calendar structure
+    newspapers_taken = [p.newspaper for p in purchases]
+
+    # per day total cost (all newspapers)
+    price_per_day = sum(p.newspaper.price for p in purchases)
+
+    # ================= CALENDAR =================
     cal = calendar.monthcalendar(year, month)
 
-    # deliveries for this month
-    deliveries = NewspaperDelivery.objects.filter(
+    # ================= DELIVERIES =================
+    deliveries = HokerDelivery.objects.filter(
         customer=customer,
         date__year=year,
         date__month=month,
         is_delivered=True
     )
 
-    # delivered day numbers [1,5,10...]
     delivered_days = [d.date.day for d in deliveries]
 
-    # payment calculation
-    price_per_day = purchase.newspaper.price if purchase else 0
-    this_month_payment = len(delivered_days) * price_per_day
+    # ================= EXTRA DELIVERIES =================
+    extras = ExtraDelivery.objects.filter(
+        delivery__in=deliveries
+    )
 
-    # remaining (example – later payment table se)
+    # day -> extra quantity
+    extra_by_day = {}
+    for ex in extras:
+        day = ex.delivery.date.day
+        extra_by_day[day] = extra_by_day.get(day, 0) + ex.quantity
+
+    total_extra_qty = sum(extra_by_day.values())
+
+    # ================= PAYMENT =================
+    normal_payment = len(delivered_days) * price_per_day
+    extra_payment = total_extra_qty * price_per_day
+
+    this_month_payment = normal_payment + extra_payment
     remaining_payment = 0
     total_payment = this_month_payment + remaining_payment
 
-    # month navigation
+    # ================= MONTH NAVIGATION =================
     prev_month = month - 1 if month > 1 else 12
     prev_year  = year if month > 1 else year - 1
 
@@ -77,23 +94,28 @@ def dashboardCalender(request, year=today.year, month=today.month):
     next_year  = year if month < 12 else year + 1
 
     context = {
+        # calendar
         "calendar": cal,
         "month_name": calendar.month_name[month],
         "year": year,
         "month": month,
         "delivered_days": delivered_days,
+        "extra_by_day": extra_by_day,
 
+        # navigation
         "prev_year": prev_year,
         "prev_month": prev_month,
         "next_year": next_year,
         "next_month": next_month,
 
-        # payment
+        # subscription & payment
+        "newspapers_taken": newspapers_taken,
         "price_per_day": price_per_day,
         "this_month_payment": this_month_payment,
         "remaining_payment": remaining_payment,
         "total_payment": total_payment,
 
+        # payment helpers
         "upi_link": "upi://pay?pa=xxxx@upi",
         "qr_code_url": "/static/qr.png",
     }
@@ -101,11 +123,10 @@ def dashboardCalender(request, year=today.year, month=today.month):
     return render(request, "customer/calender.html", context)
 
 
-
 def dashboardPapers(request):
     # 🔐 Session check
     if "user_id" not in request.session:
-        return redirect("customerlogin")
+        return redirect("/customerlogin")
 
     customer_id = request.session["user_id"]
     customer = CustomerProfile.objects.get(id=customer_id)
@@ -142,7 +163,7 @@ def dashboardPapers(request):
 def dashboardAddpaper(request):
 
     if "user_id" not in request.session:
-        return redirect("customerlogin")
+        return redirect("/customerlogin")
 
     customer = CustomerProfile.objects.get(
         id=request.session["user_id"]
@@ -194,7 +215,7 @@ def dashboardAddpaper(request):
 def dashboardAddBooklet(request):
 
     if "user_id" not in request.session:
-        return redirect("customerlogin")
+        return redirect("/customerlogin")
 
     customer = CustomerProfile.objects.get(
         id=request.session["user_id"]
@@ -247,7 +268,7 @@ def agentPaymentDashboard(request):
 
     # 🔐 customer login check
     if "user_id" not in request.session:
-        return redirect("customerlogin")
+        return redirect("/customerlogin")
 
     customer_id = request.session["user_id"]
 
@@ -300,3 +321,98 @@ def agentPaymentDashboard(request):
 def logout(request):
     request.session.flush()
     return redirect("/customerlogin")
+
+
+
+def customer_bills(request):
+
+    # 🔐 Customer login check
+    if "user_id" not in request.session:
+        return redirect("/customerlogin")
+
+    customer = CustomerProfile.objects.get(
+        id=request.session["user_id"]
+    )
+
+    # 📄 All bills of this customer
+    bills = MonthlyBill.objects.filter(
+        customer=customer
+    ).select_related("agent").order_by("-year", "-month")
+
+    # 📊 Summary
+    total_bills = bills.count()
+
+    total_amount = sum(
+        bill.total_amount for bill in bills
+    )
+
+    paid_amount = sum(
+        bill.total_amount for bill in bills if bill.is_paid
+    )
+
+    pending_amount = total_amount - paid_amount
+
+    context = {
+        "bills": bills,
+
+        # summary
+        "total_bills": total_bills,
+        "total_amount": total_amount,
+        "paid_amount": paid_amount,
+        "pending_amount": pending_amount,
+    }
+
+    return render(
+        request,
+        "customer/bills.html",
+        context
+    )
+
+
+
+
+def customer_edit_profile(request):
+
+    # 🔐 Customer login check
+    if "user_id" not in request.session:
+        return redirect("/customerlogin")
+
+    customer = CustomerProfile.objects.get(
+        id=request.session["user_id"]
+    )
+
+    if request.method == "POST":
+        # basic info
+        customer.name = request.POST.get("name")
+        customer.surname = request.POST.get("surname")
+        customer.mobile = request.POST.get("mobile")
+        customer.email = request.POST.get("email")
+
+        # address
+        customer.address = request.POST.get("address")
+        customer.state = request.POST.get("state")
+        customer.district = request.POST.get("district")
+        customer.tehsil = request.POST.get("tehsil")
+        customer.village = request.POST.get("village")
+        customer.pincode = request.POST.get("pincode")
+
+        # personal
+        customer.age = request.POST.get("age")
+        customer.gender = request.POST.get("gender")
+
+        # photo (optional)
+        if "photo" in request.FILES:
+            customer.photo = request.FILES["photo"]
+
+        customer.save()
+        return redirect("/dashboard/profile")  # apna dashboard url name
+
+    context = {
+        "customer": customer
+    }
+
+    return render(
+        request,
+        "customer/edit_profile.html",
+        context
+    )

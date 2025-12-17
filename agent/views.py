@@ -5,6 +5,8 @@ from accounts.models import *
 from .models import * 
 from django.contrib import messages
 from django.db.models import Sum
+from agent.models import * 
+from customer.models import *
 from datetime import date
 from django.contrib.auth.hashers import make_password
 from datetime import date as today_date
@@ -20,7 +22,7 @@ def edit_agent_profile(request):
     # 🔐 Agent login check
     agent_id = request.session.get("agent_id")
     if not agent_id:
-        return redirect("agentlogin")
+        return redirect("/agentlogin")
 
     agent = get_object_or_404(AgentProfile, id=agent_id)
 
@@ -87,7 +89,7 @@ def Agent_Customers(request):
     # 🔐 Agent login check
     agent_id = request.session.get("agent_id")
     if not agent_id:
-        return redirect("agentlogin")
+        return redirect("/agentlogin")
 
     agent = get_object_or_404(AgentProfile, id=agent_id)
 
@@ -149,28 +151,6 @@ def Agent_Customers(request):
         "total_papers": total_papers,
     })
 
-def Hockers_Attendance(request):
-
-    # 🔐 Agent login check
-    if "agent_id" not in request.session:
-        return redirect("agentlogin")
-
-    agent = AgentProfile.objects.get(id=request.session["agent_id"])
-
-    # 📦 All deliveries of this agent (latest first)
-    deliveries = NewspaperDelivery.objects.filter(
-        agent=agent
-    ).select_related(
-        "customer",
-    ).order_by("-date")
-
-    context = {
-        "agent": agent,
-        "deliveries": deliveries,
-    }
-
-    return render(request, "agent/deleverys.html", context)
-
 
 
 
@@ -187,7 +167,7 @@ def edit_alloted_customer(request, id):
 
     # 🔐 Agent login check
     if "agent_id" not in request.session:
-        return redirect("agentlogin")
+        return redirect("/agentlogin")
 
     agent = AgentProfile.objects.get(id=request.session["agent_id"])
 
@@ -242,7 +222,7 @@ def add_alloted_customer(request):
 
     # 🔐 Agent login check
     if "agent_id" not in request.session:
-        return redirect("agentlogin")
+        return redirect("/agentlogin")
 
     agent = get_object_or_404(
         AgentProfile,
@@ -285,7 +265,7 @@ def add_delivery(request):
 
     # 🔐 Agent login check
     if "agent_id" not in request.session:
-        return redirect("agentlogin")
+        return redirect("/agentlogin")
 
     agent = AgentProfile.objects.get(id=request.session["agent_id"])
 
@@ -350,13 +330,13 @@ def agent_hokers(request):
     # 🔐 Agent login check
     agent_id = request.session.get("agent_id")
     if not agent_id:
-        return redirect("agentlogin")
+        return redirect("/agentlogin")
 
     try:
         agent = AgentProfile.objects.get(id=agent_id)
     except AgentProfile.DoesNotExist:
         request.session.flush()
-        return redirect("agentlogin")
+        return redirect("/agentlogin")
 
     # 📋 Hokers allotted to this agent
     hokers = (
@@ -379,13 +359,13 @@ def add_hoker(request):
     # 🔐 Agent login check
     agent_id = request.session.get("agent_id")
     if not agent_id:
-        return redirect("agentlogin")
+        return redirect("/agentlogin")
 
     try:
         agent = AgentProfile.objects.get(id=agent_id)
     except AgentProfile.DoesNotExist:
         request.session.flush()
-        return redirect("agentlogin")
+        return redirect("/agentlogin")
 
     if request.method == "POST":
         data = request.POST
@@ -470,11 +450,11 @@ def hoker_attendance_calendar(request, hoker_id):
     # 🔐 Agent login
     agent_id = request.session.get("agent_id")
     if not agent_id:
-        return redirect("agentlogin")
+        return redirect("/agentlogin")
 
     agent = AgentProfile.objects.filter(id=agent_id).first()
     if not agent:
-        return redirect("agentlogin")
+        return redirect("/agentlogin")
 
     # 🔒 Hoker belongs to agent
     if not AllotedHoker.objects.filter(
@@ -541,11 +521,11 @@ def add_hoker_attendance(request, hoker_id):
     # 🔐 Agent login
     agent_id = request.session.get("agent_id")
     if not agent_id:
-        return redirect("agentlogin")
+        return redirect("/agentlogin")
 
     agent = AgentProfile.objects.filter(id=agent_id).first()
     if not agent:
-        return redirect("agentlogin")
+        return redirect("/agentlogin")
 
     # 🔒 Hoker belongs to agent
     if not AllotedHoker.objects.filter(agent=agent, hoker_id=hoker_id).exists():
@@ -614,11 +594,11 @@ def hoker_profile(request, hoker_id):
     # 🔐 Agent login check
     agent_id = request.session.get("agent_id")
     if not agent_id:
-        return redirect("agentlogin")
+        return redirect("/agentlogin")
 
     agent = AgentProfile.objects.filter(id=agent_id).first()
     if not agent:
-        return redirect("agentlogin")
+        return redirect("/agentlogin")
 
     # 🔒 Check hoker belongs to this agent
     if not AllotedHoker.objects.filter(
@@ -647,11 +627,11 @@ def edit_hoker_profile(request, hoker_id):
     # 🔐 Agent login check
     agent_id = request.session.get("agent_id")
     if not agent_id:
-        return redirect("agentlogin")
+        return redirect("/agentlogin")
 
     agent = AgentProfile.objects.filter(id=agent_id).first()
     if not agent:
-        return redirect("agentlogin")
+        return redirect("/agentlogin")
 
     # 🔒 Check hoker belongs to this agent
     if not AllotedHoker.objects.filter(
@@ -699,11 +679,11 @@ def hoker_payments(request, hoker_id):
     # 🔐 Agent login
     agent_id = request.session.get("agent_id")
     if not agent_id:
-        return redirect("agentlogin")
+        return redirect("/agentlogin")
 
     agent = AgentProfile.objects.filter(id=agent_id).first()
     if not agent:
-        return redirect("agentlogin")
+        return redirect("/agentlogin")
 
     # 🔒 Check hoker belongs to this agent
     if not AllotedHoker.objects.filter(
@@ -744,11 +724,11 @@ def add_hoker_payment(request, hoker_id):
     # 🔐 Agent login
     agent_id = request.session.get("agent_id")
     if not agent_id:
-        return redirect("agentlogin")
+        return redirect("/agentlogin")
 
     agent = AgentProfile.objects.filter(id=agent_id).first()
     if not agent:
-        return redirect("agentlogin")
+        return redirect("/agentlogin")
 
     # 🔒 Check hoker belongs to this agent
     if not AllotedHoker.objects.filter(
@@ -795,11 +775,11 @@ def all_hoker_payments(request):
     # 🔐 Agent login check
     agent_id = request.session.get("agent_id")
     if not agent_id:
-        return redirect("agentlogin")
+        return redirect("/agentlogin")
 
     agent = AgentProfile.objects.filter(id=agent_id).first()
     if not agent:
-        return redirect("agentlogin")
+        return redirect("/agentlogin")
 
     # 💰 All payments done by this agent
     payments = HokerPayment.objects.filter(
@@ -827,11 +807,11 @@ def all_deliveries(request):
     # 🔐 Agent login check
     agent_id = request.session.get("agent_id")
     if not agent_id:
-        return redirect("agentlogin")
+        return redirect("/agentlogin")
 
     agent = AgentProfile.objects.filter(id=agent_id).first()
     if not agent:
-        return redirect("agentlogin")
+        return redirect("/agentlogin")
 
     # 🔒 Agent ke hokers
     hoker_ids = AllotedHoker.objects.filter(
@@ -856,7 +836,7 @@ def add_delivery_record(request, customer_id):
     # 🔐 Agent login check
     agent_id = request.session.get("agent_id")
     if not agent_id:
-        return redirect("agentlogin")
+        return redirect("/agentlogin")
 
     agent = get_object_or_404(AgentProfile, id=agent_id)
 
@@ -975,3 +955,199 @@ def add_delivery_record(request, customer_id):
         "newspapers": newspapers,
         "today": date.today(),
     })
+
+
+
+
+
+def agent_all_bills(request):
+
+    # 🔐 Agent login check
+    if "agent_id" not in request.session:
+        return redirect("/agentlogin")
+
+    agent = AgentProfile.objects.get(
+        id=request.session["agent_id"]
+    )
+
+    # 📄 All bills generated by this agent
+    bills = MonthlyBill.objects.filter(
+        agent=agent
+    ).select_related("customer").order_by("-year", "-month")
+
+    # 📊 Summary (optional but useful)
+    total_bills = bills.count()
+
+    total_amount = sum(
+        bill.total_amount for bill in bills
+    )
+
+    paid_amount = sum(
+        bill.total_amount for bill in bills if bill.is_paid
+    )
+
+    pending_amount = total_amount - paid_amount
+
+    context = {
+        "bills": bills,
+
+        # summary
+        "total_bills": total_bills,
+        "total_amount": total_amount,
+        "paid_amount": paid_amount,
+        "pending_amount": pending_amount,
+    }
+
+    return render(
+        request,
+        "agent/all_bills.html",
+        context
+    )
+
+
+
+
+
+def agent_create_bill(request):
+
+    if "agent_id" not in request.session:
+        return redirect("/agentlogin")
+
+    agent = AgentProfile.objects.get(id=request.session["agent_id"])
+
+    customers = CustomerProfile.objects.filter(
+        agent_allotments__agent=agent,
+        agent_allotments__is_active=True
+    ).distinct()
+
+    today = date.today()
+    months = list(range(1, 13))
+
+    if request.method == "POST":
+        customer_id = request.POST.get("customer")
+        month = int(request.POST.get("month"))
+        year = int(request.POST.get("year"))
+        last_submit_date = request.POST.get("last_submit_date")
+
+        customer = CustomerProfile.objects.get(id=customer_id)
+
+        # ❌ Duplicate bill block
+        if MonthlyBill.objects.filter(
+            customer=customer,
+            month=month,
+            year=year
+        ).exists():
+            return redirect("agent_all_bills")
+
+        # ================== STEP 1: PER DAY PRICE ==================
+        purchases = PurchaseNewspaper.objects.filter(
+            customer=customer,
+            is_active=True
+        ).select_related("newspaper")
+
+        price_per_day = sum(p.newspaper.price for p in purchases)
+
+        # ================== STEP 2: DELIVERED DAYS ==================
+        deliveries = HokerDelivery.objects.filter(
+            customer=customer,
+            date__year=year,
+            date__month=month,
+            is_delivered=True
+        )
+
+        days_on_delivery = sorted(
+            list(set(d.date.day for d in deliveries))
+        )
+
+        total_delivery_days = len(days_on_delivery)
+
+        # ================== STEP 3: EXTRA DELIVERIES ==================
+        extras = ExtraDelivery.objects.filter(
+            delivery__in=deliveries
+        )
+
+        extra_quantity = extras.aggregate(
+            total=Sum("quantity")
+        )["total"] or 0
+
+        # ================== STEP 4: PAYMENT CALCULATION ==================
+        base_amount = total_delivery_days * price_per_day
+        extra_amount = extra_quantity * price_per_day
+
+        total_amount = base_amount + extra_amount
+
+        # ================== STEP 5: SAVE BILL ==================
+        MonthlyBill.objects.create(
+            customer=customer,
+            agent=agent,
+            month=month,
+            year=year,
+            days_on_delivery=days_on_delivery,
+            total_delivery_days=total_delivery_days,
+            base_amount=base_amount,
+            late_charges=0,
+            total_amount=total_amount,
+            last_submit_date=last_submit_date
+        )
+
+        return redirect("agent_all_bills")
+
+    context = {
+        "customers": customers,
+        "months": months,
+        "current_month": today.month,
+        "current_year": today.year,
+    }
+
+    return render(request, "agent/create_bill.html", context)
+
+
+def agent_edit_bill(request, bill_id):
+
+    # 🔐 Agent login check
+    if "agent_id" not in request.session:
+        return redirect("/agentlogin")
+
+    agent = AgentProfile.objects.get(id=request.session["agent_id"])
+
+    bill = get_object_or_404(
+        MonthlyBill,
+        id=bill_id,
+        agent=agent
+    )
+
+    if request.method == "POST":
+        bill.base_amount = request.POST.get("base_amount")
+        bill.late_charges = request.POST.get("late_charges")
+        bill.total_amount = request.POST.get("total_amount")
+        bill.last_submit_date = request.POST.get("last_submit_date")
+
+        # Paid / Unpaid
+        bill.is_paid = True if request.POST.get("is_paid") == "on" else False
+
+        bill.save()
+        return redirect("agent_all_bills")
+
+    context = {
+        "bill": bill
+    }
+
+    return render(request, "agent/edit_bill.html", context)
+
+
+def agent_delete_bill(request, bill_id):
+
+    if "agent_id" not in request.session:
+        return redirect("/agentlogin")
+
+    agent = AgentProfile.objects.get(id=request.session["agent_id"])
+
+    bill = get_object_or_404(
+        MonthlyBill,
+        id=bill_id,
+        agent=agent
+    )
+
+    bill.delete()
+    return redirect("agent_all_bills")
+

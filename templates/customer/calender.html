@@ -1,69 +1,126 @@
 {% extends 'dashboard.html' %}
 {% block content %}
-
+{% load custom_filters %}
 <div class="container mt-4">
   <div class="row">
 
-    <!-- LEFT SIDE : Calendar -->
+    <!-- ================= LEFT : CALENDAR ================= -->
     <div class="col-md-8">
 
       <!-- Header -->
       <div class="d-flex justify-content-between align-items-center mb-3">
-        <a href="{% url 'calendar' prev_year prev_month %}" class="btn btn-outline-dark">◀</a>
-        <h4>{{ month_name }} {{ year }}</h4>
-        <a href="{% url 'calendar' next_year next_month %}" class="btn btn-outline-dark">▶</a>
+        <a href="{% url 'calendar' prev_year prev_month %}"
+           class="btn btn-outline-secondary btn-sm">◀</a>
+
+        <h4 class="fw-bold mb-0">{{ month_name }} {{ year }}</h4>
+
+        <a href="{% url 'calendar' next_year next_month %}"
+           class="btn btn-outline-secondary btn-sm">▶</a>
       </div>
 
       <!-- Calendar -->
-      <table class="table table-bordered text-center">
+      <table class="table table-bordered text-center align-middle calendar-table">
         <thead class="table-light">
           <tr>
-           <th>Mon</th><th>Tue</th>
-            <th>Wed</th><th>Thu</th><th>Fri</th><th>Sat</th> <th>Sun</th>
+            <th>Mon</th><th>Tue</th><th>Wed</th>
+            <th>Thu</th><th>Fri</th><th>Sat</th><th>Sun</th>
           </tr>
         </thead>
 
         <tbody>
-          {% for week in calendar %}
+        {% for week in calendar %}
           <tr>
             {% for day in week %}
               {% if day == 0 %}
-                <td></td>
+                <td class="bg-light"></td>
+
               {% else %}
                 {% if day in delivered_days %}
-                  <td class="bg-success text-white">{{ day }}</td>
+                  <td class="bg-success text-white fw-bold position-relative">
+                    {{ day }}
+
+                    <!-- EXTRA DELIVERY BADGE -->
+                    {% if extra_by_day %}
+                      {% if day in extra_by_day %}
+                        <span class="badge bg-warning text-dark
+                                     position-absolute top-0 end-0 m-1">
+                          +{{ extra_by_day|get_item:day }}
+                        </span>
+                      {% endif %}
+                    {% endif %}
+                  </td>
+
                 {% else %}
-                  <td class="bg-danger text-white">{{ day }}</td>
+                  <td class="bg-light text-dark">
+                    {{ day }}
+                  </td>
                 {% endif %}
               {% endif %}
             {% endfor %}
           </tr>
-          {% endfor %}
+        {% endfor %}
         </tbody>
       </table>
 
       <!-- Legend -->
-      <div class="mt-2">
+      <div class="mt-2 d-flex gap-2">
         <span class="badge bg-success">Delivered</span>
-        <span class="badge bg-danger">Not Delivered</span>
+        <span class="badge bg-warning text-dark">Extra Delivery</span>
+        <span class="badge bg-secondary">Not Delivered</span>
       </div>
 
     </div>
 
-    <!-- RIGHT SIDE : PAYMENT -->
+    <!-- ================= RIGHT : PAYMENT ================= -->
     <div class="col-md-4">
 
       <!-- Payment Summary -->
       <div class="card shadow mb-3">
         <div class="card-header fw-bold">
-          Payment Summary
+          💰 Payment Summary
         </div>
-        <div class="card-body">
-          <p>This Month Payment: <b>₹ {{ this_month_payment }}</b></p>
-          <p>Remaining Payment: <b class="text-danger">₹ {{ remaining_payment }}</b></p>
-          <p>Total Payment: <b>₹ {{ total_payment }}</b></p>
 
-          <a href="{{ upi_link }}" class="btn btn-success w-100">
+        <div class="card-body">
+
+          <!-- Subscription Info -->
+          <div class="mb-3">
+            <p class="mb-1">
+              📰 <b>Newspapers Taken:</b>
+            </p>
+            <ul class="mb-0">
+              {% for paper in newspapers_taken %}
+                <li>{{ paper.name }}</li>
+              {% endfor %}
+            </ul>
+          </div>
+
+          <hr>
+
+          <!-- Cost Info -->
+          <p>📄 Per Day Cost: <b>₹ {{ price_per_day }}</b></p>
+          <p>📅 Days Delivered: <b>{{ delivered_days|length }}</b></p>
+
+          <hr>
+
+          <!-- Payment -->
+          <p>
+            💵 Month Till Now:
+            <b class="text-success">₹ {{ this_month_payment }}</b>
+          </p>
+
+          <p>
+            ⏳ Remaining:
+            <b class="text-danger">₹ {{ remaining_payment }}</b>
+          </p>
+
+          <hr>
+
+          <p class="fs-5">
+            Total:
+            <b>₹ {{ total_payment }}</b>
+          </p>
+
+          <a href="{{ upi_link }}" class="btn btn-success w-100 mt-2">
             Pay via UPI
           </a>
         </div>
@@ -72,11 +129,11 @@
       <!-- QR Code -->
       <div class="card shadow text-center">
         <div class="card-header fw-bold">
-          QR Code for Payment
+          📲 Scan & Pay
         </div>
         <div class="card-body">
-          <img src="{{ qr_code_url }}" class="img-fluid" alt="QR Code">
-          <p class="mt-2">Scan to Pay</p>
+          <img src="{{ qr_code_url }}" class="img-fluid" style="max-width:180px">
+          <p class="text-muted mt-2 mb-0">Scan QR to Pay</p>
         </div>
       </div>
 
@@ -84,5 +141,13 @@
 
   </div>
 </div>
+
+<style>
+.calendar-table td{
+  height: 75px;
+  font-size: 16px;
+  vertical-align: middle;
+}
+</style>
 
 {% endblock %}

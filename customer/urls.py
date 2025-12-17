@@ -12,13 +12,13 @@ urlpatterns = [
     path("logout",views.logout,name="Dashboard_of_customer"),
     path("addpaper",views.dashboardAddpaper,name="Dashboard_of_customer"),
     path("addbooklet",views.dashboardAddBooklet,name="Dashboard_of_customer"),
+     path("bills/", views.customer_bills, name="customer_bills"),
+
+
+
+    path("calender/<int:year>/<int:month>/", views.dashboardCalender, name="calendar" ),
     
-
-
-
-    path("calender/<int:year>/<int:month>/", views.dashboardCalender, name="calendar" )
-    
-
+    path("profile/edit/", views.customer_edit_profile, name="customer_edit_profile"),
 
 
 ]

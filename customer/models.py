@@ -25,7 +25,7 @@ class PurchaseNewspaper(models.Model):
     newspaper = models.ForeignKey(Newspaper, on_delete=models.CASCADE)
 
     start_date = models.DateField()
-    is_active = models.BooleanField(default=False)
+    is_active = models.BooleanField(default=True)
 
     def __str__(self):
         return f"{self.customer} - {self.newspaper}"
@@ -33,7 +33,7 @@ class PurchaseNewspaper(models.Model):
 class PurchaseBooklet(models.Model):
     customer = models.ForeignKey(CustomerProfile, on_delete=models.CASCADE)
     booklet = models.ForeignKey(Booklet, on_delete=models.CASCADE)
-    is_active = models.BooleanField(default=False)
+    is_active = models.BooleanField(default=True)
 
     start_date = models.DateField(default=timezone.now())
 
@@ -92,3 +92,71 @@ class AllotedHoker(models.Model):
 
     def __str__(self):
         return f"{self.hoker} → {self.agent}"
+
+
+
+
+from django.db import models
+from django.utils import timezone
+from accounts.models import CustomerProfile, AgentProfile
+
+
+class MonthlyBill(models.Model):
+
+    # 🔗 Relations
+    customer = models.ForeignKey(
+        CustomerProfile,
+        on_delete=models.CASCADE,
+        related_name="bills"
+    )
+    agent = models.ForeignKey(
+        AgentProfile,
+        on_delete=models.CASCADE,
+        related_name="generated_bills"
+    )
+
+    # 📅 Bill period
+    month = models.PositiveIntegerField()   # 1-12
+    year = models.PositiveIntegerField()
+
+    # 📆 Delivery info
+    days_on_delivery = models.JSONField(
+        help_text="List of days when newspaper was delivered (e.g. [1,2,5,10])"
+    )
+
+    total_delivery_days = models.PositiveIntegerField(default=0)
+
+    # 💰 Payment info
+    base_amount = models.DecimalField(
+        max_digits=8,
+        decimal_places=2,
+        help_text="Amount without late charges"
+    )
+
+    late_charges = models.DecimalField(
+        max_digits=6,
+        decimal_places=2,
+        default=0
+    )
+
+    total_amount = models.DecimalField(
+        max_digits=8,
+        decimal_places=2
+    )
+
+    # ⏰ Dates
+    created_at = models.DateTimeField(auto_now_add=True)
+    last_submit_date = models.DateField()
+
+    # 🧾 Status
+    is_paid = models.BooleanField(default=False)
+    paid_on = models.DateTimeField(null=True, blank=True)
+
+    remarks = models.CharField(max_length=200, blank=True)
+
+    class Meta:
+        unique_together = ("customer", "month", "year")
+        ordering = ["-year", "-month"]
+
+    def __str__(self):
+        return f"Bill {self.month}/{self.year} - {self.customer}"
