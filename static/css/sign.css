@@ -1,0 +1,340 @@
+/* ---------- BASIC RESET ---------- */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Poppins", sans-serif;
+}
+
+body {
+  background-color: #f8f9fa;
+  color: #333;
+}
+
+/* ---------- MAIN NAVBAR (Same as your first navbar) ---------- */
+.new-navbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 70px;
+  background: linear-gradient(135deg, #002244, #004488);
+  color: white;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 40px;
+  z-index: 99999;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+  backdrop-filter: blur(6px);
+}
+
+/* Logo */
+.new-navbar .logo {
+  font-size: 22px;
+  font-weight: bold;
+  color: white;
+}
+
+/* MENU */
+.new-nav-links {
+  display: flex;
+  list-style: none;
+  gap: 25px;
+  align-items: center;
+}
+
+.new-nav-links li a {
+  color: white;
+  text-decoration: none;
+  font-size: 15px;
+  font-weight: 500;
+  transition: 0.3s ease;
+}
+
+.new-nav-links li a:hover {
+  color: #ffd700;
+}
+
+/* Dropdown */
+.dropdown {
+  position: relative;
+}
+
+.dropdown-menu {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  display: flex;
+  flex-direction: column;
+  background: rgba(255, 255, 255, 0.97);
+  border-radius: 10px;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+  padding: 8px 0;
+  min-width: 230px;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(-12px);
+  transition: 0.3s;
+}
+
+.dropdown:hover .dropdown-menu {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+}
+
+.dropdown-menu a {
+  padding: 12px 20px;
+  color: #002244 !important;   /* FIXED: Dark blue text */
+  text-decoration: none;
+  font-size: 15px;
+  transition: 0.3s;
+}
+
+.dropdown-menu a:hover {
+  background: #004488;
+  color: #fff !important;   /* Hover par text white */
+}
+/* Signin Button */
+.new-nav-btns {
+  display: flex;
+  gap: 10px;
+}
+
+.new-btn {
+  text-decoration: none;
+  padding: 8px 16px;
+  border-radius: 6px;
+  font-weight: 500;
+  transition: 0.3s;
+}
+
+.new-btn-signin {
+  background: transparent;
+  color: white;
+  border: 1px solid white;
+}
+
+.new-btn-signin:hover {
+  background: white;
+  color: #004488;
+}
+
+/* ---------- MOBILE MENU ---------- */
+.menu-toggle {
+  display: none;
+  font-size: 30px;
+  cursor: pointer;
+  color: white;
+}
+@media (max-width: 900px) {
+  .dropdown-menu a {
+    color: white !important;
+  }
+}
+/* Responsive */
+@media (max-width: 900px) {
+  
+  .menu-toggle {
+    display: block;
+  }
+
+  .new-nav-btns {
+    position: absolute;
+    right: 20px;
+    top: 15px;
+  }
+
+  /* Sidebar menu */
+  .new-nav-links {
+    position: fixed;
+    top: 0;
+    left: -280px;
+    width: 260px;
+    height: 100vh;
+    background: rgba(0,0,0,0.8);
+    backdrop-filter: blur(10px);
+    flex-direction: column;
+    padding-top: 90px;
+    gap: 15px;
+    transition: 0.4s;
+    opacity: 0;
+  }
+
+  .new-nav-links.active {
+    left: 0;
+    opacity: 1;
+  }
+
+  /* Dropdown inside sidebar */
+  .dropdown-menu {
+    position: relative;
+    background: rgba(0,0,0,0.7);
+    width: 100%;
+    border-radius: 5px;
+    display: none;
+  }
+
+  .dropdown.show .dropdown-menu {
+    display: block;
+  }
+
+  .dropdown-menu a {
+    color: white;
+  }
+}
+
+
+/* ---------- MAIN CONTENT ---------- */
+.main-content {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 40px;
+  padding: 60px 10%;
+}
+
+.form-container {
+  flex: 1;
+}
+
+.image-container {
+  flex: 1;
+  text-align: center;
+}
+
+.image-container img {
+  width: 90%;
+  border-radius: 12px;
+  max-width: 500px;
+}
+
+/* ---------- FORM ---------- */
+.signin-form {
+  background: #fff;
+  padding: 30px;
+  border-radius: 12px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+.signin-form h2 {
+  margin-bottom: 20px;
+  color: #004488;
+  text-align: center;
+}
+
+.input-group {
+  margin-bottom: 20px;
+}
+
+.input-group label {
+  display: block;
+  margin-bottom: 8px;
+  font-weight: 500;
+}
+
+.input-group input {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+}
+
+button {
+  width: 100%;
+  padding: 12px;
+  background: linear-gradient(135deg, #002244, #004488);
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+button:hover {
+  background-color: #4338ca;
+}
+
+.message {
+  text-align: center;
+  margin-top: 15px;
+}
+
+.message a {
+  color: #4f46e5;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+/* 🌟 Footer */
+footer {
+  background: linear-gradient(135deg, #002244, #004488);
+  color: #fff;
+  padding: 50px 20px 20px;
+  margin-top: 50px;
+}
+.footer-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 30px;
+}
+.footer-left, .footer-center, .footer-payment, .footer-right {
+  flex: 1;
+  min-width: 200px;
+}
+.footer-center ul {
+  list-style: none;
+}
+.footer-center ul li {
+  margin-bottom: 8px;
+}
+.footer-center ul li a {
+  color:white;
+  text-decoration: none;
+}
+.footer-payment .payment-link {
+  display: inline-block;
+  background: linear-gradient(135deg, #004488, #0077cc);
+  color: #fff;
+  padding: 8px 15px;
+  border-radius: 6px;
+  text-decoration: none;
+  margin-top: 10px;
+  transition: all 0.3s;
+}
+.footer-payment .payment-link:hover {
+  background: linear-gradient(135deg, #0055aa, #0099ff);
+  transform: scale(1.05);
+}
+.footer-bottom {
+  text-align: center;
+  margin-top: 20px;
+  font-size: 14px;
+  border-top: 1px solid #335577;
+  padding-top: 10px;
+}
+
+/* 🌟 Animations */
+@keyframes fadeIn {
+  from { opacity: 0; transform: scale(0.9); }
+  to { opacity: 1; transform: scale(1); }
+}
+.socials {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+}
+
+.socials a {
+  color: white;               /* default icon color */
+  font-size: 20px;            /* icon size */
+  transition: color 0.3s, transform 0.3s;
+}
+
+.socials a:hover {
+  color: #ffd700;             /* gold hover */
+  transform: scale(1.2);      /* slight zoom effect */
+}

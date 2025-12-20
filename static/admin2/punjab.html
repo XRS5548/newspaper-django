@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>User Admin Dashboard</title>
+  <link rel="stylesheet" href="css/punjab.css" />
+
+  <!-- 📊 Chart.js CDN -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+  
+</head>
+
+<body>
+  <div class="sidebar">
+    <h2>Admin Panel</h2>
+    <a href="user.html">User Dashboard</a>
+    <a href="calender.html">Calendar</a>
+    <a href="userprofile.html">User Profile</a>
+    <a href="monthlypayment.html">Monthly Payment</a>
+    <a href="due.html">Total Due Payment</a>
+    <a href="total.html">Total Payment</a>
+
+    <!-- 🗞️ Newspapers Dropdown -->
+<div class="dropdown">
+  <div class="dropdown-toggle">NewsPapers ▾</div>
+  <div class="dropdown-content">
+
+     <!-- 📰 दैनिक भास्कर -->
+<div class="nested-dropdown">
+  <button class="nested-toggle">
+    <a href="danikbhaskar.html" style="color: inherit; text-decoration: none;">दैनिक भास्कर</a> ▸
+  </button>
+  <div class="nested-content">
+    <a href="chota.html">छोटा दैनिक भास्कर</a>
+  </div>
+</div>
+
+<!-- 📰 राजस्थान पत्रिका -->
+<div class="nested-dropdown">
+  <button class="nested-toggle">
+    <a href="rajasthanpatrika.html" style="color: inherit; text-decoration: none;">राजस्थान पत्रिका</a> ▸
+  </button>
+  <div class="nested-content">
+    <a href="rajasthan.html">छोटा राजस्थान पत्रिका</a>
+  </div>
+</div>
+
+    <a href="punjab.html">पंजाब केसरी</a>
+    <a href="thehindu.html">The Hindu</a>
+    <a href="express.html">Indian Express</a>
+    <a href="hindusthan.html">Hindustan Times</a>
+    <a href="economy.html">Economic Times</a>
+    <a href="nulogy.html">दैनिक नवज्योति</a>
+  </div>
+</div>
+
+    <!-- 📚 Books Dropdown -->
+    <div class="dropdown">
+      <div class="dropdown-toggle">Books ▾</div>
+      <div class="dropdown-content">
+        <a href="#">All the President’s Men</a>
+        <a href="#">The Elements of Journalism</a>
+        <a href="#">The News: A User’s Manual</a>
+        <a href="#">Manufacturing Consent</a>
+        <a href="#">The Journalist and the Murderer</a>
+        <a href="#">Breaking News</a>
+        <a href="#">Blur: How to Know What’s True</a>
+        <a href="#">The New New Journalism</a>
+        <a href="#">Post-Truth</a>
+        <a href="#">Hacks: Inside Story</a>
+      </div>
+    </div>
+
+    <a href="#">Settings</a>
+  </div>
+
+ <!-- 📄 Main Content -->
+  <div class="main">
+    <div class="topbar">
+      <h1>Punjab Kesari Dashboard</h1>
+      <span id="todayDate"></span>
+    </div>
+
+    <!-- 📰 Newspaper Summary -->
+    <div class="paper-summary">
+      <img src="https://play-lh.googleusercontent.com/Hr6Qq2Biby_NdO4dH_Xoik0UEuTwnKL8DwUaD8t4BLa7hirXu6XfSrmPBbp6mPxaKMkC=w3840-h2160-rw" alt="Punjab Kesari" />
+      <div>
+        <h2>Punjab Kesari (पंजाब केसरी)</h2>
+        <p>भारत का प्रमुख हिंदी दैनिक समाचार पत्र, जो पंजाब, हरियाणा, हिमाचल और दिल्ली में लोकप्रिय है।</p>
+      </div>
+    </div>
+
+    <!-- 📊 Stats Cards -->
+    <div class="stats">
+      <div class="card">
+        <h3>कुल ग्राहक</h3>
+        <p>128</p>
+      </div>
+      <div class="card delivered">
+        <h3>डिलीवर किए गए</h3>
+        <p>116</p>
+      </div>
+      <div class="card pending">
+        <h3>Pending</h3>
+        <p>12</p>
+      </div>
+      <div class="card amount">
+        <h3>कुल भुगतान (₹)</h3>
+        <p>14,820</p>
+      </div>
+    </div>
+
+    <!-- 💰 Payment Chart -->
+    <div class="chart-container">
+      <h3>मासिक भुगतान रिकॉर्ड</h3>
+      <canvas id="paymentChart"></canvas>
+    </div>
+
+    <!-- 📋 Delivery & Payment Table -->
+    <div class="table-section">
+      <h3>ग्राहक वितरण एवं भुगतान स्थिति</h3>
+      <table>
+        <thead>
+          <tr>
+            <th>ग्राहक नाम</th>
+            <th>स्थान</th>
+            <th>स्थिति</th>
+            <th>भुगतान</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>रवि शर्मा</td>
+            <td>जयपुर</td>
+            <td><span class="status delivered">Delivered</span></td>
+            <td>₹120</td>
+          </tr>
+          <tr>
+            <td>सीमा गुप्ता</td>
+            <td>अजमेर</td>
+            <td><span class="status pending">Pending</span></td>
+            <td>₹0</td>
+          </tr>
+          <tr>
+            <td>अमित वर्मा</td>
+            <td>कोटा</td>
+            <td><span class="status delivered">Delivered</span></td>
+            <td>₹150</td>
+          </tr>
+          <tr>
+            <td>नेहा जैन</td>
+            <td>जोधपुर</td>
+            <td><span class="status delivered">Delivered</span></td>
+            <td>₹130</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+ 
+  <script src="js/punjab.js"></script>
+  <script src="js/translate.js"></script>
+
+</body>
+</html>

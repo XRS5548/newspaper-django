@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Apply for Franchise - NewsPaper</title>
+  <link rel="stylesheet" href="/static/css/newfrenchise.css" />
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+</head>
+<body>
+
+  <!-- 🌟 NAVBAR -->
+  <nav class="navbar">
+    <div class="logo">My Website</div>
+
+    <!-- Menu Toggle (Mobile) -->
+    <div class="menu-toggle" id="menuToggle">&#9776;</div>
+
+    <ul class="nav-list">
+      <li class="nav-item"><a href="">Home</a></li>
+      <li class="nav-item"><a href="about">About</a></li>
+      <li class="nav-item"><a href="blog">Blog</a></li>
+      <li class="nav-item"><a href="service" target="_blank" class="nav-link">Services</a></li>
+      <li class="nav-item"><a href="contact">Contact</a></li>
+
+      <li class="nav-item dropdown">
+        <a href="#" class="dropdown-toggle">Franchise ▾</a>
+        <ul class="dropdown-menu">
+          <li><a href="newfrenchise">Apply for Franchise</a></li>
+          <li><a href="search">Search Franchise</a></li>
+        </ul>
+      </li>
+    </ul>
+
+    <div class="nav-buttons">
+      <a href="sign" class="btn btn-signin">Sign In</a>
+    </div>
+  </nav>
+
+  <!-- 🌟 HERO SECTION -->
+  <!-- <section class="franchise-hero">
+    <h1>Apply for NewsPaper Franchise</h1>
+    <p>Join our growing network and be part of the news revolution!</p>
+  </section> -->
+ <section class="faq-header">
+    <h1>Frequently Asked Questions</h1>
+    <p>Get quick answers to common queries about our franchise program, services, and registration process.  
+       We’ve compiled helpful information to guide you easily.</p>
+  </section>
+
+  <!-- 🌟 FAQ Container -->
+  <section class="faq-container">
+    <h2>Common Questions</h2>
+
+    <div class="faq-item">
+      <button class="faq-question">
+        How do I apply for a NewsPaper Franchise? 
+        <i class="fas fa-chevron-down"></i>
+      </button>
+      <div class="faq-answer">
+        Simply visit our “Apply for Franchise” page, fill out the form, upload your required documents, and our team will contact you within 7 business days.
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <button class="faq-question">
+        What are the eligibility criteria to become a franchise partner?
+        <i class="fas fa-chevron-down"></i>
+      </button>
+      <div class="faq-answer">
+        You must be above 18 years of age, have a valid business registration or ID, and basic knowledge of local media or distribution.
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <button class="faq-question">
+        How much investment is required?
+        <i class="fas fa-chevron-down"></i>
+      </button>
+      <div class="faq-answer">
+        The initial investment varies based on the region and franchise size. Our representatives will share detailed cost breakdowns after your application.
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <button class="faq-question">
+        Can I apply for multiple districts or states?
+        <i class="fas fa-chevron-down"></i>
+      </button>
+      <div class="faq-answer">
+        Yes, multi-region applications are accepted, but subject to availability and approval by our management team.
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <button class="faq-question">
+        What support do I get after becoming a franchise?
+        <i class="fas fa-chevron-down"></i>
+      </button>
+      <div class="faq-answer">
+        We provide full support — marketing materials, brand training, technical setup, and customer care guidance.
+      </div>
+    </div>
+  </section>
+
+  <!-- 🌟 MAIN FORM SECTION -->
+  <section class="franchise-section">
+    <div class="form-container">
+      <h2>Franchise Application Form</h2>
+      <form id="franchiseForm">
+        <div class="form-group">
+          <label>Franchise Name</label>
+          <input type="text" placeholder="Enter Franchise Name" required />
+        </div>
+          <!-- 🆕 Added Owner Name Field -->
+  <div class="form-group">
+    <label>Owner Name</label>
+    <input type="text" placeholder="Enter Owner Name" required />
+  </div>
+        <div class="form-group">
+          <label>Address</label>
+          <textarea placeholder="Enter Address" required></textarea>
+        </div>
+
+        <div class="form-group">
+          <label>State</label>
+          <input type="text" placeholder="Enter State" required />
+        </div>
+
+        <div class="form-group">
+          <label>District</label>
+          <input type="text" placeholder="Enter District" required />
+        </div>
+
+        <div class="form-group">
+          <label>Director Name</label>
+          <input type="text" placeholder="Enter Director Name" required />
+        </div>
+
+        <div class="form-group">
+          <label>Director / Franchise Email</label>
+          <input type="email" placeholder="Enter Email" required />
+        </div>
+
+        <div class="form-group">
+          <label>Franchise Mobile</label>
+          <input type="tel" placeholder="Enter Mobile Number" required />
+        </div>
+
+        <div class="form-group">
+          <label>Photo of Franchise</label>
+          <input type="file" accept="image/*" required />
+        </div>
+
+        <div class="form-group">
+          <label>Certificate / Marksheet of Franchise</label>
+          <input type="file" required />
+        </div>
+
+        <div class="form-group">
+          <label>Aadhaar Front</label>
+          <input type="file" accept="image/*" required />
+        </div>
+
+        <div class="form-group">
+          <label>Aadhaar Back</label>
+          <input type="file" accept="image/*" required />
+        </div>
+
+        <button type="submit" class="apply-btn">Apply for Franchise</button>
+      </form>
+    </div>
+
+    <!-- 🌟 SIDEBAR
+    <div class="sidebar">
+      <h3>Popular Newspapers</h3>
+      <ul class="news-list">
+        <li>📰 The Times Daily</li>
+        <li>📜 The Global Herald</li>
+        <li>🗞️ National Express</li>
+        <li>📰 Morning India</li>
+        <li>📢 The Economic Post</li>
+      </ul>
+
+      <h3>Frequently Asked Questions</h3>
+      <ul class="faq-list">
+        <li><strong>How long does approval take?</strong><br>Usually 7–10 business days.</li>
+        <li><strong>Do I need prior experience?</strong><br>No, training is provided.</li>
+        <li><strong>What is the investment required?</strong><br>Depends on region and scale.</li>
+        <li><strong>Can I apply for multiple areas?</strong><br>Yes, subject to approval.</li>
+      </ul>
+    </div> -->
+  </section>
+
+  <!-- 🌟 FOOTER -->
+  <footer>
+    <div class="footer-container">
+      <div class="footer-left">
+        <h3>NewsPaper</h3>
+        <p>Stay updated with the latest news from around the world.</p>
+      </div>
+
+      <div class="footer-center">
+        <h4>Quick Links</h4>
+        <ul>
+           <li><a href="">Home</a></li>
+          <li><a href="/about">About</a></li>
+          <li><a href="/blog" target="_blank">Blog</a></li>
+          <li><a href="/service">Services</a></li>
+          <li><a href="/contact">Contact</a></li>
+          <li><a href="/newfrenchise">Franchise</a></li>
+          <li><a href="/sitemap">Sitemap</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-payment">
+        <h4>Payment</h4>
+        <p>Support our digital newspaper or buy premium access.</p>
+        <a href="/payment" class="payment-link">💳 Make a Payment</a>
+      </div>
+
+      <div class="footer-right">
+        <h4>Contact Us</h4>
+        <p>Email: info@newspaper.com</p>
+        <p>Phone: +91 9876543210</p>
+         <div class="socials">
+         <a href="#" target="_blank" title="Facebook"><i class="fab fa-facebook-f"></i></a>
+  <a href="#" target="_blank" title="Twitter"><i class="fab fa-twitter"></i></a>
+  <a href="#" target="_blank" title="Instagram"><i class="fab fa-instagram"></i></a>
+  <a href="#" target="_blank" title="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+  <a href="#" target="_blank" title="YouTube"><i class="fab fa-telegram"></i></a>
+        </div>
+      </div>
+    </div>
+    <p class="footer-bottom">© 2025 NewsPaper. All rights reserved.</p>
+  </footer>
+
+  <!-- 🌟 WhatsApp Floating Button -->
+  <a href="https://wa.me/919694953370" class="whatsapp-float" target="_blank">
+    <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" alt="WhatsApp" class="whatsapp-icon" />
+  </a>
+
+  <script src="/static/js/newfrenchise.js"></script>
+</body>
+</html>

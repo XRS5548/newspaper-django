@@ -1,0 +1,1407 @@
+/* ----- GENERAL ----- */
+body {
+  margin: 0;
+  padding-top: 80px;
+  /* pushes content below navbar */
+  font-family: Arial, sans-serif;
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+@media screen and (max-width: 500px) {
+  /* 🌟 Hero Section Fix */
+  .hero {
+    width: 100%;
+    height: 100vh; /* Full screen height */
+    background-size: cover;
+    background-position: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding: 0 15px;
+  }
+
+  .hero-text h1 {
+    font-size: 1.8rem; /* smaller font for mobile */
+    line-height: 1.2;
+    margin-top: 70px;
+  }
+
+  .hero-text p {
+    font-size: 1rem;
+   position: relative;
+   bottom: 20px;
+  }
+
+  /* 🌐 Navbar Fix */
+  .navbar {
+    flex-wrap: wrap;
+    padding: 10px 15px;
+  }
+
+  /* WhatsApp Button */
+  .whatsapp-float {
+    width: 55px;
+    height: 55px;
+    right: 15px;
+    bottom: 15px;
+  }
+
+  .whatsapp-icon {
+    width: 28px;
+    height: 28px;
+  }
+}
+
+/* 🚀 FINAL FIXED NAVBAR (Always on top, never scrolls) */
+.navbar {
+  position: fixed !important;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 70px;
+  background: linear-gradient(135deg, #002244, #004488);
+  color: white;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 40px;
+  z-index: 99999;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+  backdrop-filter: blur(6px);
+}
+
+
+.navbar .logo {
+  font-size: 22px;
+  font-weight: bold;
+  color: white;
+}
+
+.nav-list {
+  display: flex;
+  gap: 20px;
+  list-style: none;
+}
+
+.nav-list a {
+  color: white;
+  text-decoration: none;
+}
+
+/* 🔹 Navbar Buttons */
+.nav-buttons {
+  display: flex;
+  gap: 10px;
+}
+
+.btn {
+  text-decoration: none;
+  padding: 8px 16px;
+  border-radius: 6px;
+  font-weight: 500;
+  transition: 0.3s;
+}
+
+.btn-signin {
+  background: transparent;
+  color: white;
+  border: 1px solid white;
+  position: relative;
+  right: 90px;
+}
+
+.btn-signin:hover {
+  background: white;
+  color: #4f46e5;
+}
+
+.featured-image img,
+.featured-gif {
+  width: 100%;
+  height: auto;
+  border-radius: 10px;
+  object-fit: cover;
+  animation: floatUp 6s ease-in-out infinite alternate;
+}
+
+/* Optional gentle floating effect */
+@keyframes floatUp {
+  from {
+    transform: translateY(0);
+  }
+
+  to {
+    transform: translateY(-8px);
+  }
+}
+
+/* 🌟 Default: Hide toggle button (desktop view) */
+.menu-toggle {
+  display: none;
+}
+
+@media (max-width: 900px) {
+  /* 🌟 Toggle Button */
+  .menu-toggle {
+    display: block;
+    font-size: 30px;
+    cursor: pointer;
+    color: white;
+    position: absolute;
+    left: 5px;
+    top: 25px;
+    z-index: 10001;
+  }
+
+  /* 🌟 Sign-in Button stays on top right */
+  .nav-buttons {
+    position: absolute;
+    right: 20px;
+    top: 15px;
+    display: flex;
+    align-items: center;
+    z-index: 10001;
+  }
+
+  /* 🌟 Sidebar Menu */
+  .nav-list {
+    position: fixed;
+    top: 0;
+    left: -280px; /* hidden initially */
+    width: 280px;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.75);
+    backdrop-filter: blur(18px);
+    -webkit-backdrop-filter: blur(18px);
+    display: flex;
+    flex-direction: column;
+    text-align: left;
+    padding: 100px 25px 30px;
+    transition: all 0.4s ease;
+    opacity: 0;
+    z-index: 10000;
+    box-shadow: 8px 0 20px rgba(0, 0, 0, 0.4);
+    border-right: 1px solid rgba(255, 255, 255, 0.15);
+  }
+
+  .nav-list.active {
+    left: 0;
+    opacity: 1;
+  }
+
+  .nav-list a {
+    display: block;
+    color: white;
+    padding: 14px 10px;
+    text-decoration: none;
+    font-weight: 500;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    transition: background 0.3s;
+  }
+
+  .nav-list a:hover {
+    background: rgba(255, 255, 255, 0.15);
+  }
+
+  /* 🌟 Dropdown inside sidebar */
+  .dropdown-menu {
+    display: none;
+    flex-direction: column;
+    background: rgba(0, 0, 0, 0.65);
+    backdrop-filter: blur(12px);
+    border-radius: 10px;
+    margin-top: 8px;
+    padding: 8px 0;
+    overflow: hidden;
+    max-height: 0;
+    transition: max-height 0.4s ease;
+  }
+
+  .dropdown.show .dropdown-menu {
+    display: flex;
+    max-height: 300px; /* expands smoothly */
+  }
+
+  .dropdown-menu a {
+    padding-left: 25px;
+    border: none;
+    font-size: 0.95rem;
+  }
+
+  /* Hide desktop navbar */
+  .nav-list.desktop {
+    display: none;
+  }
+}
+
+/* ----- FEATURED NEWS ----- */
+.featured-news {
+  position: relative;
+}
+
+.featured-news img {
+  width: 100%;
+  height: auto;
+}
+
+.featured-text {
+  position: absolute;
+  bottom: 20px;
+  left: 20px;
+  color: #fff;
+  text-shadow: 0 0 5px #000;
+}
+
+/* ----- TWO-COLUMN SECTION ----- */
+.two-column-section .container {
+  display: flex;
+  gap: 20px;
+  margin: 40px auto;
+  max-width: 1200px;
+  flex-wrap: wrap;
+}
+
+.left-image,
+.right-text {
+  flex: 1;
+}
+
+/* Fix unwanted blue line under slider */
+.horizontal-news-slider,
+.slider-wrapper,
+.slider-track {
+  border: none !important;
+  outline: none !important;
+}
+
+.horizontal-news-slider::after,
+.horizontal-news-slider::before {
+  content: none !important;
+}
+
+.horizontal-news-slider {
+  margin: 50px auto;
+  width: 95%;
+  overflow-x: auto;
+  scrollbar-width: none;
+  /* Firefox */
+  border-bottom: none !important;
+  /* remove line */
+}
+
+.horizontal-news-slider::-webkit-scrollbar {
+  display: none;
+  /* Chrome, Safari */
+}
+
+/* just to ensure no extra border under cards */
+.news-card {
+  border-bottom: none !important;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+/* 🔧 Fix click issue for mobile sections */
+/* 🌟 Navbar always visible */
+.navbar {
+  position: relative;
+  z-index: 1000;
+}
+
+/* 🟢 Hero section - isolated layer */
+.hero {
+  position: relative;
+  z-index: 1;
+  height: 100vh;
+  overflow: hidden;
+}
+
+/* 🟢 Ensure overlay is inside hero only */
+.hero .overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.3); /* keep your dark effect */
+  z-index: 2;
+  pointer-events: none;
+}
+
+/* 🟢 Video stays fully behind */
+.hero video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 1;
+  pointer-events: none;
+}
+
+/* 🟢 Ensure following sections sit above hero cleanly */
+main,
+.horizontal-news-slider,
+.category-section,
+.stats-counter,
+footer {
+  position: relative;
+  z-index: 10;
+  pointer-events: auto;
+  background: #fff;
+}
+
+/* Prevent invisible overlay sticking after scroll */
+body, html {
+  overflow-x: hidden;
+  position: relative;
+}
+
+/* ----- FOOTER ----- */
+footer {
+  background: #002244;
+  color: #fff;
+  padding: 40px 20px 20px;
+  position: relative !important;
+  z-index: 99999 !important;
+  /* very high so nothing overlaps */
+  pointer-events: auto !important;
+}
+
+.footer-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  max-width: 1200px;
+  margin: auto;
+  gap: 20px;
+}
+
+.footer-left,
+.footer-center,
+.footer-right {
+  flex: 1;
+  min-width: 200px;
+}
+
+.footer-center ul {
+  list-style: none;
+  padding: 0;
+}
+
+.footer-center a {
+  color: #fff;
+  text-decoration: none;
+}
+
+.footer-bottom {
+  text-align: center;
+  margin-top: 20px;
+  font-size: 14px;
+}
+
+/* ----- RESPONSIVE ----- */
+@media (max-width: 900px) {
+  .two-column-section .container {
+    flex-direction: column;
+  }
+
+  .nav-list {
+    display: none;
+    flex-direction: column;
+    background: #222;
+    width: 100%;
+  }
+
+  .nav-list.active {
+    display: flex;
+  }
+
+  .menu-toggle {
+    display: block;
+  }
+}
+
+/* ----- LEFT SIDE VERTICAL NEWS SLIDER ----- */
+.left-news-slider {
+  position: fixed;
+  top: 100px;
+  /* distance from top */
+  left: 0;
+  width: 200px;
+  height: calc(100vh - 80px);
+  /* taller height */
+  background: transparent;
+  overflow: hidden;
+  border-right: 1px solid #ccc;
+  padding: 10px;
+  z-index: 1000;
+}
+
+.ticker-wrapper {
+  height: 100%;
+  overflow: hidden;
+  position: relative;
+}
+
+.ticker-content {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  position: absolute;
+  animation: scrollTicker 15s linear infinite;
+}
+
+.ticker-content a {
+  text-decoration: none;
+  color: white;
+  font-weight: 500;
+  transition: transform 0.3s, color 0.3s;
+}
+
+.ticker-content a:hover {
+  color: #007bff;
+  transform: translateX(5px);
+}
+
+/* Vertical scroll keyframes */
+@keyframes scrollTicker {
+  0% {
+    top: 100%;
+  }
+
+  100% {
+    top: -100%;
+  }
+}
+
+/* Pause on hover */
+.left-news-slider:hover .ticker-content {
+  animation-play-state: paused;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .left-news-slider {
+    display: none;
+    /* hide on small screens */
+  }
+}
+
+/* ----- RIGHT SIDE VERTICAL ADS SLIDER ----- */
+.right-ad-slider {
+  position: fixed;
+  top: 100px;
+  /* distance from top */
+  right: 0;
+  width: 200px;
+  height: 70vh;
+  /* vertical height */
+  background: transparent;
+  overflow: hidden;
+  border-left: 1px solid #ccc;
+  padding: 10px;
+  z-index: 1000;
+}
+
+.right-ad-slider .ad-wrapper {
+  height: 100%;
+  overflow: hidden;
+  position: relative;
+}
+
+.right-ad-slider .ad-content {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  position: absolute;
+  animation: scrollAds 20s linear infinite;
+}
+
+.right-ad-slider .ad-content a img {
+  width: 100%;
+  border-radius: 5px;
+  transition: transform 0.3s;
+}
+
+.right-ad-slider .ad-content a:hover img {
+  transform: scale(1.05);
+}
+
+/* Vertical scroll animation */
+@keyframes scrollAds {
+  0% {
+    top: 100%;
+  }
+
+  100% {
+    top: -100%;
+  }
+}
+
+/* Pause on hover */
+.right-ad-slider:hover .ad-content {
+  animation-play-state: paused;
+}
+
+/* Responsive: hide on small screens */
+@media (max-width: 768px) {
+  .right-ad-slider {
+    display: none;
+  }
+
+  .left-news-slider {
+    display: none;
+  }
+
+  main.main-content {
+    margin: 0;
+    /* full width on mobile */
+  }
+}
+
+/* MAIN CONTENT MARGINS */
+main.main-content {
+  margin-left: 220px;
+  margin-right: 220px;
+  padding: 20px;
+}
+
+/* LEFT NEWS SLIDER */
+.left-news-slider {
+  position: absolute;
+  /* change from fixed */
+  top: 100px;
+  left: 0;
+  width: 200px;
+  height: calc(100vh - 150px);
+  /* stay above footer */
+  background: #f1f1f1;
+  overflow: hidden;
+  padding: 10px;
+}
+
+.left-news-slider .ticker-wrapper {
+  height: 100%;
+  overflow: hidden;
+  position: relative;
+}
+
+.left-news-slider .ticker-content {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  position: absolute;
+  animation: scrollNews 20s linear infinite;
+}
+
+.left-news-slider .ticker-content a {
+  text-decoration: none;
+  color: #333;
+  font-weight: bold;
+}
+
+.left-news-slider:hover .ticker-content {
+  animation-play-state: paused;
+}
+
+@keyframes scrollNews {
+  0% {
+    top: 100%;
+  }
+
+  100% {
+    top: -100%;
+  }
+}
+
+/* RIGHT AD SLIDER */
+.right-ad-slider {
+  position: absolute;
+  /* change from fixed */
+  top: 100px;
+  right: 0;
+  width: 200px;
+  height: calc(100vh - 150px);
+  /* stay above footer */
+  background: #f9f9f9;
+  overflow: hidden;
+  border-left: 1px solid #ccc;
+  padding: 10px;
+}
+
+.right-ad-slider .ad-wrapper {
+  height: 100%;
+  overflow: hidden;
+  position: relative;
+}
+
+.right-ad-slider .ad-content {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  position: absolute;
+  animation: scrollAds 20s linear infinite;
+}
+
+.right-ad-slider .ad-content a img {
+  width: 100%;
+  border-radius: 5px;
+  transition: transform 0.3s;
+}
+
+.right-ad-slider .ad-content a:hover img {
+  transform: scale(1.05);
+}
+
+.right-ad-slider:hover .ad-content {
+  animation-play-state: paused;
+}
+
+@keyframes scrollAds {
+  0% {
+    top: 100%;
+  }
+
+  100% {
+    top: -100%;
+  }
+}
+
+/* RESPONSIVE: hide sliders on mobile */
+@media (max-width: 768px) {
+
+  .left-news-slider,
+  .right-ad-slider {
+    display: none;
+  }
+
+  main.main-content {
+    margin: 0;
+  }
+}
+
+/* 🔴 BREAKING NEWS BAR */
+.breaking-news-bar {
+  display: flex;
+  align-items: center;
+  background-color: #d32f2f;
+  color: white;
+  overflow: hidden;
+  height: 40px;
+  font-weight: bold;
+  border-bottom: 2px solid #b71c1c;
+}
+
+.breaking-title {
+  background: #b71c1c;
+  padding: 0 15px;
+  font-size: 16px;
+  letter-spacing: 0.5px;
+}
+
+.breaking-ticker {
+  white-space: nowrap;
+  overflow: hidden;
+  position: relative;
+  width: 100%;
+}
+
+.breaking-ticker span {
+  display: inline-block;
+  padding-left: 100%;
+  animation: tickerMove 25s linear infinite;
+}
+
+@keyframes tickerMove {
+  0% {
+    transform: translateX(0);
+  }
+
+  100% {
+    transform: translateX(-100%);
+  }
+}
+
+/* 🗞️ Top Categories Section */
+.category-section {
+  padding: 80px 6%;
+  background: linear-gradient(180deg, #f8f9fa, #e9eef5);
+  text-align: center;
+}
+
+.category-section h2 {
+  font-size: 2.3rem;
+  font-weight: 700;
+  color: #002244;
+  margin-bottom: 50px;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
+
+/* 🌟 Grid Layout */
+.categories {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 25px;
+  justify-content: center;
+}
+
+/* 🌟 Category Card */
+.category-card {
+  background: #ffffff;
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+  text-decoration: none;
+  color: #333;
+  transition: transform 0.4s ease, box-shadow 0.4s ease;
+  display: flex;
+  flex-direction: column;
+}
+
+.category-card:hover {
+  transform: translateY(-10px) scale(1.03);
+  box-shadow: 0 12px 25px rgba(0, 0, 0, 0.15);
+}
+
+/* 🌈 Image Part */
+.category-image {
+  position: relative;
+  overflow: hidden;
+}
+
+.category-image img {
+  width: 100%;
+  height: 180px;
+  object-fit: cover;
+  transition: transform 0.6s ease;
+}
+
+.category-card:hover img {
+  transform: scale(1.1);
+}
+
+/* 📜 Text Part */
+.category-content {
+  padding: 20px;
+}
+
+.category-content h3 {
+  font-size: 1.4rem;
+  color: #004488;
+  margin-bottom: 10px;
+  font-weight: 700;
+}
+
+.category-content p {
+  font-size: 0.95rem;
+  color: #555;
+  line-height: 1.5;
+}
+
+/* 🌍 Responsive */
+@media (max-width: 768px) {
+  .category-section h2 {
+    font-size: 1.8rem;
+  }
+
+  .category-content h3 {
+    font-size: 1.2rem;
+  }
+}
+
+/* 🌟 Minimal Stats Counter Section */
+.stats-counter {
+  text-align: center;
+  background: none;
+  color: #111;
+  padding: 80px 20px;
+  margin-top: 60px;
+}
+
+.stats-counter h2 {
+  font-size: 2.5rem;
+  margin-bottom: 50px;
+  letter-spacing: 1px;
+  color: #222;
+  font-weight: 700;
+}
+
+.counter-container {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 100px;
+}
+
+.counter-box {
+  background: none;
+  box-shadow: none;
+  border: none;
+  padding: 0;
+  transition: transform 0.3s ease;
+}
+
+.counter-box:hover {
+  transform: translateY(-5px);
+}
+
+.counter {
+  font-size: 3rem;
+  font-weight: 800;
+  color: #0055aa;
+  letter-spacing: 1px;
+}
+
+.counter-box p {
+  margin-top: 10px;
+  font-size: 1.1rem;
+  color: #444;
+  font-weight: 500;
+}
+
+/* 🌟 Auto Sliding News Section */
+.horizontal-news-slider {
+  text-align: center;
+  padding: 60px 20px;
+  overflow: hidden;
+  background: #f9f9f9;
+  border-top: 3px solid #0055aa;
+  border-bottom: 3px solid #0055aa;
+}
+
+.slider-title {
+  font-size: 2rem;
+  margin-bottom: 40px;
+  color: #002244;
+  font-weight: bold;
+  
+}
+
+.slider-wrapper {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+}
+
+.slider-track {
+  display: flex;
+  gap: 25px;
+  animation: slide 25s linear infinite;
+ margin-bottom: 250px;
+}
+.logo img{
+  height: 100px;
+  width: 100px;
+  
+}
+.news-card {
+  flex: 0 0 300px;
+  background: #fff;
+  border-radius: 15px;
+  text-decoration: none;
+  color: #222;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  transition: transform 0.3s ease;
+}
+
+.news-card:hover {
+  transform: translateY(-8px);
+}
+
+.news-card img {
+  width: 100%;
+  height: 180px;
+  object-fit: cover;
+}
+
+.news-card h3 {
+  font-size: 1.2rem;
+  margin: 10px;
+  color: #0055aa;
+}
+
+.news-card p {
+  font-size: 0.95rem;
+  margin: 0 10px 15px;
+  color: #555;
+}
+
+/* Infinite Scroll Animation */
+@keyframes slide {
+  0% {
+    transform: translateX(0);
+  }
+
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+/* Pause on Hover */
+.slider-wrapper:hover .slider-track {
+  animation-play-state: paused;
+}
+
+/* 🌟 NAVBAR DROPDOWN STYLING */
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: linear-gradient(135deg, #002244, #004488);
+  padding: 15px 40px;
+  color: #fff;
+  position: relative;
+}
+
+.nav-list {
+  display: flex;
+  list-style: none;
+  gap: 25px;
+  align-items: center;
+}
+
+.nav-item a {
+  color: white;
+  text-decoration: none;
+  font-weight: 500;
+  transition: color 0.3s ease;
+}
+
+.nav-item a:hover {
+  color: #ffd700;
+}
+
+/* 🌟 Dropdown Menu - Smooth Animation and Clickable */
+.dropdown {
+  position: relative;
+}
+
+.dropdown-menu {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  display: flex;
+  flex-direction: column;
+  background: rgba(255, 255, 255, 0.97);
+  border-radius: 10px;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+  min-width: 230px;
+  padding: 5px 0;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(-15px);
+  transition: all 0.35s ease;
+  z-index: 999;
+}
+
+/* 🩵 When hover or active via JS */
+.dropdown:hover .dropdown-menu,
+.dropdown-menu.show {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+}
+
+/* 🌟 Dropdown Links */
+.dropdown-menu a {
+  display: block;
+  padding: 12px 20px;
+  color: #002244;
+  text-decoration: none;
+  transition: background 0.3s, color 0.3s;
+  font-weight: 500;
+}
+
+.dropdown-menu a:hover {
+  background: #004488;
+  color: #fff;
+}
+
+/* 🌟 WhatsApp Floating Button */
+/* 🌟 WhatsApp Floating Button — Fixed */
+/* 🌟 WhatsApp Floating Button */
+.whatsapp-float {
+  position: fixed;
+  bottom: 25px;
+  right: 25px;
+  background: #25D366;
+  border-radius: 50%;
+  width: 60px;
+  height: 60px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+  z-index: 99999; /* ensures it stays above all elements */
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.whatsapp-float:hover {
+  transform: scale(1.1);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4);
+}
+
+.whatsapp-icon {
+  width: 35px;
+  height: 35px;
+}
+
+
+
+.footer-payment {
+  text-align: left;
+  position: relative;
+  z-index: 10;
+}
+
+.footer-payment h4 {
+  color: #ffd700;
+  margin-bottom: 10px;
+}
+
+.footer-payment p {
+  color: #ccc;
+  font-size: 0.95rem;
+  margin-bottom: 12px;
+}
+
+.footer-payment .payment-link {
+  display: inline-block;
+  padding: 10px 20px;
+  background: linear-gradient(135deg, #004488, #0077cc);
+  color: white;
+  text-decoration: none;
+  border-radius: 8px;
+  transition: background 0.3s, transform 0.3s;
+  position: relative;
+  z-index: 20;
+  /* make sure it’s on top */
+  pointer-events: auto;
+}
+
+.footer-payment .payment-link:hover {
+  background: linear-gradient(135deg, #0055aa, #0099ff);
+  transform: scale(1.05);
+}
+
+/* 🌟 Developer Contact Moving Bar - Always on Top of Navbar */
+.dev-contact-bar {
+  background: linear-gradient(90deg, #000000, #222222);
+  color: #fff;
+  padding: 8px 0;
+  font-size: 15px;
+  font-weight: 500;
+  text-align: center;
+  position: fixed;
+  /* ✅ fixed so it stays on top */
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 2000;
+  /* ✅ higher than navbar */
+}
+
+.dev-contact-bar a {
+  color: #00ffcc;
+  font-weight: 600;
+  text-decoration: none;
+  margin-left: 8px;
+  transition: color 0.3s ease;
+}
+
+.dev-contact-bar a:hover {
+  color: #ffd700;
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+/* ✅ Push navbar down a bit so it doesn't overlap */
+.navbar {
+  margin-top: 35px;
+  /* Adjust if needed */
+}
+
+/* 🌟 Popup Styling */
+.dev-popup {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.6);
+  z-index: 2000;
+  justify-content: center;
+  align-items: center;
+}
+
+.dev-popup-content {
+  background: #fff;
+  padding: 30px 40px;
+  border-radius: 15px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+  text-align: center;
+  width: 90%;
+  max-width: 400px;
+  animation: fadeIn 0.4s ease-in-out;
+}
+
+.close-btn {
+  float: right;
+  font-size: 25px;
+  cursor: pointer;
+  color: #333;
+  font-weight: bold;
+}
+
+.popup-btn {
+  display: block;
+  background: linear-gradient(135deg, #002244, #004488);
+  color: #fff;
+  text-decoration: none;
+  padding: 10px 15px;
+  border-radius: 8px;
+  margin: 15px 0;
+  transition: all 0.3s;
+}
+
+.popup-btn:hover {
+  background: linear-gradient(135deg, #004488, #0077cc);
+  transform: scale(1.05);
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: scale(0.9);
+  }
+
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+/* 🌟 Background Video Setup */
+/* 🎥 Video background */
+/* 🎥 Hero Section */
+.hero {
+  position: relative;
+  width: 100%;
+  height: 90vh;
+  overflow: hidden;
+}
+
+/* 🎬 Background Video */
+#bgVideo {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: brightness(70%);
+  z-index: 1;
+}
+
+/* 🩶 Overlay */
+.overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.3);
+  z-index: 2;
+}
+
+/* ✨ Text */
+.hero-text {
+  position: absolute;
+  top: 40%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: #fff;
+  text-align: center;
+  font-size: 2rem;
+  z-index: 3;
+}
+
+/* 🟢 Ad Bar */
+.ad-bar {
+  position: absolute;
+  bottom: 25px;
+  left: 0;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 99999 !important;
+  /* ✅ below navbar but above video */
+}
+
+/* 🚀 Scrolling ads container */
+.ad-track {
+  display: flex;
+  gap: 25px;
+  align-items: center;
+  animation: scrollAds 25s linear infinite;
+  will-change: transform;
+}
+
+/* 🔗 Ad Links */
+.ad-track a {
+  display: inline-block;
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
+}
+
+/* 🖼️ Ad Images */
+.ad-track img {
+  height: 130px;
+  border-radius: 15px;
+  transition: transform 0.3s ease;
+}
+
+.ad-track img:hover {
+  transform: scale(1.1);
+}
+
+/* 🔁 Animation */
+@keyframes scrollAds {
+  0% {
+    transform: translateX(100%);
+  }
+
+  100% {
+    transform: translateX(-100%);
+  }
+}
+
+/* 📱 Mobile */
+@media (max-width: 768px) {
+  .ad-track img {
+    height: 70px;
+  }
+}
+.socials {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+}
+
+.socials a {
+  color: white;               /* default icon color */
+  font-size: 20px;            /* icon size */
+  transition: color 0.3s, transform 0.3s;
+}
+
+.socials a:hover {
+  color: #ffd700;             /* gold hover */
+  transform: scale(1.2);      /* slight zoom effect */
+}
+/* ✅ FINAL FIX — Make main content clickable on mobile */
+@media (max-width: 900px) {
+
+  /* 🔹 Sidebar Menu: no clicks when hidden */
+  .nav-list {
+    pointer-events: none;
+  }
+
+  /* 🔹 Sidebar Menu: allow clicks only when open */
+  .nav-list.active {
+    pointer-events: auto;
+  }
+
+  /* 🔹 Dropdown inside mobile menu (clickable when open) */
+  .dropdown-menu {
+    position: relative !important;
+    z-index: 100002 !important;
+    pointer-events: auto !important;
+  }
+
+  /* 🔹 Main content & sections stay clickable */
+  main,
+  .main-content,
+  .hero,
+  .category-section,
+  .horizontal-news-slider,
+  .stats-counter,
+  .two-column-section,
+  .featured-news,
+  .ad-bar,
+  footer {
+    position: relative;
+    z-index: 1;
+    pointer-events: auto !important;
+  }
+
+  /* 🔹 Navbar, toggle & buttons stay visible but don’t block clicks */
+  .navbar,
+  .menu-toggle,
+  .nav-buttons {
+    z-index: 100001 !important;
+    pointer-events: auto !important;
+  }
+  /* ✅ Keep ad-bar above everything */
+.ad-bar {
+  z-index: 100005 !important;
+  margin-top: 330px;
+}
+.hero-text h1{
+  font-size: 60px;
+}
+}
+/* 🌟 FINAL MOBILE DROPDOWN FIX */
+@media (max-width: 900px) {
+  .dropdown-menu {
+    display: none;
+    flex-direction: column;
+    background: rgba(0, 0, 0, 0.8);
+    backdrop-filter: blur(10px);
+    border-radius: 10px;
+    margin-top: 8px;
+    padding: 8px 0;
+    position: relative;
+    width: 100%;
+    z-index: 9999;
+  }
+
+  /* when dropdown is active */
+  .dropdown.show .dropdown-menu {
+    display: flex !important;
+    animation: slideDown 0.3s ease forwards;
+  }
+
+  @keyframes slideDown {
+    from {
+      opacity: 0;
+      transform: translateY(-10px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  /* links inside dropdown */
+  .dropdown-menu a {
+    display: block;
+    color: white;
+    padding: 12px 20px;
+    text-decoration: none;
+  }
+
+  .dropdown-menu a:hover {
+    background: rgba(255, 255, 255, 0.1);
+  }
+}

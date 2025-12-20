@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Our Services - NewsPaper</title>
+  <link rel="stylesheet" href="/static/css/ux.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+</head>
+
+<!-- 🌟 Developer Contact Popup -->
+<div id="devPopup" class="dev-popup">
+  <div class="dev-popup-content">
+    <span class="close-btn" id="closePopup">&times;</span>
+    <h3>💬 Contact Developer</h3>
+    <p>Have a query or need help with this website? Reach out below:</p>
+    <a href="mailto:developer@email.com" class="popup-btn">📧 Send Email</a>
+    <a href="https://wa.me/919876543210" target="_blank" class="popup-btn">💬 Chat on WhatsApp</a>
+  </div>
+</div>
+
+<body>
+  <!-- 🌟 TOP MOVING CONTACT BAR -->
+  <div class="dev-contact-bar">
+    <marquee behavior="scroll" direction="left" scrollamount="5" onmouseover="this.stop();" onmouseout="this.start();">
+      💡 Need help or have a question? <a href="#" id="contactDevLink">Contact the Developer / Owner</a>
+    </marquee>
+  </div>
+
+  <!-- ---------- NAVBAR START ---------- -->
+  <nav class="navbar">
+    <div class="logo">MyWebsite</div>
+    <div class="menu-toggle" id="menuToggle">&#9776;</div>
+    <ul class="nav-list">
+      <li class="nav-item"><a href="/" class="nav-link">Home</a></li>
+      <li class="nav-item"><a href="about" class="nav-link">About</a></li>
+      <li class="nav-item"><a href="blog" class="nav-link">Blog</a></li>
+      <li class="nav-item"><a href="service" class="nav-link active">Services</a></li>
+      <li class="nav-item"><a href="contact" class="nav-link">Contact Us</a></li>
+      <li class="nav-item dropdown">
+        <a href="#" class="nav-link dropdown-toggle">Franchise ▾</a>
+        <ul class="dropdown-menu">
+          <li><a href="newfrenchise">Apply for New Franchise</a></li>
+          <li><a href="search">Search Franchise</a></li>
+        </ul>
+      </li>
+    </ul>
+    <div class="nav-buttons">
+      <a href="sign" class="btn btn-signin">Sign In</a>
+    </div>
+  </nav>
+  <!-- ---------- NAVBAR END ---------- -->
+
+  <!-- ---------- MAIN CONTENT (SERVICES SECTION) ---------- -->
+   <!-- Services Section -->
+  <main>
+    <section class="hero">
+      <div class="hero-text">
+        <h1>Creative UX/UI Design Services</h1>
+        <p>We design intuitive, user-centered interfaces that blend aesthetics and usability — enhancing your brand’s digital experience across every platform.</p>
+        <a href="#" class="cta-btn">Start Your Project</a>
+      </div>
+      <div class="hero-image">
+        <img src="https://images.pexels.com/photos/5082578/pexels-photo-5082578.jpeg" alt="UX UI Design" />
+      </div>
+    </section>
+
+    <section class="ux-services">
+      <div class="service-card">
+        <img src="https://images.unsplash.com/photo-1587614382346-4ec70e388b28?w=800" alt="User Research" />
+        <h3>User Research & Strategy</h3>
+        <p>We analyze user behavior to craft experiences that truly connect — combining data, empathy, and creative design thinking.</p>
+      </div>
+      <div class="service-card">
+        <img src="https://images.pexels.com/photos/196644/pexels-photo-196644.jpeg" alt="Wireframing" />
+        <h3>Wireframing & Prototyping</h3>
+        <p>Our interactive wireframes and prototypes bring your ideas to life — fast, flexible, and feedback-driven.</p>
+      </div>
+      <div class="service-card">
+        <img src="https://images.pexels.com/photos/17279853/pexels-photo-17279853.jpeg" alt="Visual Design" />
+        <h3>Visual & Interface Design</h3>
+        <p>From colors to typography, we design digital experiences that delight users and elevate your brand identity.</p>
+      </div>
+    </section>
+
+    <section class="ux-gallery">
+      <img src="https://images.unsplash.com/photo-1515378791036-0648a3ef77b2?w=800" alt="Design Process" />
+      <img src="https://images.unsplash.com/photo-1593642532973-d31b6557fa68?w=800" alt="UI Tools" />
+      <img src="https://images.pexels.com/photos/31113917/pexels-photo-31113917.jpeg" alt="App Design" />
+      <img src="https://images.unsplash.com/photo-1559028012-481c04fa702d?w=800" alt="Web UI" />
+    </section>
+
+    <div class="cta-strip">
+      <h3>Ready to design your next great user experience?</h3>
+      <a href="#" class="cta-btn">Get a Free Consultation</a>
+    </div>
+  </main>
+  <!-- ---------- FOOTER ---------- -->
+  <footer>
+    <div class="footer-container">
+      <div class="footer-left">
+        <h3>NewsPaper</h3>
+        <p>Stay updated with the latest news from around the world.</p>
+      </div>
+
+      <div class="footer-center">
+        <h4>Quick Links</h4>
+        <ul>
+           <li><a href="/">Home</a></li>
+          <li><a href="/about">About</a></li>
+          <li><a href="/blog" target="_blank">Blog</a></li>
+          <li><a href="/service">Services</a></li>
+          <li><a href="/contact">Contact</a></li>
+          <li><a href="/newfrenchise">Franchise</a></li>
+          <li><a href="/sitemap">Sitemap</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-payment">
+        <h4>Payment</h4>
+        <p>Support our digital newspaper or buy premium access.</p>
+        <a href="/payment" class="payment-link">💳 Make a Payment</a>
+      </div>
+
+      <div class="footer-right">
+        <h4>Contact Us</h4>
+        <p>Email: info@newspaper.com</p>
+        <p>Phone: +91 9876543210</p>
+        <div class="socials">
+           <a href="#" target="_blank" title="Facebook"><i class="fab fa-facebook-f"></i></a>
+  <a href="#" target="_blank" title="Twitter"><i class="fab fa-twitter"></i></a>
+  <a href="#" target="_blank" title="Instagram"><i class="fab fa-instagram"></i></a>
+  <a href="#" target="_blank" title="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+  <a href="#" target="_blank" title="YouTube"><i class="fab fa-telegram"></i></a>
+        </div>
+      </div>
+    </div>
+    <p class="footer-bottom">© 2025 NewsPaper. All rights reserved.</p>
+  </footer>
+
+  <!-- 🌟 WhatsApp Floating Button -->
+  <a href="https://wa.me/919694953370" class="whatsapp-float" target="_blank" title="Chat with us on WhatsApp">
+    <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" alt="WhatsApp" class="whatsapp-icon" />
+  </a>
+
+  <script src="/static/js/ux.js"></script>
+</body>
+</html>

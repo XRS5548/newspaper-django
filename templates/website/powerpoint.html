@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Our Services - NewsPaper</title>
+  <link rel="stylesheet" href="/static/css/power.css" />
+  <!-- Font Awesome (icons) -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" integrity="sha512-HHsOCi6Kk5qvG0Q0k0k+qW4yq7a8c6z8F1j3dSxg+Y1n/B0Y6s4yY5tqQm3c3YJz5s5sKx2wY/1Yw1J7QwQJw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+</head>
+
+<!-- 🌟 Developer Contact Popup -->
+<div id="devPopup" class="dev-popup">
+  <div class="dev-popup-content">
+    <span class="close-btn" id="closePopup">&times;</span>
+    <h3>💬 Contact Developer</h3>
+    <p>Have a query or need help with this website? Reach out below:</p>
+    <a href="mailto:developer@email.com" class="popup-btn">📧 Send Email</a>
+    <a href="https://wa.me/919876543210" target="_blank" class="popup-btn">💬 Chat on WhatsApp</a>
+  </div>
+</div>
+
+<body>
+  <!-- 🌟 TOP MOVING CONTACT BAR -->
+  <div class="dev-contact-bar">
+    <marquee behavior="scroll" direction="left" scrollamount="5" onmouseover="this.stop();" onmouseout="this.start();">
+      💡 Need help or have a question? <a href="#" id="contactDevLink">Contact the Developer / Owner</a>
+    </marquee>
+  </div>
+
+  <!-- ---------- NAVBAR START ---------- -->
+  <nav class="navbar">
+    <div class="logo">MyWebsite</div>
+    <div class="menu-toggle" id="menuToggle">&#9776;</div>
+    <ul class="nav-list">
+      <li class="nav-item"><a href="/" class="nav-link">Home</a></li>
+      <li class="nav-item"><a href="/about" class="nav-link">About</a></li>
+      <li class="nav-item"><a href="/blog" class="nav-link">Blog</a></li>
+      <li class="nav-item"><a href="/service" class="nav-link active">Services</a></li>
+      <li class="nav-item"><a href="/contact" class="nav-link">Contact Us</a></li>
+      <li class="nav-item dropdown">
+        <a href="#" class="nav-link dropdown-toggle">Franchise ▾</a>
+        <ul class="dropdown-menu">
+          <li><a href="newfrenchise">Apply for New Franchise</a></li>
+          <li><a href="search">Search Franchise</a></li>
+        </ul>
+      </li>
+    </ul>
+    <div class="nav-buttons">
+      <a href="sign" class="btn btn-signin">Sign In</a>
+    </div>
+  </nav>
+  <!-- ---------- NAVBAR END ---------- -->
+
+  <!-- ---------- MAIN CONTENT (SERVICES SECTION) ---------- -->
+  <!-- main -->
+  <main>
+    <!-- hero -->
+    <section class="ppt-hero container-center">
+      <div class="hero-text">
+        <h1>PowerPoint Design & Presentation Solutions</h1>
+        <p class="lead">Professional decks that tell your story, persuade stakeholders and convert leads. Templates, pitch
+           decks, investor presentations, training slides and speaker-ready visuals — designed fast with strategic thinking.</p>
+
+        <div class="hero-features" aria-hidden="false">
+          <span class="feature-pill"><i class="fa-solid fa-rocket"></i> Fast Turnaround</span>
+          <span class="feature-pill"><i class="fa-solid fa-users"></i> Speaker-ready</span>
+          <span class="feature-pill"><i class="fa-solid fa-file-lines"></i> Custom Templates</span>
+          <span class="feature-pill"><i class="fa-solid fa-palette"></i> Visual-first Design</span>
+        </div>
+
+        <div style="margin-top:20px; display:flex; gap:12px; flex-wrap:wrap;">
+          <a class="btn-primary" href="#contact">Get Started</a>
+          <a class="btn-ghost" href="#samples">View Samples</a>
+        </div>
+      </div>
+
+      <div class="hero-image-card" aria-hidden="true">
+        <!-- real Unsplash animated-ish GIF-like image (looping motion feel) -->
+        <img src="https://images.unsplash.com/photo-1555066931-4365d14bab8c?q=80&w=1400&auto=format&fit=crop&ixlib=rb-4.0.3&s=9b2f4c9b1b8b8f7a9d5f1b1eab123456" alt="PowerPoint design showcase">
+      </div>
+    </section>
+
+    <!-- offerings (specialized PPT services) -->
+    <section class="ppt-offerings" aria-label="PowerPoint services">
+      <div class="ppt-card">
+        <div class="thumb"><img src="https://images.unsplash.com/photo-1496307042754-b4aa456c4a2d?q=80&w=800&auto=format&fit=crop" alt="Pitch deck sample"></div>
+        <div>
+          <h3>Investor Pitch Decks</h3>
+          <p>Compelling story-driven pitch decks that highlight metrics, market sizing, traction and the ask — designed to win investor interest.</p>
+          <div><span class="tag">Startup</span><span class="tag">Investor</span></div>
+        </div>
+        <div class="actions">
+          <button class="btn-ghost">Details</button>
+          <button class="btn-primary">Order</button>
+        </div>
+      </div>
+
+      <div class="ppt-card">
+        <div class="thumb"><img src="/static/image/CORPORATE.jfif" alt="Corporate slides"></div>
+        <div>
+          <h3>Corporate & Board Presentations</h3>
+          <p>Executive-ready slides with data visualizations, clean charts and brand consistency for board meetings and quarterly reviews.</p>
+          <div><span class="tag">Corporate</span><span class="tag">Data</span></div>
+        </div>
+        <div class="actions">
+          <button class="btn-ghost">Details</button>
+          <button class="btn-primary">Order</button>
+        </div>
+      </div>
+
+      <div class="ppt-card">
+        <div class="thumb"><img src="https://images.unsplash.com/photo-1515879218367-8466d910aaa4?q=80&w=800&auto=format&fit=crop" alt="Training slides"></div>
+        <div>
+          <h3>Training & E-learning Slides</h3>
+          <p>Engaging modules with clear learning objectives, visuals and step-by-step layouts designed to boost comprehension.</p>
+          <div><span class="tag">Training</span><span class="tag">E-learning</span></div>
+        </div>
+        <div class="actions">
+          <button class="btn-ghost">Details</button>
+          <button class="btn-primary">Order</button>
+        </div>
+      </div>
+
+      <div class="ppt-card">
+        <div class="thumb"><img src="/static/image/MARKET.png" alt="Marketing slides"></div>
+        <div>
+          <h3>Marketing & Sales Collateral</h3>
+          <p>Pitch sheets and presentation decks tailored to marketing campaigns and sales outreach — convert leads with beautiful visuals.</p>
+          <div><span class="tag">Marketing</span><span class="tag">Sales</span></div>
+        </div>
+        <div class="actions">
+          <button class="btn-ghost">Details</button>
+          <button class="btn-primary">Order</button>
+        </div>
+      </div>
+
+      <div class="ppt-card">
+        <div class="thumb"><img src="/static/image/CUSTOM.jfif" alt="Templates"></div>
+        <div>
+          <h3>Custom Branded Templates</h3>
+          <p>Reusable slide libraries and templates stamped with your brand tokens and typography — saves time & keeps everyone on-brand.</p>
+          <div><span class="tag">Template</span><span class="tag">Brand</span></div>
+        </div>
+        <div class="actions">
+          <button class="btn-ghost">Details</button>
+          <button class="btn-primary">Order</button>
+        </div>
+      </div>
+
+      <div class="ppt-card">
+        <div class="thumb"><img src="https://images.unsplash.com/photo-1603791440384-56cd371ee9a7?q=80&w=800&auto=format&fit=crop" alt="Data visualization"></div>
+        <div>
+          <h3>Data Visualization & Charts</h3>
+          <p>Polished charts & infographics that explain data quickly, designed for clarity and impact in presentations.</p>
+          <div><span class="tag">Analytics</span><span class="tag">Visuals</span></div>
+        </div>
+        <div class="actions">
+          <button class="btn-ghost">Details</button>
+          <button class="btn-primary">Order</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- gallery -->
+    <section id="samples" class="ppt-gallery" aria-label="PowerPoint samples">
+      <img src="https://images.unsplash.com/photo-1499951360447-b19be8fe80f5?q=80&w=1400&auto=format&fit=crop" alt="sample slide 1">
+      <img src="https://images.pexels.com/photos/5716001/pexels-photo-5716001.jpeg" alt="sample slide 2">
+      <img src="https://images.unsplash.com/photo-1515378791036-0648a3ef77b2?q=80&w=1400&auto=format&fit=crop" alt="sample slide 3">
+      <img src="https://images.unsplash.com/photo-1488590528505-98d2b5aba04b?q=80&w=1400&auto=format&fit=crop" alt="sample slide 4">
+    </section>
+
+    <!-- CTA strip -->
+    <section class="cta-strip" id="contact" aria-label="Contact">
+      <div>
+        <h3>Ready for a stunning presentation?</h3>
+        <p class="muted">Tell us your timeline, number of slides and whether you'd like speaker notes. We deliver polished slides + source files.</p>
+      </div>
+      <div style="margin-left:auto; display:flex; gap:12px;">
+        <a class="btn-ghost" href="mailto:developer@email.com">Request Quote</a>
+        <a class="btn-primary" href="https://wa.me/919876543210" target="_blank">Chat on WhatsApp</a>
+      </div>
+    </section>
+
+  </main>
+  <!-- ---------- FOOTER ---------- -->
+  <footer>
+    <div class="footer-container">
+      <div class="footer-left">
+        <h3>NewsPaper</h3>
+        <p>Stay updated with the latest news from around the world.</p>
+      </div>
+
+      <div class="footer-center">
+        <h4>Quick Links</h4>
+        <ul>
+           <li><a href="/">Home</a></li>
+          <li><a href="/about">About</a></li>
+          <li><a href="/blog" target="_blank">Blog</a></li>
+          <li><a href="/service">Services</a></li>
+          <li><a href="/contact">Contact</a></li>
+          <li><a href="/newfrenchise">Franchise</a></li>
+          <li><a href="/sitemap">Sitemap</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-payment">
+        <h4>Payment</h4>
+        <p>Support our digital newspaper or buy premium access.</p>
+        <a href="payment" class="payment-link">💳 Make a Payment</a>
+      </div>
+
+      <div class="footer-right">
+        <h4>Contact Us</h4>
+        <p>Email: info@newspaper.com</p>
+        <p>Phone: +91 9876543210</p>
+        <div class="socials">
+          <a href="#" target="_blank" title="Facebook"><i class="fab fa-facebook-f"></i></a>
+  <a href="#" target="_blank" title="Twitter"><i class="fab fa-twitter"></i></a>
+  <a href="#" target="_blank" title="Instagram"><i class="fab fa-instagram"></i></a>
+  <a href="#" target="_blank" title="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+   <a href="#" target="_blank" title="YouTube"><i class="fab fa-telegram"></i></a>
+        </div>
+      </div>
+    </div>
+    <p class="footer-bottom">© 2025 NewsPaper. All rights reserved.</p>
+  </footer>
+
+  <!-- 🌟 WhatsApp Floating Button -->
+  <a href="https://wa.me/919694953370" class="whatsapp-float" target="_blank" title="Chat with us on WhatsApp">
+    <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" alt="WhatsApp" class="whatsapp-icon" />
+  </a>
+
+  <script src="/static/js/power.js"></script>
+</body>
+</html>

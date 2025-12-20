@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>User Profile</title>
+  <link rel="stylesheet" href="css/userprofile.css">
+</head>
+ 
+<body>
+
+  
+  <div class="sidebar">
+    <h2 data-translate="adminPanel">Admin Panel</h2>
+    <a href="user.html" data-translate="userDashboard">User Dashboard</a>
+    <a href="calender.html" data-translate="calendar">Calendar</a>
+    <a href="userprofile.html" data-translate="userProfile">User Profile</a>
+    <a href="monthlypayment.html" data-translate="monthlyPayment">Monthly Payment</a>
+    <a href="due.html" data-translate="totalDuePayment">Total Due Payment</a>
+    <a href="total.html" data-translate="totalPayment">Total Payment</a>
+
+    <!-- 🗞️ Newspapers Dropdown -->
+    <div class="dropdown">
+      <div class="dropdown-toggle" data-translate="newspapers">NewsPapers ▾</div>
+      <div class="dropdown-content">
+
+     <!-- 📰 दैनिक भास्कर -->
+<div class="nested-dropdown">
+  <button class="nested-toggle">
+    <a href="danikbhaskar.html" style="color: inherit; text-decoration: none;">दैनिक भास्कर</a> ▸
+  </button>
+  <div class="nested-content">
+    <a href="chota.html">छोटा दैनिक भास्कर</a>
+  </div>
+</div>
+
+<!-- 📰 राजस्थान पत्रिका -->
+<div class="nested-dropdown">
+  <button class="nested-toggle">
+    <a href="rajasthanpatrika.html" style="color: inherit; text-decoration: none;">राजस्थान पत्रिका</a> ▸
+  </button>
+  <div class="nested-content">
+    <a href="rajasthan.html">छोटा राजस्थान पत्रिका</a>
+  </div>
+</div>
+
+        <a href="punjab.html">पंजाब केसरी</a>
+        <a href="thehindu.html">The Hindu</a>
+        <a href="express.html">Indian Express</a>
+        <a href="hindusthan.html">Hindustan Times</a>
+        <a href="economy.html">Economic Times</a>
+        <a href="nulogy.html">दैनिक नवज्योति</a>
+      </div>
+    </div>
+
+    <!-- 📚 Books Dropdown -->
+    <div class="dropdown">
+      <div class="dropdown-toggle" data-translate="books">Books ▾</div>
+      <div class="dropdown-content">
+        <a href="#">All the President’s Men</a>
+        <a href="#">The Elements of Journalism</a>
+        <a href="#">The News: A User’s Manual</a>
+        <a href="#">Manufacturing Consent</a>
+        <a href="#">The Journalist and the Murderer</a>
+        <a href="#">Breaking News</a>
+        <a href="#">Blur: How to Know What’s True</a>
+        <a href="#">The New New Journalism</a>
+        <a href="#">Post-Truth</a>
+        <a href="#">Hacks: Inside Story</a>
+      </div>
+    </div>
+
+    <a href="#" data-translate="settings">Settings</a>
+  </div>
+
+  <div class="main">
+    <div class="topbar">
+      <h1 data-translate="userProfile">User Profile</h1>
+    </div>
+
+    <div class="profile-card">
+      <div class="profile-header">
+        <img id="profilePic" src="image/WhatsApp Image 2025-10-28 at 11.28.27 AM (3).jpeg" alt="Profile Picture" onclick="uploadPhoto()">
+        <input type="file" id="photoInput" accept="image/*" style="display:none;">
+        <h2 id="userName">Rahul Swami</h2>
+        <p id="userTitle">Team Manager, Jaipur</p>
+      </div>
+
+      <div class="info-section">
+        <h3>
+          <span data-translate="personalInformation">Personal Information</span> 
+          <span class="edit-btn" data-translate="edit" onclick="toggleEdit('personal')">Edit</span>
+          <span class="save-btn" id="savePersonal" data-translate="save" onclick="saveData()">Save</span>
+        </h3>
+
+        <div class="info-group">
+          <div>
+            <label data-translate="fullName">Full Name</label>
+            <p class="info" id="fullName">Rahul Swami</p>
+            <input type="text" id="fullNameInput" style="display:none">
+          </div>
+          <div>
+            <label data-translate="email">Email</label>
+            <p class="info" id="email">rahulswami@gmail.com</p>
+            <input type="email" id="emailInput" style="display:none">
+          </div>
+        </div>
+
+        <div class="info-group">
+          <div>
+            <label data-translate="phone">Phone</label>
+            <p class="info" id="phone">+91 7733905848</p>
+            <input type="text" id="phoneInput" style="display:none">
+          </div>
+          <div>
+            <label data-translate="altPhone">Alternate Phone</label>
+            <p class="info" id="altPhone">+91 9999999999</p>
+            <input type="text" id="altPhoneInput" style="display:none">
+          </div>
+        </div>
+
+        <div class="info-group">
+          <div style="width:100%;">
+            <label data-translate="bio">Bio</label>
+            <p class="info" id="bio">Dedicated and motivated team leader with 5 years of experience.</p>
+            <textarea id="bioInput" rows="3" style="display:none"></textarea>
+          </div>
+        </div>
+      </div>
+
+      <div class="info-section">
+        <h3>
+          <span data-translate="address">Address</span> 
+          <span class="edit-btn" data-translate="edit" onclick="toggleEdit('address')">Edit</span>
+          <span class="save-btn" id="saveAddress" data-translate="save" onclick="saveData()">Save</span>
+        </h3>
+
+        <div class="info-group">
+          <div>
+            <label data-translate="addressLine1">Address Line 1</label>
+            <p class="info" id="address1">123, Mansarovar</p>
+            <input type="text" id="address1Input" style="display:none">
+          </div>
+          <div>
+            <label data-translate="addressLine2">Address Line 2</label>
+            <p class="info" id="address2">Jaipur, Rajasthan</p>
+            <input type="text" id="address2Input" style="display:none">
+          </div>
+        </div>
+
+        <div class="info-group">
+          <div>
+            <label data-translate="country">Country</label>
+            <p class="info" id="country">India</p>
+            <input type="text" id="countryInput" style="display:none">
+          </div>
+          <div>
+            <label data-translate="postalCode">Postal Code</label>
+            <p class="info" id="postal">302020</p>
+            <input type="text" id="postalInput" style="display:none">
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="js/userprofile.js"></script>
+<script src="js/translate.js"></script>
+</body>
+</html>

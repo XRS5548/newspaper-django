@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>User Admin Dashboard</title>
+  <link rel="stylesheet" href="css/rajasthan.css" />
+
+  <!-- 📊 Chart.js CDN -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+  
+</head>
+
+<body>
+  
+  <div class="sidebar">
+    <h2>Admin Panel</h2>
+    <a href="user.html">User Dashboard</a>
+    <a href="calender.html">Calendar</a>
+    <a href="userprofile.html">User Profile</a>
+    <a href="monthlypayment.html">Monthly Payment</a>
+    <a href="due.html">Total Due Payment</a>
+    <a href="total.html">Total Payment</a>
+
+    <!-- 🗞️ Newspapers Dropdown -->
+<div class="dropdown">
+  <div class="dropdown-toggle">NewsPapers ▾</div>
+  <div class="dropdown-content">
+
+    
+        <!-- 📰 दैनिक भास्कर -->
+        <div class="nested-dropdown">
+          <button class="nested-toggle">
+            <a href="danikbhaskar.html" style="color: inherit; text-decoration: none;">दैनिक भास्कर</a> ▸
+          </button>
+          <div class="nested-content">
+            <a href="chota.html">छोटा दैनिक भास्कर</a>
+          </div>
+        </div>
+
+        <!-- 📰 राजस्थान पत्रिका -->
+        <div class="nested-dropdown">
+          <button class="nested-toggle">
+            <a href="rajasthanpatrika.html" style="color: inherit; text-decoration: none;">राजस्थान पत्रिका</a> ▸
+          </button>
+          <div class="nested-content">
+            <a href="rajasthan.html">छोटा राजस्थान पत्रिका</a>
+          </div>
+        </div>
+    <a href="punjab.html">पंजाब केसरी</a>
+    <a href="thehindu.html">The Hindu</a>
+    <a href="express.html">Indian Express</a>
+    <a href="hindusthan.html">Hindustan Times</a>
+    <a href="economy.html">Economic Times</a>
+    <a href="nulogy.html">दैनिक नवज्योति</a>
+  </div>
+</div>
+
+    <!-- 📚 Books Dropdown -->
+    <div class="dropdown">
+      <div class="dropdown-toggle">Books ▾</div>
+      <div class="dropdown-content">
+        <a href="#">All the President’s Men</a>
+        <a href="#">The Elements of Journalism</a>
+        <a href="#">The News: A User’s Manual</a>
+        <a href="#">Manufacturing Consent</a>
+        <a href="#">The Journalist and the Murderer</a>
+        <a href="#">Breaking News</a>
+        <a href="#">Blur: How to Know What’s True</a>
+        <a href="#">The New New Journalism</a>
+        <a href="#">Post-Truth</a>
+        <a href="#">Hacks: Inside Story</a>
+      </div>
+    </div>
+
+    <a href="#">Settings</a>
+  </div>
+  <!-- 📰 Main Section -->
+  <div class="main">
+    <div class="topbar">
+      <h1>छोटा राजस्थान पत्रिका - Payment Dashboard</h1>
+    </div>
+
+    <!-- 🖼️ Newspaper Info -->
+    <div class="paper-card">
+      <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSZDXRDkxKqwlX-wTCHeF6nBMATOV65ay32ow&s" alt="छोटा राजस्थान पत्रिका" class="paper-img">
+      <div>
+        <h2>छोटा राजस्थान पत्रिका</h2>
+        <p>Established 1956 • One of the most popular Hindi dailies of Rajasthan</p>
+      </div>
+    </div>
+
+    <!-- 💰 Payment Summary -->
+    <div class="payment-summary">
+      <div class="summary-box" style="background: linear-gradient(135deg, #ade8f4, #caf0f8);">
+        <h3>Total Paid</h3>
+        <p id="totalPaid">₹48,500</p>
+      </div>
+      <div class="summary-box" style="background: linear-gradient(135deg, #ffd6a5, #ffb703);">
+        <h3>Pending</h3>
+        <p id="totalDue">₹9,500</p>
+      </div>
+      <div class="summary-box" style="background: linear-gradient(135deg, #f8cdda, #fcd5ce);">
+        <h3>Due Soon</h3>
+        <p id="dueSoon">₹5,000</p>
+      </div>
+      <div class="summary-box" style="background: linear-gradient(135deg, #b7e4c7, #95d5b2);">
+        <h3>Months Covered</h3>
+        <p>9</p>
+      </div>
+    </div>
+
+    <!-- 📊 Chart Section -->
+    <div class="chart-section">
+      <h3>Payment Trend (2025)</h3>
+      <canvas id="paymentChart"></canvas>
+    </div>
+
+    <!-- 📅 Payment Details Table -->
+    <div class="table-section">
+      <h3>मासिक भुगतान विवरण</h3>
+      <table>
+        <thead>
+          <tr>
+            <th>माह</th>
+            <th>राशि (₹)</th>
+            <th>स्थिति</th>
+            <th>भुगतान तिथि</th>
+          </tr>
+        </thead>
+        <tbody id="paymentTable"></tbody>
+      </table>
+    </div>
+  </div>
+  <script src="js/rajasthan.js" defer></script>
+  <script src="js/translate.js"></script>
+</body>
+</html>

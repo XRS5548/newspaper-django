@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Responsive Admin Dashboard</title>
+  <link rel="stylesheet" href="css/admin.css">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
+
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: { extend: {} }
+    }
+  </script>
+
+ 
+</head>
+<body class="bg-gray-100 text-gray-900 dark:bg-gray-900 dark:text-gray-100 transition-colors duration-300">
+
+<div class="flex h-screen overflow-hidden">
+
+  <!-- Sidebar -->
+  <aside id="sidebar" class="fixed inset-y-0 left-0 w-64 bg-white dark:bg-gray-800 border-r transform -translate-x-full md:translate-x-0 transition-transform duration-300 z-50">
+    <div class="p-4 text-xl font-bold text-gray-900 dark:text-gray-100">TailAdmin</div>
+    <nav class="mt-6">
+      <ul>
+        <li class="px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-700 rounded"><a href="admin.html">Dashboard</a></li>
+        <li class="px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-700 rounded"><a href="calender.html">Calendar</a></li>
+        <li class="px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-700 rounded"><a href="user.html">User Profile</a></li>
+        <li class="px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-700 rounded"><a href="form.html">Forms</a></li>
+        <li class="px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-700 rounded"><a href="table.html">Tables</a></li>
+        <li class="px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-700 rounded"><a href="chart.html">Charts</a></li>
+      </ul>
+    </nav>
+  </aside>
+
+  <!-- Overlay for mobile sidebar -->
+  <div id="overlay" class="fixed inset-0 bg-black bg-opacity-50 hidden z-40 md:hidden"></div>
+
+  <!-- Main content -->
+  <div class="flex-1 flex flex-col ml-0 md:ml-64 transition-all duration-300">
+    <!-- Header -->
+    <header class="flex items-center justify-between bg-white dark:bg-gray-900 p-4 border-b border-gray-200 dark:border-gray-700 transition-colors duration-300">
+      <div class="flex items-center space-x-2">
+        <button id="sidebarToggle" class="md:hidden px-2 py-1 bg-gray-200 dark:bg-gray-700 rounded">☰</button>
+        <input type="text" placeholder="Search..." class="border rounded px-3 py-1 w-64 sm:w-48 dark:bg-gray-700 dark:border-gray-600 dark:text-gray-100" />
+      </div>
+      <div class="flex items-center space-x-4">
+        <button id="darkModeBtn" class="text-xl">🌙</button>
+        <button id="notifBtn" class="text-xl">🔔</button>
+        <div id="profileBtn" class="rounded-full overflow-hidden w-8 h-8 bg-gray-300 dark:bg-gray-600 cursor-pointer">
+                  <img src="image/WhatsApp Image 2025-10-16 at 6.06.50 PM.jpeg" alt="User Photo" class="w-full h-full object-cover">
+
+        </div>
+      </div>
+       <!-- Dropdown -->
+          <div id="profileDropdown" class="hidden absolute right-0 mt-2 w-48 bg-white dark:bg-gray-800 rounded shadow-lg py-2 z-50">
+            <div class="px-4 py-2 border-b border-gray-200 dark:border-gray-700">
+              <div class="font-semibold text-gray-900 dark:text-gray-100">John Doe</div>
+              <div class="text-sm text-gray-500 dark:text-gray-400">Admin</div>
+            </div>
+            <a href="edit.html" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-700 text-gray-900 dark:text-gray-100">Edit Profile</a>
+            <a href="#" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-700 text-gray-900 dark:text-gray-100">Account Settings</a>
+            <a href="#" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-700 text-gray-900 dark:text-gray-100">Support</a>
+            <a href="#" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-700 text-red-600 dark:text-red-400">Sign Out</a>
+          </div>
+        
+    </header>
+
+
+<main class="flex-1 bg-gray-100 p-6 overflow-y-auto">
+
+  <!-- ===== Section 1: Form Elements ===== -->
+  <section class="bg-white dark:bg-gray-800 p-6 rounded-lg shadow mb-6">
+    <h2 class="text-xl font-bold mb-4">Form Elements</h2>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+      <div>
+        <label class="block mb-1 text-sm font-medium">Input</label>
+        <input type="text" class="w-full border px-3 py-2 rounded dark:bg-gray-700 dark:border-gray-600" placeholder="Enter text" />
+      </div>
+
+      <div>
+        <label class="block mb-1 text-sm font-medium">Input with Placeholder</label>
+        <input type="text" class="w-full border px-3 py-2 rounded dark:bg-gray-700 dark:border-gray-600" placeholder="Your name here..." />
+      </div>
+
+      <div>
+        <label class="block mb-1 text-sm font-medium">Select Input</label>
+        <select class="w-full border px-3 py-2 rounded dark:bg-gray-700 dark:border-gray-600">
+          <option>Select your country</option>
+          <option>India</option>
+          <option>USA</option>
+          <option>UK</option>
+        </select>
+      </div>
+
+      <div>
+        <label class="block mb-1 text-sm font-medium">Password Input</label>
+        <input type="password" class="w-full border px-3 py-2 rounded dark:bg-gray-700 dark:border-gray-600" placeholder="Enter password" />
+      </div>
+
+      <div>
+        <label class="block mb-1 text-sm font-medium">Date Picker</label>
+        <input type="date" class="w-full border px-3 py-2 rounded dark:bg-gray-700 dark:border-gray-600" />
+      </div>
+
+      <div>
+        <label class="block mb-1 text-sm font-medium">Time Picker</label>
+        <input type="time" class="w-full border px-3 py-2 rounded dark:bg-gray-700 dark:border-gray-600" />
+      </div>
+
+      <div>
+        <label class="block mb-1 text-sm font-medium">Input with Payment Symbol</label>
+        <div class="flex items-center border rounded dark:bg-gray-700 dark:border-gray-600">
+          <span class="px-3 text-gray-500 dark:text-gray-300">₹</span>
+          <input type="number" class="flex-1 px-3 py-2 rounded-r outline-none dark:bg-gray-700 dark:border-gray-600" placeholder="Amount" />
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== Section 2: Select Inputs ===== -->
+  <section class="bg-white dark:bg-gray-800 p-6 rounded-lg shadow mb-6">
+    <h2 class="text-xl font-bold mb-4">Select Inputs</h2>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+      <div>
+        <label class="block mb-1 text-sm font-medium">Select Input</label>
+        <select class="w-full border px-3 py-2 rounded dark:bg-gray-700 dark:border-gray-600">
+          <option>Choose Option</option>
+          <option>Option 1</option>
+          <option>Option 2</option>
+          <option>Option 3</option>
+        </select>
+      </div>
+
+      <div>
+        <label class="block mb-1 text-sm font-medium">Multiple Select</label>
+        <select multiple class="w-full border px-3 py-2 rounded dark:bg-gray-700 dark:border-gray-600 h-24">
+          <option>HTML</option>
+          <option>CSS</option>
+          <option>JavaScript</option>
+          <option>Python</option>
+        </select>
+      </div>
+
+      <div>
+        <label class="block mb-1 text-sm font-medium">Textarea</label>
+        <textarea class="w-full border px-3 py-2 rounded dark:bg-gray-700 dark:border-gray-600" rows="4" placeholder="Enter your message..."></textarea>
+      </div>
+
+      <div>
+        <label class="block mb-1 text-sm font-medium">Email Input</label>
+        <input type="email" class="w-full border px-3 py-2 rounded dark:bg-gray-700 dark:border-gray-600" placeholder="example@email.com" />
+      </div>
+
+      <div>
+        <label class="block mb-1 text-sm font-medium">Phone Number</label>
+        <input type="tel" class="w-full border px-3 py-2 rounded dark:bg-gray-700 dark:border-gray-600" placeholder="+91 9876543210" />
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== Section 3: File & Checkbox ===== -->
+  <section class="bg-white dark:bg-gray-800 p-6 rounded-lg shadow">
+    <h2 class="text-xl font-bold mb-4">File & Checkbox Inputs</h2>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+      <div>
+        <label class="block mb-1 text-sm font-medium">Choose File</label>
+        <input type="file" class="w-full border px-3 py-2 rounded dark:bg-gray-700 dark:border-gray-600" />
+      </div>
+
+      <div>
+        <label class="block mb-1 text-sm font-medium">Checkbox Options</label>
+        <div class="flex flex-col space-y-2">
+          <label><input type="checkbox" class="mr-2"> I agree to terms</label>
+          <label><input type="checkbox" class="mr-2"> Subscribe to newsletter</label>
+        </div>
+      </div>
+
+      <div class="col-span-2">
+        <label class="block mb-1 text-sm font-medium">Drop File Area</label>
+        <div id="dropZone" class="border-2 border-dashed border-gray-400 p-6 rounded-lg text-center cursor-pointer dark:border-gray-600 hover:bg-gray-100 dark:hover:bg-gray-700 transition">
+          <p>📂 Drag & drop your files here or <span class="text-blue-600">browse</span></p>
+          <input type="file" multiple class="hidden" id="fileInput" />
+        </div>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+    <script src="js/form.js"></script>
+</body>
+</html>

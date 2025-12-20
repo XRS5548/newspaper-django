@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Hindustan Times - Admin Dashboard</title>
+  <link rel="stylesheet" href="css/nulogy.css" />
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+
+<body>
+  <!-- 🧭 Sidebar -->
+  <div class="sidebar">
+    <h2>Admin Panel</h2>
+    <a href="user.html">User Dashboard</a>
+    <a href="calender.html">Calendar</a>
+    <a href="userprofile.html">User Profile</a>
+    <a href="monthlypayment.html">Monthly Payment</a>
+    <a href="due.html">Total Due Payment</a>
+    <a href="total.html">Total Payment</a>
+ <!-- 🗞️ Newspapers Dropdown -->
+    <div class="dropdown">
+      <div class="dropdown-toggle">NewsPapers ▾</div>
+      <div class="dropdown-content">
+        
+        <!-- 📰 दैनिक भास्कर -->
+        <div class="nested-dropdown">
+          <button class="nested-toggle">
+            <a href="danikbhaskar.html" style="color: inherit; text-decoration: none;">दैनिक भास्कर</a> ▸
+          </button>
+          <div class="nested-content">
+            <a href="chota.html">छोटा दैनिक भास्कर</a>
+          </div>
+        </div>
+
+        <!-- 📰 राजस्थान पत्रिका -->
+        <div class="nested-dropdown">
+          <button class="nested-toggle">
+            <a href="rajasthanpatrika.html" style="color: inherit; text-decoration: none;">राजस्थान पत्रिका</a> ▸
+          </button>
+          <div class="nested-content">
+            <a href="rajasthan.html">छोटा राजस्थान पत्रिका</a>
+          </div>
+        </div>
+        <a href="punjab.html">पंजाब केसरी</a>
+        <a href="thehindu.html">The Hindu</a>
+        <a href="express.html" class="active">Indian Express</a>
+        <a href="hindusthan.html">Hindustan Times</a>
+        <a href="economy.html">Economic Times</a>
+        <a href="nulogy.html">दैनिक नवज्योति</a>
+      </div>
+    </div>
+
+  <!-- 📚 Books Dropdown -->
+    <div class="dropdown">
+      <div class="dropdown-toggle">Books ▾</div>
+      <div class="dropdown-content">
+        <a href="#">All the President’s Men</a>
+        <a href="#">The Elements of Journalism</a>
+        <a href="#">The News: A User’s Manual</a>
+        <a href="#">Manufacturing Consent</a>
+        <a href="#">The Journalist and the Murderer</a>
+        <a href="#">Breaking News</a>
+        <a href="#">Blur: How to Know What’s True</a>
+        <a href="#">The New New Journalism</a>
+        <a href="#">Post-Truth</a>
+        <a href="#">Hacks: Inside Story</a>
+      </div>
+    </div>
+
+    <a href="#">Settings</a>
+  </div>
+  <!-- 📰 Main Section -->
+  <div class="main">
+    <div class="topbar">
+      <h1>दैनिक नवज्योति - Payment Dashboard</h1>
+    </div>
+
+    <!-- 🖼️ Newspaper Info -->
+    <div class="newspaper-card">
+      <img src="https://www.rajasthandirect.com/wp-content/uploads/2012/12/Dainik-Navajyoti-Newspaper-Logo.png" alt="दैनिक नवज्योति" class="news-img">
+      <div class="news-info">
+        <h2>दैनिक नवज्योति</h2>
+        <p>Established in 1936, दैनिक नवज्योति is one of Rajasthan’s leading Hindi newspapers.</p>
+      </div>
+    </div>
+
+    <!-- 💰 Payment Summary Section -->
+    <div class="payment-summary">
+      <div class="summary-box" style="background: linear-gradient(135deg, #ade8f4, #caf0f8);">
+        <h3>Total Paid</h3>
+        <p>₹55,000</p>
+      </div>
+
+      <div class="summary-box" style="background: linear-gradient(135deg, #ffd6a5, #ffb703);">
+        <h3>Pending</h3>
+        <p>₹12,000</p>
+      </div>
+
+      <div class="summary-box" style="background: linear-gradient(135deg, #f8cdda, #fcd5ce);">
+        <h3>Due Soon</h3>
+        <p>₹8,000</p>
+      </div>
+
+      <div class="summary-box" style="background: linear-gradient(135deg, #b7e4c7, #95d5b2);">
+        <h3>Total Months Covered</h3>
+        <p>10</p>
+      </div>
+    </div>
+
+    <!-- 📊 Chart -->
+    <div class="chart-container">
+      <h3>Payment Trend (2025)</h3>
+      <canvas id="paymentChart"></canvas>
+    </div>
+
+    <!-- 📅 Payment Details -->
+    <div class="payment-section">
+      <h3>Monthly Payment Details</h3>
+      <table>
+        <thead>
+          <tr>
+            <th>Month</th>
+            <th>Payment Amount (₹)</th>
+            <th>Status</th>
+            <th>Payment Date</th>
+          </tr>
+        </thead>
+        <tbody id="paymentTable"></tbody>
+      </table>
+    </div>
+  </div>
+  <script src="js/nulogy.js"></script>
+  <script src="js/translate.js"></script>
+
+</body>
+</html>

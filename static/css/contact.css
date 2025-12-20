@@ -1,0 +1,803 @@
+/* 🌟 RESET */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Poppins", sans-serif;
+}
+
+/* 🌟 Body */
+body {
+  background: #f4f4f4;
+  color: #333;
+  line-height: 1.6;
+  overflow-x: hidden;
+}
+
+/* 🌟 Top Developer Contact Bar */
+.dev-contact-bar {
+  background: linear-gradient(90deg, #000000, #222222);
+  color: #fff;
+  padding: 8px 0;
+  font-size: 15px;
+  font-weight: 500;
+  text-align: center;
+  position: fixed;
+  top: 0;
+  width: 100%;
+  z-index: 2000;
+}
+
+.dev-contact-bar a {
+  color: #00ffcc;
+  font-weight: 600;
+  text-decoration: none;
+  margin-left: 8px;
+  transition: color 0.3s ease;
+}
+.dev-contact-bar a:hover {
+  color: #ffd700;
+  text-decoration: underline;
+}
+
+/* 🌟 Navbar */
+.navbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: linear-gradient(135deg, #001a33, #003366);
+  padding: 15px 30px;
+  position: relative;
+  z-index: 1000;
+  margin-top: 35px;
+  height: 90px;
+  position: fixed;
+  width: 100vw;
+}
+/* 🌟 Perfect Mobile Responsive Fix */
+@media screen and (max-width: 500px) {
+
+  /* ✅ Prevent page shaking / horizontal scroll */
+  html, body {
+    overflow-x: hidden;
+    width: 100%;
+    max-width: 100%;
+  }
+.logo {
+  color: #fff;
+  font-size: 24px;
+  font-weight: bold;
+  margin-left: 20px;
+  margin-top: 10px;
+  
+}
+  /* ✅ Navbar: fix layout and width */
+  .navbar {
+    width: 100%;
+    padding: 12px 18px;
+    height: 70px;
+    position: fixed;
+    top: 35px; /* below the dev contact bar */
+    left: 0;
+    right: 0;
+    margin: 0;
+  }
+
+  /* ✅ Menu toggle (hamburger icon) */
+  .menu-toggle {
+    display: block;
+    position: absolute;
+    left: 15px;
+    top: 22px;
+    font-size: 26px;
+    color: #fff;
+    cursor: pointer;
+    z-index: 10001;
+  }
+
+  /* ✅ Right-side Sign In / Buttons */
+  .nav-buttons {
+    position: absolute;
+    right: 15px;
+    top: 20px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    z-index: 10001;
+  }
+
+  /* ✅ Sidebar (mobile nav menu) */
+  .nav-list {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 250px;
+    background: rgba(0, 0, 0, 0.85);
+    backdrop-filter: blur(10px);
+    flex-direction: column;
+    padding: 100px 25px 30px;
+    gap: 12px;
+    transform: translateX(-100%);
+    transition: transform 0.4s ease-in-out;
+    z-index: 10000;
+  }
+
+  .nav-list.active {
+    transform: translateX(0);
+  }
+
+  .nav-list a {
+    display: block;
+    color: #fff;
+    padding: 12px 10px;
+    font-weight: 500;
+    text-decoration: none;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  }
+
+  .nav-list a:hover {
+    background: rgba(255, 255, 255, 0.1);
+  }
+
+  /* ✅ Contact Page Header Fix */
+  .contact-page-header {
+    margin-top: 100px; /* prevent overlap with navbar */
+    height: 280px;
+  }
+
+  .contact-page-header h1 {
+    font-size: 1.8rem;
+
+  }
+
+  .contact-page-header p {
+    font-size: 0.95rem;
+  }
+
+  /* ✅ Contact section padding fix */
+  .contact-main {
+    padding: 40px 15px;
+  }
+
+  /* ✅ Footer + map fix */
+  iframe {
+    width: 100%;
+  }
+  footer {
+    padding: 40px 15px;
+  }
+
+  /* ✅ Developer contact bar */
+  .dev-contact-bar {
+    font-size: 13px;
+    padding: 6px 5px;
+  }
+}
+
+.logo {
+  color: #fff;
+  font-size: 24px;
+  font-weight: bold;
+  
+}
+
+.nav-list {
+  list-style: none;
+  display: flex;
+  gap: 25px;
+  align-items: center;
+}
+
+.nav-list li {
+  position: relative;
+}
+
+.nav-list li a {
+  color: #fff;
+  text-decoration: none;
+  font-weight: 500;
+  transition: color 0.3s ease;
+}
+.nav-list li a:hover,
+.nav-list li a.active {
+  color: #ffd700;
+}
+
+/* 🌟 Dropdown */
+.dropdown {
+  position: relative;
+}
+
+.dropdown-menu {
+  display: none;
+  position: absolute;
+  top: 100%;
+  left: 0;
+  background: #1a1a1a;
+  border-radius: 10px;
+  list-style: none;
+  padding: 8px 0;
+  width: 230px;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+  animation: slideDown 0.3s ease;
+  z-index: 999;
+}
+
+.dropdown-menu li a {
+  display: block;
+  color: #fff;
+  padding: 10px 18px;
+  text-decoration: none;
+  transition: background 0.3s, color 0.3s;
+}
+.dropdown-menu li a:hover {
+  background: #004488;
+  color: #fff;
+}
+
+/* ✅ Fix hover gap issue */
+.dropdown:hover > .dropdown-menu {
+  display: block;
+}
+.dropdown-menu:hover {
+  display: block;
+}
+
+/* 🌟 Mobile Menu Toggle */
+.menu-toggle {
+  font-size: 28px;
+  color: #fff;
+  cursor: pointer;
+  display: none;
+}
+
+/* 🌟 Mobile Responsive Navbar */
+@media (max-width: 900px) {
+  .menu-toggle {
+    display: block;
+    font-size: 28px;
+    cursor: pointer;
+    color: white;
+    position: absolute;
+    left: 5px; /* 👈 toggle now on left */
+    top: 20px;
+    z-index: 10001;
+  }
+
+  .nav-buttons {
+    position: absolute;
+    right: 20px;
+    top: 15px;
+    display: flex;
+    align-items: center;
+    z-index: 10001;
+  }
+
+  /* 🌟 Sidebar Nav List (hidden by default) */
+  .nav-list {
+    position: fixed;
+    top: 0;
+    left: -270px; /* 👈 starts hidden off-screen */
+    width: 270px;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.75);
+    backdrop-filter: blur(15px);
+    flex-direction: column;
+    text-align: left;
+    padding: 100px 25px 30px;
+    transition: all 0.4s ease;
+    opacity: 0;
+    z-index: 10000;
+    box-shadow: 5px 0 20px rgba(0,0,0,0.4);
+  }
+
+  /* 🌟 Show Sidebar when Active */
+  .nav-list.active {
+    left: 0;
+    opacity: 1;
+  }
+
+  .nav-list a {
+    display: block;
+    color: white;
+    padding: 14px 10px;
+    text-decoration: none;
+    font-weight: 500;
+    border-bottom: 1px solid rgba(255,255,255,0.1);
+    transition: background 0.3s;
+  }
+
+  .nav-list a:hover {
+    background: rgba(255, 255, 255, 0.1);
+  }
+
+  /* 🌟 Dropdown Inside Sidebar */
+  .dropdown-menu {
+  display: none;
+  flex-direction: column;
+  background: rgba(0, 0, 0, 0.7);
+  backdrop-filter: blur(10px);
+  border-radius: 10px;
+  margin-top: 8px;
+  padding: 10px;
+}
+
+.dropdown.show .dropdown-menu {
+  display: flex;
+}
+
+
+  .dropdown-menu a {
+    padding-left: 25px;
+    border: none;
+  }
+
+  /* Hide desktop layout */
+  .nav-list.desktop {
+    display: none;
+  }
+}
+
+/* 🌟 Buttons in Navbar */
+.nav-buttons .btn {
+  background: transparent;
+  color: #fff;
+  border: 1px solid #fff;
+  padding: 8px 15px;
+  border-radius: 6px;
+  text-decoration: none;
+  font-weight: 600;
+  transition: all 0.3s;
+}
+.nav-buttons .btn:hover {
+  background: #fff;
+  color: #003366;
+}
+
+/* 🌟 Developer Popup */
+.dev-popup {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.6);
+  z-index: 2000;
+  justify-content: center;
+  align-items: center;
+}
+.dev-popup-content {
+  background: #fff;
+  color: #000;
+  padding: 30px 40px;
+  border-radius: 15px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+  text-align: center;
+  width: 90%;
+  max-width: 400px;
+  animation: fadeIn 0.4s ease-in-out;
+}
+.close-btn {
+  float: right;
+  font-size: 25px;
+  cursor: pointer;
+  color: #333;
+  font-weight: bold;
+}
+.popup-btn {
+  display: block;
+  background: linear-gradient(135deg, #002244, #004488);
+  color: #fff;
+  text-decoration: none;
+  padding: 10px 15px;
+  border-radius: 8px;
+  margin: 15px 0;
+  transition: all 0.3s;
+}
+.popup-btn:hover {
+  background: linear-gradient(135deg, #004488, #0077cc);
+  transform: scale(1.05);
+}
+
+/* 🌟 WhatsApp Floating Icon */
+.whatsapp-float {
+  position: fixed;
+  bottom: 25px;
+  right: 25px;
+  background-color: #25D366;
+  border-radius: 50%;
+  width: 60px;
+  height: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  z-index: 1000;
+}
+.whatsapp-float:hover {
+  transform: scale(1.1);
+  box-shadow: 0 6px 14px rgba(0, 0, 0, 0.4);
+}
+.whatsapp-icon {
+  width: 35px;
+  height: 35px;
+}
+
+/* 🌟 Animations */
+@keyframes fadeIn {
+  from { opacity: 0; transform: scale(0.9); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+/* 🌟 Contact Section */
+.contact-main {
+  padding: 60px 20px;
+}
+.contact-section .container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 30px;
+}
+.contact-form, .contact-info {
+  background: #fff;
+  border-radius: 15px;
+  padding: 30px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+  flex: 1;
+  min-width: 300px;
+}
+.contact-form h2, .contact-info h2 {
+  color: #002244;
+  margin-bottom: 15px;
+}
+.contact-form input,
+.contact-form textarea {
+  width: 100%;
+  padding: 12px;
+  margin-bottom: 15px;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  font-size: 15px;
+}
+.contact-form button {
+  background: #f04e30;
+  border: none;
+  padding: 12px 20px;
+  border-radius: 8px;
+  color: #fff;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+.contact-form button:hover {
+  background: #d43c1a;
+}
+.contact-info p {
+  margin-bottom: 10px;
+}
+.contact-info .socials a {
+  color: #003366;
+  font-weight: 600;
+  text-decoration: none;
+  margin-right: 12px;
+}
+.contact-info .socials a:hover {
+  color: #004488;
+}
+
+/* 🌟 Map Section */
+.map-section {
+  padding: 40px 20px;
+  text-align: center;
+  background: #fff;
+  color: #002244;
+}
+.map-section h2 {
+  margin-bottom: 20px;
+}
+
+/* 🌟 Footer */
+footer {
+  background: linear-gradient(135deg, #002244, #004488);
+  color: #fff;
+  padding: 50px 20px 20px;
+  margin-top: 50px;
+}
+.footer-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 30px;
+}
+.footer-left, .footer-center, .footer-payment, .footer-right {
+  flex: 1;
+  min-width: 200px;
+}
+.footer-center ul {
+  list-style: none;
+}
+.footer-center ul li {
+  margin-bottom: 8px;
+}
+.footer-center ul li a {
+  color:white;
+  text-decoration: none;
+}
+.footer-payment .payment-link {
+  display: inline-block;
+  background: linear-gradient(135deg, #004488, #0077cc);
+  color: #fff;
+  padding: 8px 15px;
+  border-radius: 6px;
+  text-decoration: none;
+  margin-top: 10px;
+  transition: all 0.3s;
+}
+.footer-payment .payment-link:hover {
+  background: linear-gradient(135deg, #0055aa, #0099ff);
+  transform: scale(1.05);
+}
+.footer-bottom {
+  text-align: center;
+  margin-top: 20px;
+  font-size: 14px;
+  border-top: 1px solid #335577;
+  padding-top: 10px;
+}
+
+/* 🌟 Animations */
+@keyframes fadeIn {
+  from { opacity: 0; transform: scale(0.9); }
+  to { opacity: 1; transform: scale(1); }
+}
+.socials {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+}
+
+.socials a {
+  color: white;               /* default icon color */
+  font-size: 20px;            /* icon size */
+  transition: color 0.3s, transform 0.3s;
+}
+
+.socials a:hover {
+  color: #ffd700;             /* gold hover */
+  transform: scale(1.2);      /* slight zoom effect */
+}
+/* 🌟 Contact Page Header Section */
+.contact-page-header {
+  position: relative;
+  background: url("https://images.pexels.com/photos/17716872/pexels-photo-17716872.jpeg")
+    center/cover no-repeat;
+  height: 450px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  color: #fff;
+  overflow: hidden;
+}
+
+/* Dark overlay for better text visibility */
+.contact-page-header .contact-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(5, 5, 5, 0.5);
+  z-index: 1;
+}
+
+/* Header content */
+.contact-page-header .contact-header-content {
+  position: relative;
+  z-index: 2;
+  max-width: 800px;
+  padding: 0 20px;
+}
+
+.contact-page-header h1 {
+  font-size: 2.8rem;
+  font-weight: 700;
+  margin-bottom: 12px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  animation: fadeDown 1s ease forwards;
+}
+
+.contact-page-header p {
+  font-size: 1.15rem;
+  line-height: 1.6;
+  animation: fadeUp 1.2s ease forwards;
+}
+
+/* 🌈 Animations */
+@keyframes fadeDown {
+  from { opacity: 0; transform: translateY(-25px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(25px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* 📱 Responsive */
+@media (max-width: 768px) {
+  .contact-page-header {
+    height: 260px;
+  }
+
+  .contact-page-header h1 {
+    font-size: 2rem;
+  }
+
+  .contact-page-header p {
+    font-size: 1rem;
+  }
+}
+/* 🌟 Contact Section */
+.contact-main {
+  padding: 80px 20px;
+  background: linear-gradient(135deg, #f3f9ff, #e0f7fa);
+}
+
+.contact-section .container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 40px;
+}
+
+/* 🌈 Contact Form */
+.contact-form {
+  flex: 1;
+  min-width: 320px;
+  background: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(12px);
+  border-radius: 20px;
+  padding: 35px 30px;
+  box-shadow: 0 10px 25px rgba(0, 100, 180, 0.15);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  border-top: 5px solid #0078d4;
+}
+.contact-form:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 12px 30px rgba(0, 100, 200, 0.25);
+}
+
+.contact-form h2 {
+  color: #004d99;
+  font-size: 1.8rem;
+  margin-bottom: 20px;
+  text-align: center;
+  position: relative;
+}
+.contact-form h2::after {
+  content: "";
+  position: absolute;
+  width: 60px;
+  height: 3px;
+  background: linear-gradient(90deg, #00c6ff, #0072ff);
+  bottom: -8px;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.contact-form input,
+.contact-form textarea {
+  width: 100%;
+  padding: 14px 16px;
+  margin-bottom: 15px;
+  border: 1px solid #ccddee;
+  border-radius: 10px;
+  font-size: 15px;
+  outline: none;
+  transition: all 0.3s ease;
+  background: #f9fcff;
+}
+.contact-form input:focus,
+.contact-form textarea:focus {
+  border-color: #0078d4;
+  box-shadow: 0 0 6px rgba(0, 120, 212, 0.3);
+  background: #fff;
+}
+
+.contact-form textarea {
+  height: 120px;
+  resize: none;
+}
+
+.contact-form button {
+  width: 100%;
+  background: linear-gradient(135deg, #0072ff, #00c6ff);
+  color: #fff;
+  font-weight: 600;
+  border: none;
+  border-radius: 10px;
+  padding: 14px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  letter-spacing: 0.5px;
+}
+.contact-form button:hover {
+  background: linear-gradient(135deg, #00aaff, #0066cc);
+  transform: scale(1.03);
+}
+
+/* 🌟 Contact Info Box */
+.contact-info {
+  flex: 1;
+  min-width: 320px;
+  background: linear-gradient(135deg, #0072ff, #00c6ff);
+  color: #fff;
+  border-radius: 20px;
+  padding: 35px 30px;
+  box-shadow: 0 10px 25px rgba(0, 80, 160, 0.25);
+  transition: transform 0.3s ease;
+}
+.contact-info:hover {
+  transform: translateY(-5px);
+}
+.contact-info h2 {
+  font-size: 1.8rem;
+  margin-bottom: 15px;
+  text-align: center;
+  color: #fff;
+  text-transform: uppercase;
+}
+.contact-info p {
+  margin-bottom: 12px;
+  font-size: 15px;
+}
+.contact-info .socials {
+  margin-top: 15px;
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+}
+.contact-info .socials a {
+  font-size: 20px;
+  color: #fff;
+  transition: all 0.3s ease;
+}
+.contact-info .socials a:hover {
+  color: #ffd700;
+  transform: scale(1.2);
+}
+
+/* 🌍 Map Section */
+.map-section {
+  padding: 60px 20px;
+  text-align: center;
+  background: linear-gradient(135deg, #e3f2fd, #f1f8ff);
+  color: #004d99;
+  border-top: 5px solid #0078d4;
+}
+.map-section h2 {
+  font-size: 1.8rem;
+  margin-bottom: 20px;
+  position: relative;
+}
+.map-section h2::after {
+  content: "";
+  position: absolute;
+  width: 60px;
+  height: 3px;
+  background: linear-gradient(90deg, #00c6ff, #0072ff);
+  bottom: -8px;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+iframe {
+  border-radius: 15px;
+  box-shadow: 0 10px 25px rgba(0, 100, 200, 0.2);
+}

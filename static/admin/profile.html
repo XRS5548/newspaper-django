@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>User Profile</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+
+<body class="bg-gray-100 dark:bg-gray-900 transition-colors duration-300">
+
+  <!-- ================= SIDEBAR ================= -->
+  <div id="sidebar"
+       class="fixed top-0 left-0 w-64 h-full bg-white dark:bg-gray-800 shadow-lg transform -translate-x-full transition-transform duration-300 z-50">
+
+    <div class="p-4 border-b dark:border-gray-700">
+      <h2 class="text-xl font-bold dark:text-white">Menu</h2>
+    </div>
+
+    <nav class="p-4 space-y-3 text-gray-700 dark:text-gray-300">
+      <a href="index.html" class="block py-2 px-3 rounded hover:bg-gray-200 dark:hover:bg-gray-700">Dashboard</a>
+      <a href="#" class="block py-2 px-3 rounded hover:bg-gray-200 dark:hover:bg-gray-700">Users</a>
+      <a href="#" class="block py-2 px-3 rounded hover:bg-gray-200 dark:hover:bg-gray-700">Settings</a>
+    </nav>
+  </div>
+
+  <!-- Overlay -->
+  <div id="overlay"
+       class="fixed inset-0 bg-black bg-opacity-40 hidden z-40"></div>
+
+  <!-- ================= TOP NAVBAR ================= -->
+  <header class="flex justify-between items-center px-6 py-4 bg-white dark:bg-gray-800 shadow">
+    
+    <!-- Sidebar Toggle Button -->
+    <button id="sidebarToggle" class="text-2xl text-gray-700 dark:text-gray-200">&#9776;</button>
+
+    <div class="flex items-center gap-4">
+
+      <!-- DARK MODE BUTTON -->
+      <button id="darkModeBtn"
+              class="px-3 py-2 bg-gray-200 dark:bg-gray-700 rounded-full text-gray-700 dark:text-white">
+        🌙
+      </button>
+
+      <!-- NOTIFICATION -->
+      <button id="notifBtn"
+              class="relative px-3 py-2 bg-gray-200 dark:bg-gray-700 rounded-full text-gray-700 dark:text-white">
+        🔔
+        <span class="absolute top-0 right-0 bg-red-600 text-white text-xs px-1 rounded">3</span>
+      </button>
+
+      <!-- PROFILE DROPDOWN BUTTON -->
+      <button id="profileBtn"
+              class="w-10 h-10 rounded-full overflow-hidden border">
+        <img src="image/WhatsApp Image 2025-10-16 at 6.06.50 PM.jpeg" />
+      </button>
+
+      <!-- DROPDOWN -->
+      <div id="profileDropdown"
+           class="absolute top-16 right-6 bg-white dark:bg-gray-800 rounded shadow-lg p-3 w-40 hidden text-gray-700 dark:text-gray-300">
+        <a href="#" class="block py-2 hover:bg-gray-100 dark:hover:bg-gray-700 rounded">My Profile</a>
+        <a href="#" class="block py-2 hover:bg-gray-100 dark:hover:bg-gray-700 rounded">Settings</a>
+        <a href="#" class="block py-2 hover:bg-gray-100 dark:hover:bg-gray-700 rounded">Logout</a>
+      </div>
+
+    </div>
+
+  </header>
+
+  
+  <!-- ================= PROFILE CONTENT ================= -->
+  <div class="max-w-3xl mx-auto bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-200 shadow-lg rounded-xl p-6 mt-8">
+
+    <h1 class="text-3xl font-bold mb-6">User Profile</h1>
+
+    <!-- USER INFO -->
+    <div class="flex items-center gap-6">
+      <div class="w-24 h-24 rounded-full overflow-hidden border">
+        <img src="image/boy1.jfif" class="w-full h-full object-cover" />
+      </div>
+      <div>
+        <h2 id="uName" class="text-2xl font-bold"></h2>
+        <p id="uEmail" class="text-gray-600 dark:text-gray-300"></p>
+        <p id="uRole" class="text-gray-600 dark:text-gray-300"></p>
+        <p><strong>Password:</strong> <span id="uPassword"></span></p>
+      </div>
+    </div>
+
+    <hr class="my-6 border-gray-300 dark:border-gray-700">
+
+    <!-- NEWSPAPER DATA -->
+    <h2 class="text-xl font-semibold mb-4">Newspaper Distribution</h2>
+
+    <div class="grid grid-cols-3 gap-4" id="paperData"></div>
+
+  </div>
+
+  <!-- ================= JS ================= -->
+  <script>
+
+    /* ---------------- SIDEBAR ---------------- */
+    const sidebar = document.getElementById("sidebar");
+    const overlay = document.getElementById("overlay");
+    const toggleBtn = document.getElementById("sidebarToggle");
+
+    toggleBtn.addEventListener("click", () => {
+      sidebar.classList.toggle("-translate-x-full");
+      overlay.classList.toggle("hidden");
+    });
+
+    overlay.addEventListener("click", () => {
+      sidebar.classList.add("-translate-x-full");
+      overlay.classList.add("hidden");
+    });
+
+
+    /* ---------------- DARK MODE ---------------- */
+    const darkBtn = document.getElementById("darkModeBtn");
+    darkBtn.addEventListener("click", () => {
+      document.body.classList.toggle("dark");
+    });
+
+
+    /* ---------------- NOTIFICATION ---------------- */
+    document.getElementById("notifBtn").addEventListener("click", () => {
+      alert("You have new notifications!");
+    });
+
+
+    /* ---------------- PROFILE DROPDOWN ---------------- */
+    const profileBtn = document.getElementById("profileBtn");
+    const profileDropdown = document.getElementById("profileDropdown");
+
+    profileBtn.addEventListener("click", (e) => {
+      profileDropdown.classList.toggle("hidden");
+      e.stopPropagation();
+    });
+
+    document.addEventListener("click", () => {
+      profileDropdown.classList.add("hidden");
+    });
+
+
+    /* ---------------- USER DATA ---------------- */
+    let users = [
+      { id: 1, name: "Chetram", phone: "9876543210", PK: 5, BH: 3, ET: 7, PB: 4, HT: 6, TN: 2, email: "chetram@example.com", role: "Distributor", password: "chetram123" },
+      { id: 2, name: "Ajay", phone: "9123456780", PK: 2, BH: 1, ET: 4, PB: 5, HT: 3, TN: 6, email: "ajay@example.com", role: "User", password: "ajay456" },
+    ];
+
+    const params = new URLSearchParams(window.location.search);
+    const id = params.get("id");
+    const user = users.find(u => u.id == id);
+
+    if (user) {
+      document.getElementById("uName").innerText = user.name;
+      document.getElementById("uEmail").innerText = user.email;
+      document.getElementById("uRole").innerText = user.role;
+      document.getElementById("uPassword").innerText = user.password;
+
+      let papers = ["PK", "BH", "ET", "PB", "HT", "TN"];
+      let html = "";
+
+      papers.forEach(p => {
+        html += `
+          <div class="bg-gray-100 dark:bg-gray-700 p-4 rounded text-center shadow">
+            <p class="text-gray-600 dark:text-gray-300">${p}</p>
+            <p class="text-2xl font-bold">${user[p]}</p>
+          </div>
+        `;
+      });
+
+      document.getElementById("paperData").innerHTML = html;
+    }
+    
+  </script>
+
+</body>
+</html>

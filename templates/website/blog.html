@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Blog | NewsPaper</title>
+  <link rel="stylesheet" href="/static/css/blog.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+</head>
+<!-- 🌟 Developer Contact Popup -->
+<div id="devPopup" class="dev-popup">
+  <div class="dev-popup-content">
+    <span class="close-btn" id="closePopup">&times;</span>
+    <h3>💬 Contact Developer</h3>
+    <p>Have a query or need help with this website? Reach out below:</p>
+    <a href="mailto:developer@email.com" class="popup-btn">📧 Send Email</a>
+    <a href="https://wa.me/919876543210" target="_blank" class="popup-btn">💬 Chat on WhatsApp</a>
+  </div>
+</div>
+
+<body>
+   <!-- 🌟 TOP MOVING CONTACT BAR -->
+<div class="dev-contact-bar">
+  <marquee behavior="scroll" direction="left" scrollamount="5" onmouseover="this.stop();" onmouseout="this.start();">
+    💡 Need help or have a question? <a href="#" id="contactDevLink">Contact the Developer / Owner</a>
+  </marquee>
+</div>
+  <!-- ---------- NAVBAR START ---------- -->
+  <nav class="navbar">
+    <div class="logo">MyWebsite</div>
+    <div class="menu-toggle" id="menuToggle">&#9776;</div>
+    <ul class="nav-list">
+      <li class="nav-item"><a href="/">Home</a></li>
+      <li class="nav-item"><a href="/about">About</a></li>
+      <li class="nav-item"><a href="/blog" target="_blank">Blog</a></li>
+      <li class="nav-item"><a href="/service" class="nav-link">Services</a></li>
+      <li class="nav-item"><a href="/contact">Contact Us</a></li>
+      <li class="nav-item dropdown">
+        <a href="#" class="nav-link dropdown-toggle">Franchise ▾</a>
+        <ul class="dropdown-menu">
+          <li><a href="newfrenchise">Apply for New Franchise</a></li>
+          <li><a href="search">Search Franchise</a></li>
+        </ul>
+      </li>
+    </ul>
+    <div class="nav-buttons">
+      <a href="sign" class="btn btn-signin">Sign In</a>
+    </div>
+  </nav>
+
+  <!-- ---------- HEADER SECTION ---------- -->
+ <!-- ---------- HEADER SECTION ---------- -->
+<header class="blog-header">
+  <div class="header-overlay">
+    <h1>Welcome to Our Blog World</h1>
+    <p>Read, Write & Share stories that matter.</p>
+  </div>
+</header>
+
+
+  <!-- ---------- BLOG FORM SECTION ---------- -->
+  <!-- 🔹 Blog Cards Section -->
+  <section class="blog-section">
+    <h2>📰 Featured Articles</h2>
+    <div class="blog-grid">
+
+      <!-- 🔗 Blog 1 -->
+      <a href="https://blog.google/technology/ai/" target="_blank" class="blog-card">
+        <img src="/static/image/gemini.webp" alt="AI Blog">
+        <h3>How AI is Transforming the Digital World</h3>
+        <p>Explore how artificial intelligence is changing industries, education, and more.</p>
+      </a>
+
+      <!-- 🔗 Blog 2 -->
+      <a href="https://time.com/collections/best-inventions-2025/" target="_blank" class="blog-card">
+        <img src="/static/image/2025.webp" alt="Tech Blog">
+        <h3>Top Tech Innovations of 2025</h3>
+        <p>Discover the next big wave of technological advancements shaping our future.</p>
+      </a>
+
+      <!-- 🔗 Blog 3 -->
+      <a href="https://www.health.harvard.edu/topics/staying-healthy" target="_blank" class="blog-card">
+        <img src="/static/image/healthy.jpg" alt="Fitness Blog">
+        <h3>Stay Fit: How to Balance Health & Work</h3>
+        <p>Tips and guides to keep your fitness routine consistent even in a busy schedule.</p>
+      </a>
+
+      <!-- 🔗 Blog 4 -->
+      <a href="https://www.apple.com/newsroom/" target="_blank" class="blog-card">
+        <img src="/static/image/apple.jpg" alt="Apple News">
+        <h3>Inside Apple: The Future of Smart Devices</h3>
+        <p>Get the latest updates and design secrets from Apple’s innovation team.</p>
+      </a>
+
+      <!-- 🔗 Blog 5 -->
+      <a href="https://news.microsoft.com/" target="_blank" class="blog-card">
+        <img src="/static/image/microsoft.png" alt="Microsoft Blog">
+        <h3>Microsoft & AI: A New Era of Productivity</h3>
+        <p>Learn how Microsoft’s AI tools are revolutionizing the way we work and create.</p>
+      </a>
+
+ <!-- 🔗 Blog 6 -->
+    <a href="https://www.nasa.gov/news-release/" target="_blank" class="blog-card">
+      <img src="/static/image/nasa.webp" alt="NASA News">
+      <h3>NASA’s Mission to Mars: Beyond Earth</h3>
+      <p>Discover NASA’s latest missions and the journey toward interplanetary exploration.</p>
+    </a>
+
+    <!-- 🔗 Blog 7 -->
+    <a href="https://thehackernews.com/" target="_blank" class="blog-card">
+      <img src="/static/image/hacker.webp" alt="Cybersecurity Blog">
+      <h3>Cybersecurity in 2025: Staying Safe Online</h3>
+      <p>Read about the latest security trends and how to protect your data from new threats.</p>
+    </a>
+
+    <!-- 🔗 Blog 8 -->
+    <a href="https://www.smashingmagazine.com/" target="_blank" class="blog-card">
+      <img src="/static/https://images.pexels.com/photos/3585001/pexels-photo-3585001.jpeg" alt="Design Blog">
+      <h3>Creative Web Design Trends for 2025</h3>
+      <p>See how modern UI/UX design and creativity are shaping digital experiences.</p>
+    </a>
+
+    </div>
+  </section>
+
+
+  <!-- ---------- FOOTER ---------- -->
+  <footer>
+    <div class="footer-container">
+      <div class="footer-left">
+        <h3>NewsPaper</h3>
+        <p>Stay updated with the latest news from around the world.</p>
+      </div>
+
+      <div class="footer-center">
+        <h4>Quick Links</h4>
+        <ul>
+          <li><a href="/">Home</a></li>
+          <li><a href="about">About</a></li>
+          <li><a href="blog">Blog</a></li>
+          <li><a href="service">Services</a></li>
+          <li><a href="contact">Contact</a></li>
+          <li><a href="newfrenchise">Franchise</a></li>
+          <li><a href="sitemap">Sitemap</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-payment">
+        <h4>Payment</h4>
+        <p>Support our digital newspaper or buy premium access.</p>
+        <a href="payment" class="payment-link">💳 Make a Payment</a>
+      </div>
+
+      <div class="footer-right">
+        <h4>Contact Us</h4>
+        <p>Email: info@newspaper.com</p>
+        <p>Phone: +91 9876543210</p>
+         <div class="socials">
+          <a href="#" target="_blank" title="Facebook"><i class="fab fa-facebook-f"></i></a>
+  <a href="#" target="_blank" title="Twitter"><i class="fab fa-twitter"></i></a>
+  <a href="#" target="_blank" title="Instagram"><i class="fab fa-instagram"></i></a>
+  <a href="#" target="_blank" title="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+  <a href="#" target="_blank" title="YouTube"><i class="fab fa-telegram"></i></a>
+        </div>
+      </div>
+    </div>
+    <p class="footer-bottom">© 2025 NewsPaper. All rights reserved.</p>
+  </footer>
+
+  <!-- 🌟 WhatsApp Floating Button -->
+  <a href="https://wa.me/919694953370" class="whatsapp-float" target="_blank">
+<img src="/static/https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" alt="WhatsApp" class="whatsapp-icon">
+  </a>
+
+  <script src="/static/js/blog.js"></script>
+</body>
+</html>

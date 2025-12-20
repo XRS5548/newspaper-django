@@ -1,0 +1,772 @@
+/* ----- GENERAL ----- */
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+/* ----- NAVBAR ----- */
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color:#002244;
+  color: black;
+  padding: 10px 20px;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  height: 60px;
+}
+
+.navbar .logo {
+  font-size: 22px;
+  font-weight: bold;
+  color: white;
+}
+.nav-list {
+  display: flex;
+  gap: 20px;
+  list-style: none;
+}
+
+.nav-list a {
+  color:white;
+  text-decoration: none;
+}
+
+/* 🔹 Navbar Buttons */
+.nav-buttons {
+  display: flex;
+  gap: 10px;
+}
+
+.btn {
+  text-decoration: none;
+  padding: 8px 16px;
+  border-radius: 6px;
+  font-weight: 500;
+  transition: 0.3s;
+}
+
+.btn-signin {
+  background: transparent;
+  color: white;
+  border: 1px solid white;
+}
+
+.btn-signin:hover {
+  background: white;
+  color: #4f46e5;
+}
+
+.btn-signup {
+  background: white;
+  color: #4f46e5;
+  border: 1px solid white;
+}
+
+.btn-signup:hover {
+  background: #c7d2fe;
+  color: #1e1b4b;
+}
+
+/* 🌟 Default: Hide toggle button (desktop view) */
+.menu-toggle {
+  display: none;
+}
+
+@media (max-width: 900px) {
+  /* 🌟 Toggle Button */
+  .menu-toggle {
+    display: block;
+    font-size: 30px;
+    cursor: pointer;
+    color: white;
+    position: absolute;
+    left: 5px;
+    top: 25px;
+    z-index: 10001;
+  }
+
+  /* 🌟 Sign-in Button stays on top right */
+  .nav-buttons {
+    position: absolute;
+    right: 20px;
+    top: 15px;
+    display: flex;
+    align-items: center;
+    z-index: 10001;
+  }
+
+  /* 🌟 Sidebar Menu */
+  .nav-list {
+    position: fixed;
+    top: 0;
+    left: -280px; /* hidden initially */
+    width: 280px;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.75);
+    backdrop-filter: blur(18px);
+    -webkit-backdrop-filter: blur(18px);
+    display: flex;
+    flex-direction: column;
+    text-align: left;
+    padding: 100px 25px 30px;
+    transition: all 0.4s ease;
+    opacity: 0;
+    z-index: 10000;
+    box-shadow: 8px 0 20px rgba(0, 0, 0, 0.4);
+    border-right: 1px solid rgba(255, 255, 255, 0.15);
+  }
+
+  .nav-list.active {
+    left: 0;
+    opacity: 1;
+  }
+
+  .nav-list a {
+    display: block;
+    color: white;
+    padding: 14px 10px;
+    text-decoration: none;
+    font-weight: 500;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    transition: background 0.3s;
+  }
+
+  .nav-list a:hover {
+    background: rgba(255, 255, 255, 0.15);
+  }
+
+  /* 🌟 Dropdown inside sidebar */
+  .dropdown-menu {
+    display: none;
+    flex-direction: column;
+    background: rgba(0, 0, 0, 0.65);
+    backdrop-filter: blur(12px);
+    border-radius: 10px;
+    margin-top: 8px;
+    padding: 8px 0;
+    overflow: hidden;
+    max-height: 0;
+    transition: max-height 0.4s ease;
+  }
+
+  .dropdown.show .dropdown-menu {
+    display: flex;
+    max-height: 300px; /* expands smoothly */
+  }
+
+  .dropdown-menu a {
+    padding-left: 25px;
+    border: none;
+    font-size: 0.95rem;
+  }
+
+  /* Hide desktop navbar */
+  .nav-list.desktop {
+    display: none;
+  }
+}
+
+/* ----- FEATURED NEWS ----- */
+.featured-news {
+  position: relative;
+}
+
+.featured-news img {
+  width: 100%;
+  height: auto;
+}
+
+.featured-text {
+  position: absolute;
+  bottom: 20px;
+  left: 20px;
+  color: #fff;
+  text-shadow: 0 0 5px #000;
+}
+
+/* ----- TWO-COLUMN SECTION ----- */
+.two-column-section .container {
+  display: flex;
+  gap: 20px;
+  margin: 40px auto;
+  max-width: 1200px;
+  flex-wrap: wrap;
+}
+
+.left-image, .right-text {
+  flex: 1;
+}
+
+/* ----- HORIZONTAL NEWS SLIDER ----- */
+.horizontal-news-slider {
+  margin: 50px auto;
+  width: 95%;
+  overflow-x: auto;
+}
+
+.slider-wrapper {
+  display: flex;
+  gap: 20px;
+}
+
+.news-card {
+  flex: 0 0 300px;
+  background: #fff;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+  text-decoration: none;
+  color: #000;
+}
+
+.news-card img {
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+}
+
+/* ----- FOOTER ----- */
+footer {
+  background: #002244;
+  color: #fff;
+  padding: 40px 20px 20px;
+}
+
+.footer-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  max-width: 1200px;
+  margin: auto;
+  gap: 20px;
+}
+
+.footer-left, .footer-center, .footer-right {
+  flex: 1;
+  min-width: 200px;
+}
+
+.footer-center ul {
+  list-style: none;
+  padding: 0;
+}
+
+.footer-center a {
+  color: #fff;
+  text-decoration: none;
+}
+
+.footer-bottom {
+  text-align: center;
+  margin-top: 20px;
+  font-size: 14px;
+}
+
+/* ----- RESPONSIVE ----- */
+@media (max-width: 900px) {
+  .two-column-section .container {
+    flex-direction: column;
+  }
+
+  .nav-list {
+    display: none;
+    flex-direction: column;
+    background: #222;
+    width: 100%;
+  }
+
+  .nav-list.active {
+    display: flex;
+  }
+
+  .menu-toggle {
+    display: block;
+  }
+}
+
+.blog-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 25px;
+    }
+
+    .blog-card {
+      background: #111b2f;
+      border-radius: 12px;
+      overflow: hidden;
+      text-decoration: none;
+      color: white;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      margin-bottom: 50px;
+    }
+
+    .blog-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 4px 15px rgba(0, 255, 255, 0.2);
+    }
+
+    .blog-card img {
+      width: 100%;
+      height: 180px;
+      object-fit: cover;
+    }
+
+    .blog-card h3 {
+      margin: 15px 0 10px;
+      font-size: 1.2rem;
+      color: #00d0ff;
+      margin-left: 17px;
+    }
+
+    .blog-card p {
+      font-size: 0.95rem;
+      color: #ccc;
+      padding: 0 15px 20px;
+     position: relative;
+     right: 10px;
+     margin-left: 15px;
+    }
+/* ✅ FINAL FIX FOR MOBILE SHAKE / PAGE MOVEMENT */
+html, body {
+  width: 100%;
+  overflow-x: hidden; /* Stop sideways scroll */
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* ✅ Fix elements that might go beyond screen width */
+*, *::before, *::after {
+  box-sizing: inherit;
+  max-width: 100%;
+}
+
+/* ✅ Ensure navbar & top bars don't overflow */
+.navbar, 
+.dev-contact-bar, 
+.top-help-bar,
+.blog-header,
+footer {
+  width: 100%;
+  overflow-x: hidden;
+}
+
+/* ✅ Mobile-specific fixes */
+@media screen and (max-width: 500px) {
+  body {
+    position: relative;
+    overflow-x: hidden;
+  }
+
+  .navbar {
+    margin: 0;
+    padding: 10px;
+  }
+
+  .blog-header {
+    height: 380px; /* reduce to fit smaller screens */
+    padding: 20px;
+  }
+
+  .header-overlay {
+    padding: 20px;
+  }
+
+  .blog-header h1 {
+    font-size: 1.8rem;
+  }
+
+  .blog-header p {
+    font-size: 0.95rem;
+  }
+
+  /* ✅ Prevent any image or grid overflow */
+  img {
+    max-width: 100%;
+    height: auto;
+  }
+
+  .blog-grid, .two-column-section, .slider-wrapper {
+    margin: 0 auto;
+    padding: 0 10px;
+    overflow-x: hidden;
+  }
+}
+
+
+/* ---------- HEADER SECTION ---------- */
+
+/* 🌟 NAVBAR DROPDOWN STYLING */
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: linear-gradient(135deg, #002244, #004488);
+  padding: 15px 40px;
+  color: #fff;
+  position: relative;
+}
+
+.nav-list {
+  display: flex;
+  list-style: none;
+  gap: 25px;
+  align-items: center;
+}
+
+.nav-item a {
+  color: white;
+  text-decoration: none;
+  font-weight: 500;
+  transition: color 0.3s ease;
+}
+
+.nav-item a:hover {
+  color: #ffd700;
+}
+
+/* 🌟 Dropdown Menu - Smooth Animation and Clickable */
+.dropdown {
+  position: relative;
+}
+
+.dropdown-menu {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  display: flex;
+  flex-direction: column;
+  background: rgba(255, 255, 255, 0.97);
+  border-radius: 10px;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+  min-width: 230px;
+  padding: 5px 0;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(-15px);
+  transition: all 0.35s ease;
+  z-index: 999;
+}
+
+/* 🩵 When hover or active via JS */
+.dropdown:hover .dropdown-menu,
+.dropdown-menu.show {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+}
+
+/* 🌟 Dropdown Links */
+.dropdown-menu a {
+  display: block;
+  padding: 12px 20px;
+  color: #002244;
+  text-decoration: none;
+  transition: background 0.3s, color 0.3s;
+  font-weight: 500;
+}
+
+.dropdown-menu a:hover {
+  background: #004488;
+  color: #fff;
+}
+/* 🌟 WhatsApp Floating Button */
+.whatsapp-float {
+  position: fixed;
+  bottom: 25px;
+  right: 25px;
+  background-color: #25D366;
+  border-radius: 50%;
+  width: 60px;
+  height: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  z-index: 1000;
+}
+
+.whatsapp-float:hover {
+  transform: scale(1.1);
+  box-shadow: 0 6px 14px rgba(0, 0, 0, 0.4);
+}
+
+.whatsapp-icon {
+  width: 35px;
+  height: 35px;
+  filter: brightness(100%);
+}
+footer-payment {
+  text-align: left;
+}
+
+.footer-payment h4 {
+  color: #ffd700;
+  margin-bottom: 10px;
+}
+
+.footer-payment p {
+  color: #ccc;
+  font-size: 0.95rem;
+  margin-bottom: 12px;
+}
+
+.footer-payment .payment-link {
+  display: inline-block;
+  padding: 10px 20px;
+  background: linear-gradient(135deg, #004488, #0077cc);
+  color: white;
+  text-decoration: none;
+  border-radius: 8px;
+  transition: background 0.3s, transform 0.3s;
+}
+
+.footer-payment .payment-link:hover {
+  background: linear-gradient(135deg, #0055aa, #0099ff);
+  transform: scale(1.05);
+}
+
+/* 🌟 Developer Contact Moving Bar - Always on Top of Navbar */
+.dev-contact-bar {
+  background: linear-gradient(90deg, #000000, #222222);
+  color: #fff;
+  padding: 8px 0;
+  font-size: 15px;
+  font-weight: 500;
+  text-align: center;
+  position: fixed; /* ✅ fixed so it stays on top */
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 2000; /* ✅ higher than navbar */
+}
+
+.dev-contact-bar a {
+  color: #00ffcc;
+  font-weight: 600;
+  text-decoration: none;
+  margin-left: 8px;
+  transition: color 0.3s ease;
+}
+
+.dev-contact-bar a:hover {
+  color: #ffd700;
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+/* ✅ Push navbar down a bit so it doesn't overlap */
+.navbar {
+  margin-top: 35px; /* Adjust if needed */
+}
+
+/* 🌟 Popup Styling */
+.dev-popup {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.6);
+  z-index: 2000;
+  justify-content: center;
+  align-items: center;
+}
+
+.dev-popup-content {
+  background: #fff;
+  padding: 30px 40px;
+  border-radius: 15px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+  text-align: center;
+  width: 90%;
+  max-width: 400px;
+  animation: fadeIn 0.4s ease-in-out;
+}
+
+.close-btn {
+  float: right;
+  font-size: 25px;
+  cursor: pointer;
+  color: #333;
+  font-weight: bold;
+}
+
+.popup-btn {
+  display: block;
+  background: linear-gradient(135deg, #002244, #004488);
+  color: #fff;
+  text-decoration: none;
+  padding: 10px 15px;
+  border-radius: 8px;
+  margin: 15px 0;
+  transition: all 0.3s;
+}
+
+.popup-btn:hover {
+  background: linear-gradient(135deg, #004488, #0077cc);
+  transform: scale(1.05);
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: scale(0.9); }
+  to { opacity: 1; transform: scale(1); }
+}
+/* 🌟 Top Help Bar Styling */
+.top-help-bar {
+  background-color: #000; /* काला background */
+  color: #fff;
+  text-align: center;
+  padding: 8px 0;
+  font-size: 15px;
+  font-family: 'Poppins', sans-serif;
+  position: sticky;
+  top: 0;
+  z-index: 3000;
+}
+
+.top-help-bar a {
+  color: #00ffcc;
+  text-decoration: none;
+  font-weight: bold;
+  margin-left: 6px;
+  transition: 0.3s;
+}
+
+.top-help-bar a:hover {
+  color: #00ffff;
+  text-decoration: underline;
+}
+.blog-section h2{
+  text-align: center;
+  font-size: 40px;
+  margin-bottom: 40px;
+}
+.socials {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+}
+
+.socials a {
+  color: white;               /* default icon color */
+  font-size: 20px;            /* icon size */
+  transition: color 0.3s, transform 0.3s;
+}
+
+.socials a:hover {
+  color: #ffd700;             /* gold hover */
+  transform: scale(1.2);      /* slight zoom effect */
+}
+/* ---------- BLOG HEADER SECTION ---------- */
+.blog-header {
+  position: relative;
+  width: 100%;
+  height: 50vh; /* ✅ reduced height */
+  background: url('https://images.unsplash.com/photo-1522202176988-66273c2fd55f?auto=format&fit=crop&w=1600&q=80') center/cover no-repeat;
+  display: flex;
+  align-items: center; /* ✅ vertically center */
+  justify-content: center;
+  text-align: center;
+  color: #fff;
+  overflow: hidden;
+  height: 450px;
+}
+
+.header-overlay {
+  
+  padding: 40px 30px;
+  border-radius: 12px;
+  animation: fadeInUp 1.2s ease;
+}
+
+.blog-header h1 {
+  font-size: 2.8rem;
+  margin-bottom: 10px;
+  font-weight: 700;
+  letter-spacing: 1px;
+}
+
+.blog-header p {
+  font-size: 1.1rem;
+  color: #f1f1f1;
+  max-width: 700px;
+  margin: auto;
+  line-height: 1.5;
+}
+
+/* ✨ Smooth fade-up animation */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(40px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Responsive Adjustments */
+@media (max-width: 768px) {
+  .blog-header {
+    height: 40vh;
+    padding: 20px;
+  }
+
+  .blog-header h1 {
+    font-size: 2rem;
+  }
+
+  .blog-header p {
+    font-size: 0.95rem;
+  }
+}
+/* ✅ FIX: Make Main Content Clickable in Mobile Version */
+@media (max-width: 900px) {
+
+  /* Prevent hidden menu from blocking clicks */
+  .nav-list {
+    pointer-events: none; /* no clicks when hidden */
+  }
+
+  /* Allow clicks only when menu is active/open */
+  .nav-list.active {
+    pointer-events: auto;
+  }
+
+  /* Ensure dropdown menus work normally */
+  .dropdown-menu {
+    pointer-events: auto !important;
+    position: relative !important;
+    z-index: 100002 !important;
+  }
+
+  /* Main content (below navbar) stays clickable */
+  main,
+  .main-content,
+  .featured-news,
+  .two-column-section,
+  .horizontal-news-slider,
+  footer {
+    position: relative;
+    z-index: 1;
+    pointer-events: auto !important;
+  }
+
+  /* Navbar elements stay above but not blocking content */
+  .navbar,
+  .menu-toggle,
+  .nav-buttons {
+    z-index: 100001 !important;
+  }
+}

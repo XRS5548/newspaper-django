@@ -1,66 +1,742 @@
 {% load static %}
-
 <!DOCTYPE html>
-
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Dashboard</title>
+    <title>{% block title %}Dashboard Panel{% endblock %}</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<!-- Bootstrap CSS -->
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
-
-<style>
-    body { background:#f4f6f9; }
-    .sidebar {
-        width: 240px;
-        height: 100vh;
-        background: #111827;
-        position: fixed;
-        color: white;
-    }
-    .sidebar a {
-        color: #cbd5e1;
-        text-decoration: none;
-        display: block;
-        padding: 12px 20px;
-    }
-    .sidebar a:hover {
-        background: #1f2937;
-        color: #fff;
-    }
-    .content {
-        margin-left: 240px;
-        padding: 20px;
-    }
-</style>
-
+    
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --primary-color: #4f46e5;
+            --primary-light: #eef2ff;
+            --secondary-color: #06b6d4;
+            --accent-color: #8b5cf6;
+            --light-bg: #f8fafc;
+            --card-bg: #ffffff;
+            --text-dark: #1e293b;
+            --text-medium: #475569;
+            --text-light: #64748b;
+            --border-color: #e2e8f0;
+            --success-color: #10b981;
+            --warning-color: #f59e0b;
+            --danger-color: #ef4444;
+            --info-color: #3b82f6;
+            --sidebar-width: 260px;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background-color: var(--light-bg);
+            color: var(--text-dark);
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+        
+        /* Sidebar Styling */
+        .sidebar {
+            width: var(--sidebar-width);
+            height: 100vh;
+            background: linear-gradient(180deg, #ffffff 0%, #f8fafc 100%);
+            position: fixed;
+            left: 0;
+            top: 0;
+            z-index: 100;
+            box-shadow: 2px 0 10px rgba(0, 0, 0, 0.05);
+            border-right: 1px solid var(--border-color);
+            transition: all 0.3s ease;
+            overflow-y: auto;
+        }
+        
+        .sidebar-header {
+            padding: 1.5rem 1.25rem;
+            border-bottom: 1px solid var(--border-color);
+            background-color: white;
+        }
+        
+        .sidebar-header h4 {
+            font-family: 'Poppins', sans-serif;
+            font-weight: 700;
+            color: var(--primary-color);
+            margin: 0;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .sidebar-header h4 i {
+            background: linear-gradient(135deg, var(--primary-color), var(--accent-color));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+        
+        .nav-section {
+            padding: 1.25rem 0;
+        }
+        
+        .nav-title {
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            color: var(--text-light);
+            font-weight: 600;
+            padding: 0 1.25rem 0.75rem;
+            margin-bottom: 0.5rem;
+            border-bottom: 1px solid var(--border-color);
+        }
+        
+        .nav-link {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 0.85rem 1.25rem;
+            color: var(--text-medium);
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.2s ease;
+            position: relative;
+            border-left: 4px solid transparent;
+        }
+        
+        .nav-link:hover {
+            background-color: var(--primary-light);
+            color: var(--primary-color);
+            border-left-color: var(--primary-color);
+        }
+        
+        .nav-link.active {
+            background-color: var(--primary-light);
+            color: var(--primary-color);
+            font-weight: 600;
+            border-left-color: var(--primary-color);
+        }
+        
+        .nav-link .icon {
+            font-size: 1.2rem;
+            width: 24px;
+            display: flex;
+            justify-content: center;
+        }
+        
+        .badge {
+            margin-left: auto;
+            font-size: 0.7rem;
+            padding: 0.25rem 0.5rem;
+            border-radius: 6px;
+            font-weight: 600;
+        }
+        
+        .badge-primary {
+            background-color: var(--primary-color);
+        }
+        
+        .badge-success {
+            background-color: var(--success-color);
+        }
+        
+        .badge-warning {
+            background-color: var(--warning-color);
+        }
+        
+        /* Main Content */
+        .content {
+            margin-left: var(--sidebar-width);
+            padding: 0;
+            transition: all 0.3s ease;
+            min-height: 100vh;
+        }
+        
+        /* Topbar */
+        .topbar {
+            background-color: white;
+            padding: 1rem 2rem;
+            border-bottom: 1px solid var(--border-color);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            z-index: 99;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+        }
+        
+        .page-header h1 {
+            font-family: 'Poppins', sans-serif;
+            font-size: 1.75rem;
+            font-weight: 700;
+            color: var(--text-dark);
+            margin: 0;
+        }
+        
+        .page-header p {
+            color: var(--text-light);
+            font-size: 0.9rem;
+            margin: 0.25rem 0 0 0;
+        }
+        
+        .user-menu {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        
+        .user-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--primary-color), var(--accent-color));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 600;
+            box-shadow: 0 4px 6px rgba(79, 70, 229, 0.2);
+        }
+        
+        .user-info h6 {
+            margin: 0;
+            font-weight: 600;
+            color: var(--text-dark);
+        }
+        
+        .user-info small {
+            color: var(--text-light);
+            font-size: 0.75rem;
+        }
+        
+        /* Content Area */
+        .content-area {
+            padding: 2rem;
+        }
+        
+        /* Cards */
+        .dashboard-card {
+            background-color: white;
+            border-radius: 12px;
+            border: 1px solid var(--border-color);
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+            transition: all 0.3s ease;
+            overflow: hidden;
+            margin-bottom: 1.5rem;
+        }
+        
+        .dashboard-card:hover {
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+            transform: translateY(-2px);
+        }
+        
+        .card-header {
+            background-color: white;
+            border-bottom: 1px solid var(--border-color);
+            padding: 1.25rem 1.5rem;
+        }
+        
+        .card-header h5 {
+            font-family: 'Poppins', sans-serif;
+            font-weight: 600;
+            color: var(--text-dark);
+            margin: 0;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .card-body {
+            padding: 1.5rem;
+        }
+        
+        /* Stats Cards */
+        .stats-card {
+            height: 100%;
+        }
+        
+        .stats-icon {
+            width: 50px;
+            height: 50px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+        }
+        
+        .stats-icon.blue {
+            background-color: #e0e7ff;
+            color: var(--primary-color);
+        }
+        
+        .stats-icon.green {
+            background-color: #d1fae5;
+            color: var(--success-color);
+        }
+        
+        .stats-icon.orange {
+            background-color: #fef3c7;
+            color: var(--warning-color);
+        }
+        
+        .stats-icon.purple {
+            background-color: #ede9fe;
+            color: var(--accent-color);
+        }
+        
+        /* Activity List */
+        .activity-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+        
+        .activity-item {
+            padding: 0.75rem 0;
+            border-bottom: 1px solid var(--border-color);
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        
+        .activity-item:last-child {
+            border-bottom: none;
+        }
+        
+        .activity-icon {
+            width: 36px;
+            height: 36px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+        }
+        
+        /* Mobile Responsiveness */
+        .sidebar-toggle {
+            display: none;
+            background: none;
+            border: none;
+            color: var(--text-dark);
+            font-size: 1.5rem;
+            cursor: pointer;
+            padding: 0.5rem;
+            border-radius: 8px;
+        }
+        
+        .sidebar-toggle:hover {
+            background-color: var(--primary-light);
+        }
+        
+        .mobile-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 90;
+        }
+        
+        @media (max-width: 992px) {
+            .sidebar {
+                left: -260px;
+            }
+            
+            .sidebar.active {
+                left: 0;
+            }
+            
+            .content {
+                margin-left: 0;
+            }
+            
+            .sidebar-toggle {
+                display: block;
+            }
+            
+            .mobile-overlay.active {
+                display: block;
+            }
+            
+            .topbar {
+                padding: 1rem;
+            }
+            
+            .content-area {
+                padding: 1.5rem;
+            }
+        }
+        
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 6px;
+        }
+        
+        ::-webkit-scrollbar-track {
+            background: #f1f5f9;
+        }
+        
+        ::-webkit-scrollbar-thumb {
+            background: #cbd5e1;
+            border-radius: 3px;
+        }
+        
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--primary-color);
+        }
+        
+        /* Footer */
+        .footer {
+            margin-top: 3rem;
+            padding: 1.5rem 2rem;
+            border-top: 1px solid var(--border-color);
+            background-color: white;
+            color: var(--text-light);
+            font-size: 0.85rem;
+        }
+    </style>
 </head>
+
 <body>
-
-<!-- Sidebar -->
-
-<div class="sidebar">
-    <h4 class="text-center py-3 border-bottom">Dashboard Panel</h4>
-
-<a href="/dashboard/profile">👤 Profile</a>
-<a href="/dashboard/calender">📅 Calendar</a>
-<a href="/dashboard/bills">🪙 My Bills</a>
-<a href="/dashboard/papers">📄 All Papers</a>
-<a href="/dashboard/agents">🧑‍💼 Agent</a>
-
-<a href="/dashboard/logout" class="text-danger">🚪 Logout</a>
-
-</div>
-
-<!-- Main Content -->
-
-<div class="content">
-    {% block content %}
-    <h2>Welcome to Dashboard</h2>
-    {% endblock %}
-</div>
-
+    <!-- Mobile Overlay -->
+    <div class="mobile-overlay" id="mobileOverlay"></div>
+    
+    <!-- Sidebar -->
+    <div class="sidebar" id="sidebar">
+        <div class="sidebar-header">
+            <h4>
+                <i class="bi bi-speedometer2"></i>
+                Dashboard Panel
+            </h4>
+        </div>
+        
+        <div class="nav-section">
+            <div class="nav-title">Main Menu</div>
+            
+            <a href="/dashboard/profile" class="nav-link active">
+                <span class="icon"><i class="bi bi-person-circle"></i></span>
+                <span>Profile</span>
+            </a>
+            
+            <a href="/dashboard/calender" class="nav-link">
+                <span class="icon"><i class="bi bi-calendar-check"></i></span>
+                <span>Calendar</span>
+            </a>
+            
+            <a href="/dashboard/bills" class="nav-link">
+                <span class="icon"><i class="bi bi-receipt"></i></span>
+                <span>My Bills</span>
+            </a>
+            
+            <a href="/dashboard/papers" class="nav-link">
+                <span class="icon"><i class="bi bi-files"></i></span>
+                <span>All Papers</span>
+            </a>
+            
+            <a href="/dashboard/agents" class="nav-link">
+                <span class="icon"><i class="bi bi-person-badge"></i></span>
+                <span>Agents</span>
+            </a>
+        </div>
+        
+        <div class="nav-section mt-4">
+            <div class="nav-title">Account</div>
+            
+            {% comment %} <a href="/dashboard/settings" class="nav-link">
+                <span class="icon"><i class="bi bi-gear"></i></span>
+                <span>Settings</span>
+            </a> {% endcomment %}
+            
+            {% comment %} <a href="/dashboard/help" class="nav-link">
+                <span class="icon"><i class="bi bi-question-circle"></i></span>
+                <span>Help & Support</span>
+            </a> {% endcomment %}
+            
+            <a href="/dashboard/logout" class="nav-link" style="color: var(--danger-color);">
+                <span class="icon"><i class="bi bi-box-arrow-right"></i></span>
+                <span>Logout</span>
+            </a>
+        </div>
+        
+        <!-- Sidebar Footer -->
+        <div class="position-absolute bottom-0 start-0 end-0 p-3 border-top border-light text-center">
+            <small class="text-muted">Dashboard v2.1</small>
+            <div class="mt-1">
+                <span class="badge bg-success" style="font-size: 0.6rem;">Online</span>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Main Content -->
+    <div class="content" id="content">
+        <!-- Topbar -->
+        <div class="topbar">
+            <div class="d-flex align-items-center gap-3">
+                <button class="sidebar-toggle" id="sidebarToggle">
+                    <i class="bi bi-list"></i>
+                </button>
+                <div class="page-header">
+                    <h1>{% block page_title %}Dashboard Overview{% endblock %}</h1>
+                    <p>{% block page_subtitle %}Welcome back! Here's what's happening today.{% endblock %}</p>
+                </div>
+            </div>
+            
+            <div class="user-menu">
+                <div class="user-avatar">
+                    {{ user.name|first|default:"U" }}
+                </div>
+                <div class="user-info">
+                    <h6>{{ user.name|default:"User" }} {{ user.surname|default:"" }}</h6>
+                    <small><i class="bi bi-circle-fill text-success" style="font-size: 0.5rem;"></i> Active</small>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Content Area -->
+        <div class="content-area">
+            {% block content %}
+            <!-- Default Dashboard Content -->
+            <div class="row">
+                <div class="col-md-6 col-lg-3">
+                    <div class="dashboard-card stats-card">
+                        <div class="card-body">
+                            <div class="stats-icon blue">
+                                <i class="bi bi-calendar-check"></i>
+                            </div>
+                            <h3 class="mb-2">15</h3>
+                            <p class="text-muted mb-0">Upcoming Events</p>
+                            <small class="text-success"><i class="bi bi-arrow-up"></i> 3 new this week</small>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-md-6 col-lg-3">
+                    <div class="dashboard-card stats-card">
+                        <div class="card-body">
+                            <div class="stats-icon green">
+                                <i class="bi bi-receipt"></i>
+                            </div>
+                            <h3 class="mb-2">$2,450</h3>
+                            <p class="text-muted mb-0">Pending Bills</p>
+                            <small class="text-warning"><i class="bi bi-clock"></i> 5 unpaid</small>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-md-6 col-lg-3">
+                    <div class="dashboard-card stats-card">
+                        <div class="card-body">
+                            <div class="stats-icon orange">
+                                <i class="bi bi-files"></i>
+                            </div>
+                            <h3 class="mb-2">24</h3>
+                            <p class="text-muted mb-0">Documents</p>
+                            <small class="text-primary"><i class="bi bi-plus-circle"></i> 2 new today</small>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-md-6 col-lg-3">
+                    <div class="dashboard-card stats-card">
+                        <div class="card-body">
+                            <div class="stats-icon purple">
+                                <i class="bi bi-person-badge"></i>
+                            </div>
+                            <h3 class="mb-2">8</h3>
+                            <p class="text-muted mb-0">Active Agents</p>
+                            <small class="text-success"><i class="bi bi-check-circle"></i> All online</small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="row mt-4">
+                <div class="col-lg-8">
+                    <div class="dashboard-card">
+                        <div class="card-header">
+                            <h5><i class="bi bi-clock-history"></i> Recent Activity</h5>
+                        </div>
+                        <div class="card-body">
+                            <ul class="activity-list">
+                                <li class="activity-item">
+                                    <div class="activity-icon" style="background-color: var(--primary-color);">
+                                        <i class="bi bi-receipt"></i>
+                                    </div>
+                                    <div>
+                                        <h6 class="mb-1">Bill #4567 created</h6>
+                                        <p class="text-muted mb-0">New bill generated for client John Smith</p>
+                                        <small class="text-muted">2 hours ago</small>
+                                    </div>
+                                </li>
+                                <li class="activity-item">
+                                    <div class="activity-icon" style="background-color: var(--success-color);">
+                                        <i class="bi bi-calendar-plus"></i>
+                                    </div>
+                                    <div>
+                                        <h6 class="mb-1">Meeting scheduled</h6>
+                                        <p class="text-muted mb-0">Team meeting on Friday at 3:00 PM</p>
+                                        <small class="text-muted">Yesterday, 4:30 PM</small>
+                                    </div>
+                                </li>
+                                <li class="activity-item">
+                                    <div class="activity-icon" style="background-color: var(--accent-color);">
+                                        <i class="bi bi-file-earmark-text"></i>
+                                    </div>
+                                    <div>
+                                        <h6 class="mb-1">Document uploaded</h6>
+                                        <p class="text-muted mb-0">Q3 Report.pdf uploaded to papers</p>
+                                        <small class="text-muted">2 days ago</small>
+                                    </div>
+                                </li>
+                                <li class="activity-item">
+                                    <div class="activity-icon" style="background-color: var(--info-color);">
+                                        <i class="bi bi-person-plus"></i>
+                                    </div>
+                                    <div>
+                                        <h6 class="mb-1">New agent added</h6>
+                                        <p class="text-muted mb-0">Michael Johnson joined as new agent</p>
+                                        <small class="text-muted">3 days ago</small>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-lg-4">
+                    <div class="dashboard-card">
+                        <div class="card-header">
+                            <h5><i class="bi bi-lightning-charge"></i> Quick Actions</h5>
+                        </div>
+                        <div class="card-body">
+                            <div class="d-grid gap-2">
+                                <button class="btn btn-primary btn-lg mb-2">
+                                    <i class="bi bi-plus-circle me-2"></i> Schedule Event
+                                </button>
+                                <button class="btn btn-outline-secondary btn-lg mb-2">
+                                    <i class="bi bi-receipt me-2"></i> Create Bill
+                                </button>
+                                <button class="btn btn-outline-secondary btn-lg mb-2">
+                                    <i class="bi bi-upload me-2"></i> Upload Document
+                                </button>
+                                <button class="btn btn-outline-secondary btn-lg">
+                                    <i class="bi bi-person-plus me-2"></i> Add Agent
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="dashboard-card mt-4">
+                        <div class="card-header">
+                            <h5><i class="bi bi-calendar-event"></i> Today's Events</h5>
+                        </div>
+                        <div class="card-body">
+                            <div class="mb-3">
+                                <h6><i class="bi bi-circle-fill text-primary me-2" style="font-size: 0.5rem;"></i> Team Meeting</h6>
+                                <small class="text-muted">10:00 AM - Conference Room</small>
+                            </div>
+                            <div class="mb-3">
+                                <h6><i class="bi bi-circle-fill text-success me-2" style="font-size: 0.5rem;"></i> Client Call</h6>
+                                <small class="text-muted">2:30 PM - Online</small>
+                            </div>
+                            <div>
+                                <h6><i class="bi bi-circle-fill text-warning me-2" style="font-size: 0.5rem;"></i> Deadline</h6>
+                                <small class="text-muted">Q3 Reports submission</small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endblock %}
+            
+            <!-- Footer -->
+            <div class="footer">
+                <div class="row">
+                    <div class="col-md-6">
+                        <p class="mb-0">© 2023 Dashboard Panel. All rights reserved.</p>
+                    </div>
+                    <div class="col-md-6 text-end">
+                        <p class="mb-0">Last updated: {% now "F j, Y, g:i a" %}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <!-- Custom JavaScript -->
+    <script>
+        // Sidebar toggle for mobile
+        document.addEventListener('DOMContentLoaded', function() {
+            const sidebar = document.getElementById('sidebar');
+            const content = document.getElementById('content');
+            const sidebarToggle = document.getElementById('sidebarToggle');
+            const mobileOverlay = document.getElementById('mobileOverlay');
+            
+            // Toggle sidebar on mobile
+            sidebarToggle.addEventListener('click', function() {
+                sidebar.classList.toggle('active');
+                mobileOverlay.classList.toggle('active');
+            });
+            
+            // Close sidebar when clicking on overlay
+            mobileOverlay.addEventListener('click', function() {
+                sidebar.classList.remove('active');
+                mobileOverlay.classList.remove('active');
+            });
+            
+            // Update user avatar with initials
+            const userName = "{{ user.first_name|default:'User' }}";
+            const userAvatar = document.querySelector('.user-avatar');
+            if (userAvatar && userName) {
+                userAvatar.textContent = userName.charAt(0).toUpperCase();
+            }
+            
+            // Set active nav link based on current page
+            function setActiveNav() {
+                const currentPath = window.location.pathname;
+                const navLinks = document.querySelectorAll('.nav-link');
+                
+                navLinks.forEach(link => {
+                    if (link.getAttribute('href') === currentPath) {
+                        link.classList.add('active');
+                    } else {
+                        link.classList.remove('active');
+                    }
+                });
+            }
+            
+            // Initialize active nav (you might need server-side logic for this)
+            setActiveNav();
+            
+            // Add hover effect to cards
+            const cards = document.querySelectorAll('.dashboard-card');
+            cards.forEach(card => {
+                card.addEventListener('mouseenter', function() {
+                    this.style.boxShadow = '0 15px 30px rgba(0, 0, 0, 0.1)';
+                });
+                
+                card.addEventListener('mouseleave', function() {
+                    this.style.boxShadow = '0 2px 8px rgba(0, 0, 0, 0.04)';
+                });
+            });
+        });
+    </script>
 </body>
 </html>

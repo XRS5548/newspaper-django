@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Search Franchise - NewsPaper</title>
+  <link rel="stylesheet" href="/static/css/search.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+</head>
+<body>
+
+  <!-- 🌟 NAVBAR -->
+  <nav class="navbar">
+    <div class="logo">NewsPaper</div>
+
+    <div class="menu-toggle" id="menuToggle">&#9776;</div>
+
+    <ul class="nav-list">
+      <li><a href="/">Home</a></li>
+      <li><a href="/about">About</a></li>
+      <li><a href="/blog" target="_blank">Blog</a></li>
+      <li class="nav-item"><a href="/service"class="nav-link">Services</a></li>
+      <li><a href="/contact">Contact</a></li>
+      <li class="dropdown">
+        <a href="#" class="dropdown-toggle">Franchise ▾</a>
+        <ul class="dropdown-menu">
+          <li><a href="/newfrenchise">Apply for New Franchise</a></li>
+          <li><a href="/search">Search Franchise</a></li>
+        </ul>
+      </li>
+    </ul>
+
+    <div class="nav-buttons">
+      <a href="/sign" class="btn btn-signin">Sign In</a>
+    </div>
+  </nav>
+
+  <!-- 🌟 HERO -->
+  <section class="hero-search">
+    <h1>Find a Newspaper Franchise</h1>
+    <p>Search by your state and district to discover our trusted partners.</p>
+  </section>
+ <section class="search-section">
+    <div class="form-container">
+      <h2>Search Franchise</h2>
+      <form id="searchForm">
+        <div class="form-group">
+          <label for="state">Select State</label>
+          <select id="state" required>
+            <option value="">-- Choose State --</option>
+            <option value="Rajasthan">Rajasthan</option>
+            <option value="Uttar Pradesh">Uttar Pradesh</option>
+            <option value="Haryana">Haryana</option>
+            <option value="Delhi">Delhi</option>
+          </select>
+        </div>
+
+        <div class="form-group" id="districtBox" style="display: none;">
+          <label for="district">Select District</label>
+          <select id="district" required>
+            <option value="">-- Choose District --</option>
+          </select>
+        </div>
+
+        <button type="submit" class="btn-check">Check Now</button>
+      </form>
+    </div>
+
+    <div class="result-container" id="resultContainer">
+      <h3>Franchise Results</h3>
+      <p>Select a state and district to see available newspaper franchises.</p>
+    </div>
+  </section>
+
+
+  <!-- 🌟 FOOTER -->
+  <footer>
+    <div class="footer-container">
+      <div class="footer-left">
+        <h3>NewsPaper</h3>
+        <p>Stay updated with the latest news from around the world.</p>
+      </div>
+
+      <div class="footer-center">
+        <h4>Quick Links</h4>
+        <ul>
+           <li><a href="/">Home</a></li>
+          <li><a href="/about">About</a></li>
+          <li><a href="/blog" target="_blank">Blog</a></li>
+          <li><a href="/service">Services</a></li>
+          <li><a href="/contact">Contact</a></li>
+          <li><a href="/newfrenchise">Franchise</a></li>
+          <li><a href="/sitemap">Sitemap</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-payment">
+        <h4>Payment</h4>
+        <p>Support our digital newspaper or buy premium access.</p>
+        <a href="payment" class="payment-link">💳 Make a Payment</a>
+      </div>
+
+      <div class="footer-right">
+        <h4>Contact Us</h4>
+        <p>Email: info@newspaper.com</p>
+        <p>Phone: +91 9876543210</p>
+         <div class="socials">
+         <a href="#" target="_blank" title="Facebook"><i class="fab fa-facebook-f"></i></a>
+  <a href="#" target="_blank" title="Twitter"><i class="fab fa-twitter"></i></a>
+  <a href="#" target="_blank" title="Instagram"><i class="fab fa-instagram"></i></a>
+  <a href="#" target="_blank" title="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+  <a href="#" target="_blank" title="YouTube"><i class="fab fa-telegram"></i></a>
+        </div>
+      </div>
+    </div>
+    <p class="footer-bottom">© 2025 NewsPaper. All rights reserved.</p>
+  </footer>
+  <!-- 🌟 WhatsApp Button -->
+  <a href="https://wa.me/919694953370" class="whatsapp-float" target="_blank" title="Chat with us on WhatsApp">
+    <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" alt="WhatsApp" class="whatsapp-icon">
+  </a>
+
+  <script src="/static/js/search.js"></script>
+</body>
+</html>
