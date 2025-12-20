@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Responsive Admin Dashboard</title>
+  <link rel="stylesheet" href="css/admin.css">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
+  <link rel="stylesheet" href="https://cdn.datatables.net/2.0.3/css/dataTables.tailwindcss.css">
+<script src="https://cdn.datatables.net/2.0.3/js/dataTables.js"></script>
+
+
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: { extend: {} }
+    }
+  </script>
+
+ 
+</head>
+<body class="bg-gray-100 text-gray-900 dark:bg-gray-900 dark:text-gray-100 transition-colors duration-300">
+
+<div class="flex h-screen overflow-hidden">
+
+  <!-- Sidebar -->
+  <aside id="sidebar" class="fixed inset-y-0 left-0 w-64 bg-white dark:bg-gray-800 border-r transform -translate-x-full md:translate-x-0 transition-transform duration-300 z-50">
+    <div class="p-4 text-xl font-bold text-gray-900 dark:text-gray-100">TailAdmin</div>
+    <nav class="mt-6">
+      <ul>
+        <li class="px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-700 rounded"><a href="dashboard.html">Dashboard</a></li>
+        <li class="px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-700 rounded"><a href="calender.html">Calendar</a></li>
+        <li class="px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-700 rounded"><a href="user.html">User Profile</a></li>
+        <li class="px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-700 rounded"><a href="form.html">Forms</a></li>
+        <li class="px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-700 rounded"><a href="table.html">Tables</a></li>
+        <li class="px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-700 rounded"><a href="chart.html">Charts</a></li>
+      </ul>
+    </nav>
+  </aside>
+
+  <!-- Overlay for mobile sidebar -->
+  <div id="overlay" class="fixed inset-0 bg-black bg-opacity-50 hidden z-40 md:hidden"></div>
+
+  <!-- Main content -->
+  <div class="flex-1 flex flex-col ml-0 md:ml-64 transition-all duration-300">
+    <!-- Header -->
+    <header class="flex items-center justify-between bg-white dark:bg-gray-900 p-4 border-b border-gray-200 dark:border-gray-700 transition-colors duration-300">
+      <div class="flex items-center space-x-2">
+        <button id="sidebarToggle" class="md:hidden px-2 py-1 bg-gray-200 dark:bg-gray-700 rounded">☰</button>
+       <input id="searchInput" type="text" placeholder="Search..." 
+  class="border rounded px-3 py-1 w-64 sm:w-48 dark:bg-gray-700 dark:border-gray-600 dark:text-gray-100" />
+
+      </div>
+      <div class="flex items-center space-x-4">
+        <button id="darkModeBtn" class="text-xl">🌙</button>
+        <button id="notifBtn" class="text-xl">🔔</button>
+        <div id="profileBtn" class="rounded-full overflow-hidden w-8 h-8 bg-gray-300 dark:bg-gray-600 cursor-pointer">
+                <img src="image/WhatsApp Image 2025-10-16 at 6.06.50 PM.jpeg" alt="User Photo" class="w-full h-full object-cover">
+
+        </div>
+
+      </div>
+       <!-- Dropdown -->
+<div id="profileDropdown" class="hidden absolute right-0 mt-2 w-56 bg-white dark:bg-gray-800 rounded shadow-lg py-2 z-50">
+  
+  <!-- Profile Header Section -->
+  <div class="flex items-center px-4 py-3 border-b border-gray-200 dark:border-gray-700">
+    <div class="w-10 h-10 rounded-full overflow-hidden mr-3">
+      <img src="image/WhatsApp Image 2025-10-16 at 6.06.50 PM.jpeg" alt="User Photo" class="w-full h-full object-cover">
+    </div>
+    <div>
+      <div class="font-semibold text-gray-900 dark:text-gray-100">John Doe</div>
+      <div class="text-sm text-gray-500 dark:text-gray-400">Admin</div>
+    </div>
+  </div>
+
+  <!-- Dropdown Links -->
+  <a href="edit.html" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-700 text-gray-900 dark:text-gray-100">
+    Edit Profile
+  </a>
+  <a href="#" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-700 text-gray-900 dark:text-gray-100">
+    Account Settings
+  </a>
+  <a href="#" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-700 text-gray-900 dark:text-gray-100">
+    Support
+  </a>
+  <a href="#" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-700 text-red-600 dark:text-red-400">
+    Sign Out
+  </a>
+</div>
+
+    </header>
+
+    <!-- Main dashboard content -->
+    <main class="p-4 sm:p-6 overflow-auto transition-colors duration-300">
+
+      <!-- Summary cards -->
+<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 mb-6">
+
+  <!-- Active Users -->
+  <div class="bg-white dark:bg-gray-800 p-4 rounded shadow transition-colors duration-300">
+    <div class="text-sm uppercase text-gray-500 dark:text-gray-400">Active</div>
+    <div id="activeCount" class="text-3xl font-semibold text-gray-900 dark:text-gray-100">0</div>
+    <div class="text-green-600 dark:text-green-400">Live Data</div>
+    <!-- 🔥 Active Newspaper List Here -->
+    <div id="activeList" class="text-sm text-gray-600 dark:text-gray-300 mt-2"></div>
+  </div>
+
+  <!-- Deactive Users -->
+  <div class="bg-white dark:bg-gray-800 p-4 rounded shadow transition-colors duration-300">
+    <div class="text-sm uppercase text-gray-500 dark:text-gray-400">Deactive</div>
+    <div id="deactiveCount" class="text-3xl font-semibold text-gray-900 dark:text-gray-100">0</div>
+    <div class="text-red-600 dark:text-red-400">Live Data</div>
+  </div>
+        <div class="bg-white dark:bg-gray-800 p-4 rounded shadow transition-colors duration-300">
+          <div class="text-sm uppercase text-gray-500 dark:text-gray-400">Monthly Target</div>
+          <div class="flex items-center">
+            <div id="target-chart" class="flex-1"></div>
+            <div class="ml-4 text-2xl font-semibold text-gray-900 dark:text-gray-100">75.55%</div>
+          </div>
+          <div class="text-sm text-gray-500 dark:text-gray-400 mt-2">You earn $3,287 today...</div>
+        </div>
+      </div>
+
+
+
+ <!-- Add Worker / Customer -->
+<div class="card" id="add">
+    <h2>Add Worker / Customer</h2>
+    <input type="text" id="name" placeholder="Name">
+    <select id="role">
+        <option value="Worker">Worker</option>
+        <option value="Customer">Customer</option>
+    </select>
+    <input type="text" id="contact" placeholder="Contact Number">
+    <button onclick="addEntry()">Add Entry</button>
+</div>
+<!-- Add this inside the container div, below the Add Worker/Customer card -->
+
+<div class="card" id="updateStatus">
+    <h2>Update Worker/Customer Status</h2>
+    <input type="text" id="statusName" placeholder="Enter Worker/Customer Name">
+    <select id="statusSelect">
+        <option value="Present">Present</option>
+        <option value="Absent">Absent</option>
+        <option value="Stopped">Stopped</option>
+    </select>
+    <button onclick="updateStatus()">Update Status</button>
+</div>
+
+<!-- Records Table -->
+<div class="card" id="records">
+    <h2>Newspaper Records</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Role</th>
+                <th>Status</th>
+                <th>Pending Fees</th>
+                <th>PK</th>
+                <th>BH</th>
+                <th>ET</th>
+                <th>PB</th>
+                <th>HT</th>
+                <th>TN</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody id="recordTable"></tbody>
+    </table>
+</div>
+
+</div>
+</div>
+ </main>
+  </div>
+</div>
+<script>
+let id = 1;
+let records = JSON.parse(localStorage.getItem('records')) || [];
+
+function saveToLocal() {
+    localStorage.setItem('records', JSON.stringify(records));
+}
+
+function loadFromLocal() {
+    records.forEach(r => addRow(r,false));
+    updateStats();
+}
+
+function addEntry() {
+    let name = document.getElementById("name").value.trim();
+    let role = document.getElementById("role").value;
+    if(!name){ alert("Enter Name"); return; }
+
+    let record = {
+        id:id, name:name, role:role, status:'Present', fees:0,
+        PK:0, BH:0, ET:0, PB:0, HT:0, TN:0
+    };
+    records.push(record);
+    addRow(record,true);
+    id++;
+    document.getElementById("name").value="";
+    saveToLocal();
+    updateStats();
+}
+
+function addRow(record, scroll){
+    let table = document.getElementById("recordTable");
+    let row = document.createElement('tr');
+    row.innerHTML = `
+        <td>${record.id}</td>
+        <td>${record.name}</td>
+        <td>${record.role}</td>
+        <td>
+            <select class="status-select" onchange="updateValue(${record.id}, 'status', this.value)">
+                <option ${record.status==='Present'?'selected':''}>Present</option>
+                <option ${record.status==='Absent'?'selected':''}>Absent</option>
+                <option ${record.status==='Stopped'?'selected':''}>Stopped</option>
+            </select>
+        </td>
+        <td><input type="number" class="number-input" value="${record.fees}" onchange="updateValue(${record.id}, 'fees', this.value)"/></td>
+        <td><input type="number" class="number-input" value="${record.PK}" onchange="updateValue(${record.id}, 'PK', this.value)"/></td>
+        <td><input type="number" class="number-input" value="${record.BH}" onchange="updateValue(${record.id}, 'BH', this.value)"/></td>
+        <td><input type="number" class="number-input" value="${record.ET}" onchange="updateValue(${record.id}, 'ET', this.value)"/></td>
+        <td><input type="number" class="number-input" value="${record.PB}" onchange="updateValue(${record.id}, 'PB', this.value)"/></td>
+        <td><input type="number" class="number-input" value="${record.HT}" onchange="updateValue(${record.id}, 'HT', this.value)"/></td>
+        <td><input type="number" class="number-input" value="${record.TN}" onchange="updateValue(${record.id}, 'TN', this.value)"/></td>
+        <td><button onclick="editName(${record.id})">Edit</button> <button onclick="deleteRow(${record.id}, this)">Delete</button></td>
+    `;
+    table.appendChild(row);
+    if(scroll) row.scrollIntoView({behavior:'smooth'});
+}
+
+function updateValue(id,key,value){
+    let record = records.find(r=>r.id===id);
+    if(record){
+        record[key] = (key==='status')? value : Number(value);
+        saveToLocal();
+        updateStats();
+    }
+}
+
+function editName(id){
+    let record = records.find(r=>r.id===id);
+    let newName = prompt("Enter new name", record.name);
+    if(newName){
+        record.name = newName;
+        saveToLocal();
+        document.querySelectorAll('#recordTable tr').forEach(tr=>{
+            if(tr.children[0].innerText==id) tr.children[1].innerText=newName;
+        });
+        updateStats();
+    }
+}
+
+function deleteRow(id,btn){
+    records = records.filter(r=>r.id!==id);
+    btn.parentElement.parentElement.remove();
+    saveToLocal();
+    updateStats();
+}
+
+function updateStats(){
+    let active = records.filter(r=>r.status==='Present');
+    let inactive = records.filter(r=>r.status!=='Present');
+    document.getElementById('activeCount').innerText=active.length;
+    document.getElementById('activeNames').innerText=active.map(r=>r.name).join(', ');
+    document.getElementById('inactiveCount').innerText=inactive.length;
+    document.getElementById('inactiveNames').innerText=inactive.map(r=>r.name).join(', ');
+}
+
+loadFromLocal();
+function updateStatus() {
+    let name = document.getElementById("statusName").value.trim();
+    let newStatus = document.getElementById("statusSelect").value;
+
+    if(!name) { alert("Enter Name"); return; }
+
+    let found = false;
+    records.forEach(r => {
+        if(r.name.toLowerCase() === name.toLowerCase()){
+            r.status = newStatus;
+            found = true;
+
+            // Update row in table
+            document.querySelectorAll('#recordTable tr').forEach(tr => {
+                if(tr.children[1].innerText.toLowerCase() === name.toLowerCase()){
+                    tr.children[3].innerText = newStatus;
+                }
+            });
+        }
+    });
+
+    if(!found){
+        alert("Worker/Customer not found!");
+        return;
+    }
+
+    saveToLocal();
+    updateStats();
+    alert("Status updated successfully!");
+    document.getElementById("statusName").value = "";
+}
+
+</script>
+   
+
+<script src="js/admin.js"></script>
+
+</body>
+</html>

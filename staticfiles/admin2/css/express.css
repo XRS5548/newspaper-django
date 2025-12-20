@@ -1,0 +1,314 @@
+body {
+  margin: 0;
+  font-family: "Poppins", sans-serif;
+  display: flex;
+  height: 100vh;
+  background: #f7f8fa;
+}
+
+/* Sidebar */
+.sidebar {
+  width: 250px;
+  background: linear-gradient(180deg, #002244, #004488);
+  color: white;
+  display: flex;
+  flex-direction: column;
+  padding: 20px;
+  overflow-y: auto;
+  height: 1200px;
+}
+
+.sidebar h2 {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.sidebar a,
+.dropdown-toggle {
+  text-decoration: none;
+  color: white;
+  display: block;
+  padding: 10px;
+  border-radius: 5px;
+  transition: 0.3s;
+  cursor: pointer;
+}
+
+.sidebar a:hover,
+.dropdown-toggle:hover {
+  background: rgba(255, 255, 255, 0.2);
+}
+
+/* Dropdown styling */
+.dropdown-content {
+  display: none;
+  flex-direction: column;
+  margin-left: 15px;
+  background: rgba(255, 255, 255, 0.1);
+  border-left: 2px solid #fff;
+  border-radius: 5px;
+  overflow: hidden;
+  animation: slideDown 0.3s ease-in-out;
+}
+
+.dropdown-content a {
+  color: #f1f1f1;
+  padding: 8px 12px;
+  font-size: 15px;
+}
+
+.dropdown-content a:hover {
+  background: rgba(255, 255, 255, 0.3);
+}
+
+.dropdown.active .dropdown-content {
+  display: flex;
+}
+
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-5px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* 🧭 Main Section */
+.main {
+  flex: 1;
+  padding: 20px;
+  overflow-y: auto;
+}
+
+/* 🌈 Topbar */
+.topbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: linear-gradient(90deg, #e63946, #ff7b7b);
+  color: white;
+  padding: 12px 20px;
+  border-radius: 12px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+}
+
+/* 📰 Summary */
+.paper-summary {
+  display: flex;
+  align-items: center;
+  background: #fff;
+  padding: 20px;
+  border-radius: 12px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+  margin-top: 20px;
+}
+.paper-summary img {
+  height: 60px;
+  margin-right: 15px;
+}
+
+/* 💡 Stats */
+.stats {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 15px;
+  margin-top: 20px;
+}
+.stat-card {
+  background: #fff;
+  padding: 20px;
+  border-radius: 12px;
+  text-align: center;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+}
+.stat-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 6px 12px rgba(0,0,0,0.2);
+}
+.stat-card h3 {
+  color: #6c757d;
+  margin-bottom: 10px;
+}
+.stat-card p {
+  font-size: 24px;
+  font-weight: 600;
+  color: #e63946;
+}
+
+/* 📊 Chart */
+.chart-section {
+  background: #fff;
+  margin-top: 25px;
+  border-radius: 12px;
+  padding: 20px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+  height: 380px;
+}
+
+/* 📋 Table */
+.table-section {
+  background: #fff;
+  margin-top: 25px;
+  border-radius: 12px;
+  padding: 20px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+  overflow-x: auto;
+}
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+th, td {
+  padding: 10px 12px;
+  border-bottom: 1px solid #dee2e6;
+}
+th {
+  text-align: left;
+  color: #6c757d;
+}
+.status {
+  padding: 5px 10px;
+  border-radius: 6px;
+  font-weight: 600;
+}
+.status.delivered {
+  background: #e63946;
+  color: #fff;
+}
+.status.pending {
+  background: #ffc107;
+  color: #000;
+}
+
+/* ===== Nested Dropdown Styling ===== */
+.nested-dropdown {
+  display: block;
+  padding: 5px 10px;
+}
+
+.nested-toggle {
+  width: 100%;
+  background: none;
+  border: none;
+  text-align: left;
+  font-size: 15px;
+  cursor: pointer;
+  padding: 8px 10px;
+  color: white;
+  transition: background 0.3s;
+}
+
+.nested-toggle:hover {
+  background: #f0f0f0;
+  color: #0077ff;
+}
+
+.nested-content {
+  display: none;
+  margin-left: 20px;
+  padding-left: 10px;
+  border-left: 3px solid #0077ff;
+  background: #fafafa;
+  border-radius: 5px;
+}
+
+.nested-content.show {
+  display: block;
+}
+
+.nested-content a {
+  display: block;
+  padding: 6px 10px;
+  color: #333;
+  text-decoration: none;
+}
+
+.nested-content a:hover {
+  background: #e6e6e6;
+  color: #0077ff;
+}
+
+/* 📱 Sidebar Slide-in From Left */
+.sidebar.mobile-mode {
+  position: fixed;
+  top: 0;
+  left: -100%;
+  width: 80%;
+  transition: left 0.4s ease-in-out;
+  z-index: 9999;
+  height: 100%;
+}
+
+.sidebar.sidebar-show {
+  left: 0;
+}
+
+/* ===========================
+   ✅ RESPONSIVE DESIGN
+=========================== */
+
+/* 💻 Tablets */
+@media (max-width: 1024px) {
+  .stats {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .paper-summary {
+    flex-direction: column;
+    text-align: center;
+  }
+  .paper-summary img {
+    margin-bottom: 10px;
+  }
+}
+
+/* 📱 Mobile Phones */
+@media (max-width: 768px) {
+  body {
+    flex-direction: column;
+  }
+
+  .sidebar {
+    width: 80%;
+    height: 100%;
+    position: fixed;
+    top: 0;
+    left: -100%;
+    z-index: 1000;
+  }
+
+  .main {
+    padding: 15px;
+  }
+
+  .topbar {
+    flex-direction: column;
+    gap: 10px;
+    text-align: center;
+  }
+
+  .stats {
+    grid-template-columns: 1fr;
+  }
+
+  .chart-section {
+    height: 320px;
+  }
+
+  table {
+    font-size: 14px;
+  }
+
+  th, td {
+    padding: 8px;
+  }
+
+  .paper-summary {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+}

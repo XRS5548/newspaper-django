@@ -1,0 +1,363 @@
+
+    body {
+      margin: 0;
+      font-family: "Poppins", sans-serif;
+      display: flex;
+      height: 100vh;
+      background: #f7f8fa;
+    }
+
+    /* Sidebar */
+    .sidebar {
+      width: 250px;
+      background: linear-gradient(180deg, #002244, #004488);
+      color: white;
+      display: flex;
+      flex-direction: column;
+      padding: 20px;
+      overflow-y: auto;
+      height: 1200px;
+    }
+
+    .sidebar h2 {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    .sidebar a,
+    .dropdown-toggle {
+      text-decoration: none;
+      color: white;
+      display: block;
+      padding: 10px;
+      border-radius: 5px;
+      transition: 0.3s;
+      cursor: pointer;
+    }
+
+    .sidebar a:hover,
+    .dropdown-toggle:hover {
+      background: rgba(255, 255, 255, 0.2);
+    }
+
+    /* Dropdown styling */
+    .dropdown-content {
+      display: none;
+      flex-direction: column;
+      margin-left: 15px;
+      background: rgba(255, 255, 255, 0.1);
+      border-left: 2px solid #fff;
+      border-radius: 5px;
+      overflow: hidden;
+      animation: slideDown 0.3s ease-in-out;
+    }
+
+    .dropdown-content a {
+      color: #f1f1f1;
+      padding: 8px 12px;
+      font-size: 15px;
+    }
+
+    .dropdown-content a:hover {
+      background: rgba(255, 255, 255, 0.3);
+    }
+
+    .dropdown.active .dropdown-content {
+      display: flex;
+    }
+
+    @keyframes slideDown {
+      from {
+        opacity: 0;
+        transform: translateY(-5px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    /* ===== Nested Dropdown Styling ===== */
+.nested-dropdown {
+  display: block;
+  padding: 5px 10px;
+}
+
+.nested-toggle {
+  width: 100%;
+  background: none;
+  border: none;
+  text-align: left;
+  font-size: 15px;
+  cursor: pointer;
+  padding: 8px 10px;
+  color: white;
+  transition: background 0.3s;
+}
+
+.nested-toggle:hover {
+  background: #f0f0f0;
+  color: #0077ff;
+}
+
+/* Hidden by default */
+.nested-content {
+  display: none;
+  margin-left: 20px;
+  padding-left: 10px;
+  border-left: 3px solid #0077ff;
+  background: #fafafa;
+  border-radius: 5px;
+}
+
+/* Show when active */
+.nested-content.show {
+  display: block;
+}
+
+.nested-content a {
+  display: block;
+  padding: 6px 10px;
+  color: #333;
+  text-decoration: none;
+}
+
+.nested-content a:hover {
+  background: #e6e6e6;
+  color: #0077ff;
+}
+/* 🌍 Main */
+.main {
+  flex: 1;
+  padding: 20px;
+}
+
+/* 🧢 Topbar */
+.topbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: linear-gradient(90deg, #00796b, #26a69a);
+  color: white;
+  padding: 15px 20px;
+  border-radius: 14px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+#toggleBtn {
+  background: none;
+  border: none;
+  font-size: 22px;
+  color: white;
+  cursor: pointer;
+}
+
+/* 🗞️ Summary */
+.paper-summary {
+  display: flex;
+  align-items: center;
+  background: rgba(255, 255, 255, 0.9);
+  backdrop-filter: blur(8px);
+  padding: 20px;
+  border-radius: 14px;
+  box-shadow: 0 3px 12px rgba(0, 0, 0, 0.1);
+  margin-top: 20px;
+}
+.paper-summary img {
+  height: 60px;
+  margin-right: 15px;
+}
+
+/* 💹 Live Ticker */
+.ticker {
+  background: #e8f5e9;
+  padding: 12px;
+  margin-top: 15px;
+  border-radius: 10px;
+  color: #004d40;
+  font-weight: 600;
+  text-align: center;
+  font-size: 15px;
+}
+
+/* 📊 Stats */
+.stats {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 15px;
+  margin-top: 20px;
+}
+.stat-card {
+  background: white;
+  border-radius: 14px;
+  padding: 20px;
+  text-align: center;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s;
+}
+.stat-card:hover {
+  transform: translateY(-5px);
+}
+.stat-card h3 {
+  color: #555;
+  font-size: 16px;
+}
+.stat-card p {
+  font-size: 26px;
+  font-weight: bold;
+  color: #00796b;
+  margin: 8px 0 0;
+}
+
+/* 📈 Chart */
+.chart-section {
+  background: white;
+  border-radius: 14px;
+  margin-top: 25px;
+  padding: 25px;
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+}
+
+/* 🗞️ Headlines */
+.news-section {
+  background: white;
+  margin-top: 25px;
+  border-radius: 14px;
+  padding: 20px;
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+}
+.news-section ul {
+  list-style: none;
+  padding: 0;
+}
+.news-section li {
+  padding: 10px 0;
+  border-bottom: 1px solid #eee;
+  font-size: 15px;
+}
+
+/* 📱 Responsive */
+@media (max-width: 768px) {
+  .sidebar {
+    position: fixed;
+    z-index: 100;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    transform: translateX(-250px);
+  }
+  .sidebar.active {
+    transform: translateX(0);
+  }
+  .topbar {
+    flex-direction: column;
+    text-align: center;
+  }
+}
+/* 🌐 SIDEBAR BASE */
+#sidebar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 250px;
+  height: 100%;
+  background-color: #012a4a;
+  color: white;
+  overflow-y: auto;
+  transition: transform 0.3s ease;
+  z-index: 1000;
+}
+
+/* Hide sidebar by default on mobile */
+@media (max-width: 768px) {
+  #sidebar {
+    transform: translateX(-100%);
+  }
+
+  #sidebar.active {
+    transform: translateX(0);
+  }
+
+  /* Header adjustments */
+  .header-bar {
+    position: relative;
+    background: #009688;
+    color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 12px;
+    font-size: 18px;
+  }
+
+  /* ☰ Toggle button styling */
+  #toggleBtn {
+    display: block;
+    position: absolute;
+    left: 50px;
+    background: white;
+    color: black;
+    border: none;
+    font-size: 22px;
+    border-radius: 6px;
+    padding: 4px 10px;
+    cursor: pointer;
+  }
+
+  /* Make content adjust when sidebar is open */
+  body.sidebar-open {
+    overflow: hidden;
+  }
+
+  /* Cards grid fix */
+  .stats-container {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+    padding: 10px;
+  }
+
+  /* Single-column on very small phones */
+  @media (max-width: 480px) {
+    .stats-container {
+      grid-template-columns: 1fr;
+    }
+  }
+}
+
+/* On desktop — always show sidebar, hide toggle */
+@media (min-width: 769px) {
+  #toggleBtn {
+    display: none;
+  }
+
+  #sidebar {
+    transform: none;
+  }
+
+  .header-bar {
+    justify-content: center;
+    padding: 20px;
+  }
+}
+  /* Sidebar */
+    #sidebar {
+      width: 250px;
+      background: #002b36;
+      color: white;
+      height: 100vh;
+      position: fixed;
+      left: 0;
+      top: 0;
+      transition: transform 0.3s ease;
+      padding: 15px;
+      z-index: 1000;
+      
+    }
+
+    #sidebar h2 {
+      text-align: center;
+      margin-bottom: 20px;
+      font-size: 1.3rem;
+    }
+
+   

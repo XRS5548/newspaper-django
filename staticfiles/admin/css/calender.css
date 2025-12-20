@@ -1,0 +1,12 @@
+
+
+.dark body, 
+.dark p, 
+.dark h1, 
+.dark h2, 
+.dark h3, 
+.dark a, 
+.dark span, 
+.dark div {
+  color: #e5e7eb !important; /* gray-200 */
+}

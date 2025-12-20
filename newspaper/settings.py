@@ -23,7 +23,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = "django-insecure-g3mth&erc1*jh2bq(a%tfxk(k*ih!^^n$9rq!$)^o68i3o9xon"
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = ["*"]
 
@@ -83,12 +83,12 @@ WSGI_APPLICATION = "newspaper.wsgi.application"
 
 DATABASES = {
     "default": {
-        "ENGINE": "django.db.backends.mysql",
-        "NAME": "djangotest1",
-        "USER": "root",
-        "PASSWORD": "",
-        "HOST": "127.0.0.1",
-        "PORT": "3306",
+        "ENGINE": "django.db.backends.sqlite3",
+        "NAME": "djangotest1.sqlite3",
+        # "USER": "if0_40306127",
+        # "PASSWORD": "qeIuDBenDaNY",
+        # "HOST": "sql112.infinityfree.com",
+        # "PORT": "3306",
     }
 }
 
@@ -127,11 +127,13 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/6.0/howto/static-files/
 
-STATIC_URL = "/static/"
+STATIC_URL = '/static/'
+
 STATICFILES_DIRS = [
-    BASE_DIR / "static",
+    BASE_DIR / 'static',
 ]
 
+STATIC_ROOT = BASE_DIR / 'staticfiles'
 
 MEDIA_URL = '/photos/'
 MEDIA_ROOT = BASE_DIR / 'photos'

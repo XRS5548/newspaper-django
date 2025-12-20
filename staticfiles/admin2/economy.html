@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Hindustan Times - Admin Dashboard</title>
+  <link rel="stylesheet" href="css/economy.css" />
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+
+<body>
+  <!-- 🧭 Sidebar -->
+  <div class="sidebar">
+    <h2>Admin Panel</h2>
+    <a href="user.html">User Dashboard</a>
+    <a href="calender.html">Calendar</a>
+    <a href="userprofile.html">User Profile</a>
+    <a href="monthlypayment.html">Monthly Payment</a>
+    <a href="due.html">Total Due Payment</a>
+    <a href="total.html">Total Payment</a>
+ <!-- 🗞️ Newspapers Dropdown -->
+    <div class="dropdown">
+      <div class="dropdown-toggle">NewsPapers ▾</div>
+      <div class="dropdown-content">
+      
+        <!-- 📰 दैनिक भास्कर -->
+        <div class="nested-dropdown">
+          <button class="nested-toggle">
+            <a href="danikbhaskar.html" style="color: inherit; text-decoration: none;">दैनिक भास्कर</a> ▸
+          </button>
+          <div class="nested-content">
+            <a href="chota.html">छोटा दैनिक भास्कर</a>
+          </div>
+        </div>
+
+        <!-- 📰 राजस्थान पत्रिका -->
+        <div class="nested-dropdown">
+          <button class="nested-toggle">
+            <a href="rajasthanpatrika.html" style="color: inherit; text-decoration: none;">राजस्थान पत्रिका</a> ▸
+          </button>
+          <div class="nested-content">
+            <a href="rajasthan.html">छोटा राजस्थान पत्रिका</a>
+          </div>
+        </div>
+
+        <a href="punjab.html">पंजाब केसरी</a>
+        <a href="thehindu.html">The Hindu</a>
+        <a href="express.html" class="active">Indian Express</a>
+        <a href="hindusthan.html">Hindustan Times</a>
+        <a href="economy.html">Economic Times</a>
+        <a href="nulogy.html">दैनिक नवज्योति</a>
+      </div>
+    </div>
+
+  <!-- 📚 Books Dropdown -->
+    <div class="dropdown">
+      <div class="dropdown-toggle">Books ▾</div>
+      <div class="dropdown-content">
+        <a href="#">All the President’s Men</a>
+        <a href="#">The Elements of Journalism</a>
+        <a href="#">The News: A User’s Manual</a>
+        <a href="#">Manufacturing Consent</a>
+        <a href="#">The Journalist and the Murderer</a>
+        <a href="#">Breaking News</a>
+        <a href="#">Blur: How to Know What’s True</a>
+        <a href="#">The New New Journalism</a>
+        <a href="#">Post-Truth</a>
+        <a href="#">Hacks: Inside Story</a>
+      </div>
+    </div>
+
+    <a href="#">Settings</a>
+  </div>
+
+  <!-- 🌍 MAIN CONTENT -->
+  <div class="main">
+    <div class="topbar">
+      <button id="toggleBtn"></button>
+      <h1>💹 The Economic Times Dashboard</h1>
+      <span id="todayDate"></span>
+    </div>
+
+    <!-- 🗞️ Summary Section -->
+    <section class="paper-summary">
+      <img src="https://www.banyannation.com/wp-content/uploads/2016/03/The_Economic_Times-1.jpg" alt="Economic Times Logo">
+      <div>
+        <h2>The Economic Times</h2>
+        <p>India’s No.1 financial daily delivering trusted business news, stock market analysis, and economic insights.</p>
+      </div>
+    </section>
+
+    <!-- 💰 Live Ticker -->
+    <section class="ticker">
+      <p>📈 Sensex: <span id="sensex">73,502</span> | 💵 Nifty: <span id="nifty">22,210</span> | 🪙 USD/INR: <span id="usd">83.12</span></p>
+    </section>
+
+    <!-- 📊 Stats Cards -->
+    <section class="stats">
+      <div class="stat-card">
+        <h3>Total Subscribers</h3>
+        <p id="subscribers">0</p>
+      </div>
+      <div class="stat-card delivered">
+        <h3>Delivered Today</h3>
+        <p id="delivered">0</p>
+      </div>
+      <div class="stat-card pending">
+        <h3>Pending Delivery</h3>
+        <p id="pending">0</p>
+      </div>
+      <div class="stat-card payment">
+        <h3>Total Revenue (₹)</h3>
+        <p id="payment">0</p>
+      </div>
+    </section>
+
+    <!-- 📈 Chart -->
+    <section class="chart-section">
+      <h3>Revenue & Subscribers Growth</h3>
+      <canvas id="growthChart"></canvas>
+    </section>
+
+    <!-- 🗞️ Headlines -->
+    <section class="news-section">
+      <h3>Today’s Financial Highlights</h3>
+      <ul>
+        <li>💸 RBI maintains repo rate at 6.5%, signals stability.</li>
+        <li>📊 Sensex hits record high amid strong IT sector rally.</li>
+        <li>🏦 Govt announces new digital banking policy for 2025.</li>
+        <li>🚗 EV market surges 30% YoY, Tata leads with 45% share.</li>
+        <li>🌍 IMF raises India’s growth forecast to 7.5% for FY25.</li>
+      </ul>
+    </section>
+  </div>
+ 
+
+ 
+  <script src="js/economy.js"></script>
+  <script src="js/translate.js"></script>
+
+</body>
+</html>

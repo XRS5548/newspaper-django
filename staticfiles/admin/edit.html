@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Responsive Admin Dashboard</title>
+  <link rel="stylesheet" href="css/admin.css">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
+
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: { extend: {} }
+    }
+  </script>
+
+ 
+</head>
+<body class="bg-gray-100 text-gray-900 dark:bg-gray-900 dark:text-gray-100 transition-colors duration-300">
+
+<div class="flex h-screen overflow-hidden">
+
+  <!-- Sidebar -->
+  <aside id="sidebar" class="fixed inset-y-0 left-0 w-64 bg-white dark:bg-gray-800 border-r transform -translate-x-full md:translate-x-0 transition-transform duration-300 z-50">
+    <div class="p-4 text-xl font-bold text-gray-900 dark:text-gray-100">TailAdmin</div>
+    <nav class="mt-6">
+      <ul>
+        <li class="px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-700 rounded"><a href="dashboard.html">Dashboard</a></li>
+        <li class="px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-700 rounded"><a href="calender.html">Calendar</a></li>
+        <li class="px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-700 rounded"><a href="user.html">User Profile</a></li>
+        <li class="px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-700 rounded"><a href="form.html">Forms</a></li>
+        <li class="px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-700 rounded"><a href="table.html">Tables</a></li>
+        <li class="px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-700 rounded"><a href="chart.html">Charts</a></li>
+      </ul>
+    </nav>
+  </aside>
+
+  <!-- Overlay for mobile sidebar -->
+  <div id="overlay" class="fixed inset-0 bg-black bg-opacity-50 hidden z-40 md:hidden"></div>
+
+  <!-- Main content -->
+  <div class="flex-1 flex flex-col ml-0 md:ml-64 transition-all duration-300">
+    <!-- Header -->
+    <header class="flex items-center justify-between bg-white dark:bg-gray-900 p-4 border-b border-gray-200 dark:border-gray-700 transition-colors duration-300">
+      <div class="flex items-center space-x-2">
+        <button id="sidebarToggle" class="md:hidden px-2 py-1 bg-gray-200 dark:bg-gray-700 rounded">☰</button>
+        <input type="text" placeholder="Search..." class="border rounded px-3 py-1 w-64 sm:w-48 dark:bg-gray-700 dark:border-gray-600 dark:text-gray-100" />
+      </div>
+      <div class="flex items-center space-x-4">
+        <button id="darkModeBtn" class="text-xl">🌙</button>
+        <button id="notifBtn" class="text-xl">🔔</button>
+        <div id="profileBtn" class="rounded-full overflow-hidden w-8 h-8 bg-gray-300 dark:bg-gray-600 cursor-pointer">
+                <img src="image/WhatsApp Image 2025-10-16 at 6.06.50 PM.jpeg" alt="User Photo" class="w-full h-full object-cover">
+
+        </div>
+      </div>
+       <!-- Dropdown -->
+          <div id="profileDropdown" class="hidden absolute right-0 mt-2 w-48 bg-white dark:bg-gray-800 rounded shadow-lg py-2 z-50">
+            <div class="px-4 py-2 border-b border-gray-200 dark:border-gray-700">
+              <div class="font-semibold text-gray-900 dark:text-gray-100">John Doe</div>
+              <div class="text-sm text-gray-500 dark:text-gray-400">Admin</div>
+            </div>
+            <a href="edit.html" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-700 text-gray-900 dark:text-gray-100">Edit Profile</a>
+            <a href="#" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-700 text-gray-900 dark:text-gray-100">Account Settings</a>
+            <a href="#" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-700 text-gray-900 dark:text-gray-100">Support</a>
+            <a href="#" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-700 text-red-600 dark:text-red-400">Sign Out</a>
+          </div>
+        
+    </header>
+<div class="max-w-5xl mx-auto bg-white shadow-lg rounded-lg p-6 mt-10">
+    <!-- Header Section -->
+    <div class="flex flex-col sm:flex-row items-center sm:items-start sm:space-x-6 border-b pb-6 mb-6">
+      <img src="image/WhatsApp Image 2025-10-16 at 6.06.50 PM.jpeg" alt="User" class="w-28 h-28 rounded-full border-4 border-blue-500">
+      <div class="text-center sm:text-left mt-4 sm:mt-0">
+        <h2 class="text-2xl font-bold">Rahul Swami</h2>
+        <p class="text-gray-600">Team Manager , Jaipur</p>
+
+        <!-- Social Links -->
+        <div class="flex justify-center sm:justify-start mt-3 space-x-3">
+          <a href="#" class="p-2 bg-gray-100 rounded-full hover:bg-gray-200"><i class="fab fa-facebook-f"></i>f</a>
+          <a href="#" class="p-2 bg-gray-100 rounded-full hover:bg-gray-200">X</a>
+          <a href="#" class="p-2 bg-gray-100 rounded-full hover:bg-gray-200">in</a>
+          <a href="#" class="p-2 bg-gray-100 rounded-full hover:bg-gray-200">ig</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Personal Information -->
+    <div class="mb-6">
+      <div class="flex justify-between items-center mb-4">
+        <h3 class="text-lg font-semibold">Personal Information</h3>
+        <button onclick="toggleEdit('personal')" class="text-blue-600 hover:underline">Edit</button>
+      </div>
+      <div id="personalView">
+        <div class="grid sm:grid-cols-2 gap-4">
+          <div>
+            <p class="text-sm text-gray-500">First Name</p>
+            <p class="font-medium">Rahul</p>
+          </div>
+          <div>
+            <p class="text-sm text-gray-500">Last Name</p>
+            <p class="font-medium">Swami</p>
+          </div>
+          <div>
+            <p class="text-sm text-gray-500">Email</p>
+            <p class="font-medium">rahulswami@gmail.com</p>
+          </div>
+          <div>
+            <p class="text-sm text-gray-500">Phone</p>
+            <p class="font-medium">91+7733905848</p>
+          </div>
+          <div class="sm:col-span-2">
+            <p class="text-sm text-gray-500">Bio</p>
+            <p class="font-medium">Team Manager</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Edit Mode -->
+      <div id="personalEdit" class="hidden">
+        <div class="grid sm:grid-cols-2 gap-4">
+          <input type="text" class="border p-2 rounded" value="Musharof">
+          <input type="text" class="border p-2 rounded" value="Chowdhury">
+          <input type="email" class="border p-2 rounded" value="randomuser@pimjo.com">
+          <input type="text" class="border p-2 rounded" value="+09 363 398 46">
+          <textarea class="border p-2 rounded sm:col-span-2">Team Manager</textarea>
+        </div>
+        <div class="mt-4 space-x-3">
+          <button onclick="saveSection('personal')" class="bg-blue-600 text-white px-4 py-2 rounded">Save</button>
+          <button onclick="cancelEdit('personal')" class="bg-gray-300 px-4 py-2 rounded">Cancel</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Address Information -->
+    <div>
+      <div class="flex justify-between items-center mb-4">
+        <h3 class="text-lg font-semibold">Address</h3>
+        <button onclick="toggleEdit('address')" class="text-blue-600 hover:underline">Edit</button>
+      </div>
+      <div id="addressView">
+        <div class="grid sm:grid-cols-2 gap-4">
+          <div>
+            <p class="text-sm text-gray-500">Country</p>
+            <p class="font-medium">Rajasthan</p>
+          </div>
+          <div>
+            <p class="text-sm text-gray-500">City/State</p>
+            <p class="font-medium">Jaipur, rajasthan</p>
+          </div>
+          <div>
+            <p class="text-sm text-gray-500">Postal Code</p>
+            <p class="font-medium">302033</p>
+          </div>
+          <div>
+            <p class="text-sm text-gray-500">Tax ID</p>
+            <p class="font-medium">AS4568384</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Edit Mode -->
+      <div id="addressEdit" class="hidden">
+        <div class="grid sm:grid-cols-2 gap-4">
+          <input type="text" class="border p-2 rounded" value="United States">
+          <input type="text" class="border p-2 rounded" value="Phoenix, Arizona">
+          <input type="text" class="border p-2 rounded" value="ERT 2489">
+          <input type="text" class="border p-2 rounded" value="AS4568384">
+        </div>
+        <div class="mt-4 space-x-3">
+          <button onclick="saveSection('address')" class="bg-blue-600 text-white px-4 py-2 rounded">Save</button>
+          <button onclick="cancelEdit('address')" class="bg-gray-300 px-4 py-2 rounded">Cancel</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <footer class="text-center text-gray-500 text-sm mt-10 pb-6">
+    Designed and Developed by <span class="text-blue-600 font-semibold">TailAdmin</span> — Distributed by ThemeWagon.
+  </footer>
+
+  <script>
+    function toggleEdit(section) {
+      document.getElementById(section + 'View').classList.add('hidden');
+      document.getElementById(section + 'Edit').classList.remove('hidden');
+    }
+
+    function cancelEdit(section) {
+      document.getElementById(section + 'View').classList.remove('hidden');
+      document.getElementById(section + 'Edit').classList.add('hidden');
+    }
+
+    function saveSection(section) {
+      alert(section.charAt(0).toUpperCase() + section.slice(1) + " section saved!");
+      cancelEdit(section);
+    }
+  </script>
+    
+
+<script src="js/admin.js"></script>
+
+</body>
+</html>

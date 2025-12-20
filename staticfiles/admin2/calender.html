@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>User Admin Dashboard</title>
+  <link rel="stylesheet" href="css/calender.css">
+
+ 
+</head>
+
+<body>
+   
+
+  <div class="sidebar">
+    <h2>Admin Panel</h2>
+    <a href="user.html">User Dashboard</a>
+    <a href="calender.html">Calendar</a>
+    <a href="userprofile.html">User Profile</a>
+    <a href="monthlypayment.html">Monthly Payment</a>
+    <a href="due.html">Total Due Payment</a>
+    <a href="total.html">Total Payment</a>
+
+   <!-- 🗞️ Newspapers Dropdown -->
+<div class="dropdown">
+  <div class="dropdown-toggle">NewsPapers ▾</div>
+  <div class="dropdown-content">
+
+    <!-- 📰 दैनिक भास्कर -->
+<div class="nested-dropdown">
+  <button class="nested-toggle">
+    <a href="danikbhaskar.html" style="color: inherit; text-decoration: none;">दैनिक भास्कर</a> ▸
+  </button>
+  <div class="nested-content">
+    <a href="chota.html">छोटा दैनिक भास्कर</a>
+  </div>
+</div>
+
+<!-- 📰 राजस्थान पत्रिका -->
+<div class="nested-dropdown">
+  <button class="nested-toggle">
+    <a href="rajasthanpatrika.html" style="color: inherit; text-decoration: none;">राजस्थान पत्रिका</a> ▸
+  </button>
+  <div class="nested-content">
+    <a href="rajasthan.html">छोटा राजस्थान पत्रिका</a>
+  </div>
+</div>
+
+    <a href="punjab.html">पंजाब केसरी</a>
+    <a href="thehindu.html">The Hindu</a>
+    <a href="express.html">Indian Express</a>
+    <a href="hindusthan.html">Hindustan Times</a>
+    <a href="economy.html">Economic Times</a>
+    <a href="nulogy.html">दैनिक नवज्योति</a>
+  </div>
+</div>
+
+    <!-- 📚 Books Dropdown -->
+    <div class="dropdown">
+      <div class="dropdown-toggle">Books ▾</div>
+      <div class="dropdown-content">
+        <a href="#">All the President’s Men</a>
+        <a href="#">The Elements of Journalism</a>
+        <a href="#">The News: A User’s Manual</a>
+        <a href="#">Manufacturing Consent</a>
+        <a href="#">The Journalist and the Murderer</a>
+        <a href="#">Breaking News</a>
+        <a href="#">Blur: How to Know What’s True</a>
+        <a href="#">The New New Journalism</a>
+        <a href="#">Post-Truth</a>
+        <a href="#">Hacks: Inside Story</a>
+      </div>
+    </div>
+
+    <a href="#">Settings</a>
+  </div>
+
+  
+  
+<div class="main">
+  <div class="topbar">
+    <h1>Newspaper Delivery Calendar</h1>
+  </div>
+
+  <div class="calendar">
+    <div class="calendar-header">
+      <button id="prevMonth">← Prev</button>
+      <h2 id="monthYear"></h2>
+      <button id="nextMonth">Next →</button>
+    </div>
+
+    <div class="calendar-grid" id="calendarDays">
+  <div class="day-name">Sun</div>
+  <div class="day-name">Mon</div>
+  <div class="day-name">Tue</div>
+  <div class="day-name">Wed</div>
+  <div class="day-name">Thu</div>
+  <div class="day-name">Fri</div>
+  <div class="day-name">Sat</div>
+</div>
+
+      <!-- 📘 Legend Section -->
+    <div class="calendar-legend">
+      <div><span class="legend-box delivered"></span> Delivered</div>
+      <div><span class="legend-box not-delivered"></span> Not Delivered</div>
+    </div>
+  </div>
+</div>
+  <script src="js/calender.js"></script>
+ <script src="js/translate.js"></script>
+</body>
+</html>

@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>User Admin Dashboard</title>
+  <link rel="stylesheet" href="css/user.css" />
+
+  <!-- 📊 Chart.js CDN -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+  
+</head>
+
+<body>
+    <!-- ☰ Toggle Button -->
+  <button class="menu-toggle" id="menuToggle">☰</button>
+   <!-- Sidebar -->
+  <div class="sidebar">
+    <h2>Admin Panel</h2>
+    <a href="user.html">User Dashboard</a>
+    <a href="calender.html">Calendar</a>
+    <a href="userprofile.html">User Profile</a>
+    <a href="monthlypayment.html">Monthly Payment</a>
+    <a href="due.html">Total Due Payment</a>
+    <a href="total.html">Total Payment</a>
+
+    <!-- 🗞️ Newspapers Dropdown -->
+<div class="dropdown">
+  <div class="dropdown-toggle">NewsPapers ▾</div>
+  <div class="dropdown-content">
+
+   <!-- 📰 दैनिक भास्कर -->
+<div class="nested-dropdown">
+  <button class="nested-toggle">
+    <a href="danikbhaskar.html" style="color: inherit; text-decoration: none;">दैनिक भास्कर</a> ▸
+  </button>
+  <div class="nested-content">
+    <a href="chota.html">छोटा दैनिक भास्कर</a>
+  </div>
+</div>
+
+<!-- 📰 राजस्थान पत्रिका -->
+<div class="nested-dropdown">
+  <button class="nested-toggle">
+    <a href="rajasthanpatrika.html" style="color: inherit; text-decoration: none;">राजस्थान पत्रिका</a> ▸
+  </button>
+  <div class="nested-content">
+    <a href="rajasthan.html">छोटा राजस्थान पत्रिका</a>
+  </div>
+</div>
+
+
+    <a href="punjab.html">पंजाब केसरी</a>
+    <a href="thehindu.html">The Hindu</a>
+    <a href="express.html">Indian Express</a>
+    <a href="hindusthan.html">Hindustan Times</a>
+    <a href="economy.html">Economic Times</a>
+    <a href="nulogy.html">दैनिक नवज्योति</a>
+  </div>
+</div>
+
+    <!-- 📚 Books Dropdown -->
+    <div class="dropdown">
+      <div class="dropdown-toggle">Books ▾</div>
+      <div class="dropdown-content">
+        <a href="#">All the President’s Men</a>
+        <a href="#">The Elements of Journalism</a>
+        <a href="#">The News: A User’s Manual</a>
+        <a href="#">Manufacturing Consent</a>
+        <a href="#">The Journalist and the Murderer</a>
+        <a href="#">Breaking News</a>
+        <a href="#">Blur: How to Know What’s True</a>
+        <a href="#">The New New Journalism</a>
+        <a href="#">Post-Truth</a>
+        <a href="#">Hacks: Inside Story</a>
+      </div>
+    </div>
+
+    <a href="#">Settings</a>
+  </div>
+
+  <div class="main">
+    <div class="topbar">
+      <h1>Dashboard Overview</h1>
+    </div>
+
+     <!-- 🧾 White Boxes Section (New) -->
+    <div class="info-section">
+      <!-- Box 1 -->
+      <div class="info-box">
+        <p>
+          Welcome to the Franchise Dashboard. Here you can access your essential
+          documents and ID details easily.
+        </p>
+
+        <!-- 📞 Contact Button -->
+<button class="contact-btn" onclick="contactOwner()">📞 Contact: +91-7733905848</button>
+
+        <div class="btn-group">
+          <button class="action-btn">Download Authority Letter</button>
+          <button class="action-btn">Franchise Director ID Card</button>
+        </div>
+      </div>
+
+      <!-- Box 2 -->
+      <div class="info-box">
+        <h3>Promotion Materials</h3>
+        <div class="btn-group">
+          <button class="action-btn">Download Promotion Banner 1</button>
+          <button class="action-btn">Download Promotion Banner 2</button>
+        </div>
+      </div>
+    </div>
+  </div>
+ <!-- 💹 Stats Summary Section (Inside Light Blue Box) -->
+<div class="stats-wrapper">
+  <h3>📊 Payment & Order Summary</h3>
+  <div class="stats-section">
+    <div class="stat-box">
+      <div class="stat-icon">💰</div>
+      <div class="stat-info">
+        <h4>Total Payment</h4>
+        <span>₹4,500</span>
+      </div>
+    </div>
+
+    <div class="stat-box">
+      <div class="stat-icon">📅</div>
+      <div class="stat-info">
+        <h4>Today's Payment</h4>
+        <span>₹300</span>
+      </div>
+    </div>
+
+    <div class="stat-box">
+      <div class="stat-icon">⚠️</div>
+      <div class="stat-info">
+        <h4>Total Dues</h4>
+        <span>₹1,200</span>
+      </div>
+    </div>
+
+    <div class="stat-box">
+      <div class="stat-icon">📰</div>
+      <div class="stat-info">
+        <h4>Total Orders</h4>
+        <span>45</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+  <script src="js/user.js"></script>
+  <script src="js/translate.js"></script>
+</body>
+</html>

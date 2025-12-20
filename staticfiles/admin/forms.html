@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Responsive Admin Dashboard</title>
+  <link rel="stylesheet" href="css/admin.css">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
+
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: { extend: {} }
+    }
+  </script>
+
+ 
+</head>
+<body class="bg-gray-100 text-gray-900 dark:bg-gray-900 dark:text-gray-100 transition-colors duration-300">
+
+<div class="flex h-screen overflow-hidden">
+
+  <!-- Sidebar -->
+  <aside id="sidebar" class="fixed inset-y-0 left-0 w-64 bg-white dark:bg-gray-800 border-r transform -translate-x-full md:translate-x-0 transition-transform duration-300 z-50">
+    <div class="p-4 text-xl font-bold text-gray-900 dark:text-gray-100">TailAdmin</div>
+    <nav class="mt-6">
+      <ul>
+        <li class="px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-700 rounded"><a href="dashboard.html">Dashboard</a></li>
+        <li class="px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-700 rounded"><a href="calender.html">Calendar</a></li>
+        <li class="px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-700 rounded"><a href="">User Profile</a></li>
+        <li class="px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-700 rounded"><a href="forms.html">Forms</a></li>
+        <li class="px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-700 rounded"><a href="table.html">Tables</a></li>
+        <li class="px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-700 rounded"><a href="#">Pages</a></li>
+        <li class="px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-700 rounded"><a href="#">Charts</a></li>
+      </ul>
+    </nav>
+  </aside>
+
+  <!-- Overlay for mobile sidebar -->
+  <div id="overlay" class="fixed inset-0 bg-black bg-opacity-50 hidden z-40 md:hidden"></div>
+
+  <!-- Main content -->
+  <div class="flex-1 flex flex-col ml-0 md:ml-64 transition-all duration-300">
+    <!-- Header -->
+    <header class="flex items-center justify-between bg-white dark:bg-gray-900 p-4 border-b border-gray-200 dark:border-gray-700 transition-colors duration-300">
+      <div class="flex items-center space-x-2">
+        <button id="sidebarToggle" class="md:hidden px-2 py-1 bg-gray-200 dark:bg-gray-700 rounded">☰</button>
+        <input type="text" placeholder="Search..." class="border rounded px-3 py-1 w-64 sm:w-48 dark:bg-gray-700 dark:border-gray-600 dark:text-gray-100" />
+      </div>
+      <div class="flex items-center space-x-4">
+        <button id="darkModeBtn" class="text-xl">🌙</button>
+        <button id="notifBtn" class="text-xl">🔔</button>
+        <div id="profileBtn" class="rounded-full overflow-hidden w-8 h-8 bg-gray-300 dark:bg-gray-600 cursor-pointer">Rahul Swami</div>
+      </div>
+       <!-- Dropdown -->
+          <div id="profileDropdown" class="hidden absolute right-0 mt-2 w-48 bg-white dark:bg-gray-800 rounded shadow-lg py-2 z-50">
+            <div class="px-4 py-2 border-b border-gray-200 dark:border-gray-700">
+              <div class="font-semibold text-gray-900 dark:text-gray-100">John Doe</div>
+              <div class="text-sm text-gray-500 dark:text-gray-400">Admin</div>
+            </div>
+            <a href="edit.html" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-700 text-gray-900 dark:text-gray-100">Edit Profile</a>
+            <a href="#" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-700 text-gray-900 dark:text-gray-100">Account Settings</a>
+            <a href="#" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-700 text-gray-900 dark:text-gray-100">Support</a>
+            <a href="#" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-700 text-red-600 dark:text-red-400">Sign Out</a>
+          </div>
+        
+    </header>
+
+    
+
+<script src="js/admin.js"></script>
+
+</body>
+</html>

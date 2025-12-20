@@ -21,10 +21,14 @@ from django.conf.urls.static import static
 from . import settings
 from . import views
 
+
+
+handler404 = 'newspaper.views.custom_404'
+
 urlpatterns = [
     path("admin/", admin.site.urls),
+    path("login/",views.home),
     path("",include("website.urls")),
-    path("",views.home),
     path("",include("accounts.urls")),
     path("dashboard/",include("customer.urls")),
     path("agent/",include("agent.urls"))

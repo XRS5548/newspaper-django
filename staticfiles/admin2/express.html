@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Indian Express - Admin Dashboard</title>
+  <link rel="stylesheet" href="css/express.css" />
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+
+<body>
+  <div class="sidebar">
+    <h2>Admin Panel</h2>
+    <a href="user.html">User Dashboard</a>
+    <a href="calender.html">Calendar</a>
+    <a href="userprofile.html">User Profile</a>
+    <a href="monthlypayment.html">Monthly Payment</a>
+    <a href="due.html">Total Due Payment</a>
+    <a href="total.html">Total Payment</a>
+
+    <!-- 🗞️ Newspapers Dropdown -->
+    <div class="dropdown">
+      <div class="dropdown-toggle">NewsPapers ▾</div>
+      <div class="dropdown-content">
+        
+        <!-- 📰 दैनिक भास्कर -->
+        <div class="nested-dropdown">
+          <button class="nested-toggle">
+            <a href="danikbhaskar.html" style="color: inherit; text-decoration: none;">दैनिक भास्कर</a> ▸
+          </button>
+          <div class="nested-content">
+            <a href="chota.html">छोटा दैनिक भास्कर</a>
+          </div>
+        </div>
+
+        <!-- 📰 राजस्थान पत्रिका -->
+        <div class="nested-dropdown">
+          <button class="nested-toggle">
+            <a href="rajasthanpatrika.html" style="color: inherit; text-decoration: none;">राजस्थान पत्रिका</a> ▸
+          </button>
+          <div class="nested-content">
+            <a href="rajasthan.html">छोटा राजस्थान पत्रिका</a>
+          </div>
+        </div>
+
+        <a href="punjab.html">पंजाब केसरी</a>
+        <a href="thehindu.html">The Hindu</a>
+        <a href="express.html" class="active">Indian Express</a>
+        <a href="hindusthan.html">Hindustan Times</a>
+        <a href="economy.html">Economic Times</a>
+        <a href="nulogy.html">दैनिक नवज्योति</a>
+      </div>
+    </div>
+
+  <!-- 📚 Books Dropdown -->
+    <div class="dropdown">
+      <div class="dropdown-toggle">Books ▾</div>
+      <div class="dropdown-content">
+        <a href="#">All the President’s Men</a>
+        <a href="#">The Elements of Journalism</a>
+        <a href="#">The News: A User’s Manual</a>
+        <a href="#">Manufacturing Consent</a>
+        <a href="#">The Journalist and the Murderer</a>
+        <a href="#">Breaking News</a>
+        <a href="#">Blur: How to Know What’s True</a>
+        <a href="#">The New New Journalism</a>
+        <a href="#">Post-Truth</a>
+        <a href="#">Hacks: Inside Story</a>
+      </div>
+    </div>
+
+    <a href="#">Settings</a>
+  </div>
+
+  <!-- 🌐 MAIN CONTENT -->
+  <div class="main">
+    <div class="topbar">
+      <h1>🗞️ The Indian Express Dashboard</h1>
+      <span id="todayDate"></span>
+    </div>
+
+    <!-- 📰 Summary Section -->
+    <section class="paper-summary">
+      <img src="https://media.licdn.com/dms/image/v2/C511BAQFfVuKyufRWhA/company-background_10000/company-background_10000/0/1584335893712/the_new_indian_express_cover?e=2147483647&v=beta&t=1hKv7j_e0CzQNoALedBW_1AW77Ks5WVXpHAdZfwXUVg" alt="Indian Express Logo">
+      <div>
+        <h2>The Indian Express</h2>
+        <p>Founded in 1932, The Indian Express is India’s leading newspaper known for fearless, unbiased, and impactful journalism.</p>
+      </div>
+    </section>
+
+    <!-- 💡 Stats Section -->
+    <section class="stats">
+      <div class="stat-card">
+        <h3>Total Subscribers</h3>
+        <p id="subscribers">0</p>
+      </div>
+      <div class="stat-card delivered">
+        <h3>Delivered</h3>
+        <p id="delivered">0</p>
+      </div>
+      <div class="stat-card pending">
+        <h3>Pending</h3>
+        <p id="pending">0</p>
+      </div>
+      <div class="stat-card payment">
+        <h3>Total Payment (₹)</h3>
+        <p id="payment">0</p>
+      </div>
+    </section>
+
+    <!-- 📊 Chart -->
+    <section class="chart-section">
+      <h3>📈 Monthly Payment Overview</h3>
+      <canvas id="paymentChart"></canvas>
+    </section>
+
+    <!-- 📋 Delivery Table -->
+    <section class="table-section">
+      <h3>Subscriber Delivery & Payment Status</h3>
+      <table>
+        <thead>
+          <tr>
+            <th>Subscriber Name</th>
+            <th>City</th>
+            <th>Status</th>
+            <th>Payment</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Arjun Verma</td>
+            <td>Delhi</td>
+            <td><span class="status delivered">Delivered</span></td>
+            <td>₹220</td>
+          </tr>
+          <tr>
+            <td>Kavita Iyer</td>
+            <td>Pune</td>
+            <td><span class="status delivered">Delivered</span></td>
+            <td>₹210</td>
+          </tr>
+          <tr>
+            <td>Manish Kapoor</td>
+            <td>Mumbai</td>
+            <td><span class="status pending">Pending</span></td>
+            <td>₹0</td>
+          </tr>
+          <tr>
+            <td>Sneha Nanda</td>
+            <td>Ahmedabad</td>
+            <td><span class="status delivered">Delivered</span></td>
+            <td>₹230</td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+  </div>
+
+ <script src="js/express.js"></script>
+ <script src="js/translate.js"></script>
+
+</body>
+</html>
